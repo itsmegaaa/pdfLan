@@ -1,0 +1,14 @@
+{
+  "name": "ilovepdf-clone",
+  "version": "1.0.2",
+  "scripts": {
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && node index.js",
+    "dev:lan": "concurrently \"cd frontend && npm run dev -- --host 0.0.0.0\" \"cd backend && node index.js\"",
+    "start:lan": "cd frontend && npm run build && cd ../backend && node index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
