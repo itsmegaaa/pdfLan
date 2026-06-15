@@ -6,6 +6,15 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-06-15
+### Added
+- **Host Prerequisites Guide:** Menambahkan panduan instalasi Node.js, PM2, LibreOffice, Ghostscript, dll. menggunakan `winget` dan `choco` di dokumentasi README.
+- **Concurrency Limit:** Mengimplementasikan antrean `p-limit` pada `backend/utils/binaries.js` untuk membatasi eksekusi *binary* eksternal maksimal 2 proses secara bersamaan, mencegah CPU server *freeze* saat diakses banyak staf sekaligus.
+- **Aggressive File Cleanup:** Memodifikasi `asyncHandler` dan *route* `/download` di `backend/routes.js` untuk menghapus file PDF (input & output) seketika dalam hitungan milidetik setelah pemrosesan dan download selesai.
+
+### Changed
+- **Memory Optimization:** Menambahkan parameter `{ stdio: 'ignore' }` pada eksekusi `execa` untuk mencegah RAM Node.js penuh akibat menampung output *log* LibreOffice/Ghostscript.
+
 ## [1.0.3] - 2026-06-15
 ### Added
 - **Background Execution:** Menambahkan *batch scripts* (`start-background.bat` dan `stop-background.bat`) yang terintegrasi dengan `pm2` untuk menjalankan server di latar belakang tanpa membiarkan terminal Windows terbuka, serta menjaganya dari *crash*.
