@@ -12,11 +12,18 @@ This repository contains the LAN-specific version of PDFVault, optimized for loc
 - **Extract Images**: Extract all images from a PDF file.
 
 ## Prerequisites for Host PC
-To run this application as a server on your local network, the Host PC requires the following to be installed:
+To run this application as a server on your local network, the Host PC requires the following to be installed.
+
+**💡 Easiest Way (Windows 10/11):**
+Open PowerShell and run these commands to install everything automatically using `winget`:
+```powershell
+winget install OpenJS.NodeJS -e
+winget install TheDocumentFoundation.LibreOffice -e
+winget install ArtifexSoftware.GhostScript -e
+```
 
 1. **Node.js (v18 or higher)**
-   - Download and install from [nodejs.org](https://nodejs.org/).
-   - This will automatically install NPM.
+   - Installed via `winget` above, or manually from [nodejs.org](https://nodejs.org/).
 
 2. **PM2** (Process Manager)
    - Required if you want to use the background `.bat` scripts.
@@ -27,12 +34,10 @@ To run this application as a server on your local network, the Host PC requires 
 
 3. **LibreOffice**
    - Required for converting Office files (Word/Excel/PowerPoint) to PDF.
-   - Download and install from [libreoffice.org](https://www.libreoffice.org/).
    - *Note down the installation path (usually `C:\Program Files\LibreOffice\program\soffice.exe`) for your `.env` file.*
 
 4. **Ghostscript**
    - Required for PDF compression and advanced PDF manipulation.
-   - Download the 64-bit version from [ghostscript.com](https://ghostscript.com/releases/gsdnld.html).
    - *Note down the executable path (usually `C:\Program Files\gs\gs[version]\bin\gswin64c.exe`) for your `.env` file.*
 
 > Note: Client PCs accessing the app via browser do not need to install anything.
