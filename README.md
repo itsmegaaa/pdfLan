@@ -1,8 +1,8 @@
-# ClonePDF (LAN Version)
+# PDFVault
 
-ClonePDF is a self-hosted, offline-first PDF tool designed to be run within your Local Area Network (LAN) or on your personal machine. It provides PDF processing capabilities without needing to upload your sensitive documents to external servers.
+PDFVault is a self-hosted, offline-first PDF tool designed to be run within your Local Area Network (LAN) or on your personal machine. It provides PDF processing capabilities without needing to upload your sensitive documents to external servers.
 
-This repository contains the LAN-specific version of ClonePDF, optimized for local execution.
+This repository contains the LAN-specific version of PDFVault, optimized for local execution.
 
 ## Features
 - **Offline First**: Runs entirely on your local machine or network. No internet connection required after installation.
@@ -30,7 +30,7 @@ The easiest way to run the application on Windows is to use the provided batch s
    ```
 
 2. **Start the Application**:
-   Double-click the `start-clonepdf-lan.bat` file in the root directory.
+   Double-click the `start-pdfvault-lan.bat` file in the root directory.
    This will automatically start both the backend server and frontend development server in the background.
 
 3. **Access the App**:

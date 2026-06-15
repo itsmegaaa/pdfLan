@@ -1,6 +1,6 @@
 @echo off
 echo ========================================================
-echo Memulai iLovePDF Clone Server (Local LAN Mode)
+echo Memulai PDFVault Server (Local LAN Mode)
 echo ========================================================
 echo.
 

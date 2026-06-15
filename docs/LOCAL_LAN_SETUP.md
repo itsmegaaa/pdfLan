@@ -1,4 +1,4 @@
-# Setup iLovePDF Clone untuk Jaringan Lokal (LAN)
+# Setup PDFVault untuk Jaringan Lokal (LAN)
 
 Aplikasi ini dapat dijalankan pada **satu PC Server** di dalam jaringan kantor Anda. Komputer staf (Client) tidak perlu menginstal aplikasi berat apa pun (seperti LibreOffice, Ghostscript, dll.), cukup mengakses aplikasi melalui browser web.
 
@@ -12,7 +12,7 @@ Aplikasi ini dapat dijalankan pada **satu PC Server** di dalam jaringan kantor A
 ## 2. Menjalankan Aplikasi
 
 Anda dapat menggunakan script otomatis yang sudah disediakan:
-Klik ganda pada file `start-clonepdf-lan.bat`.
+Klik ganda pada file `start-pdfvault-lan.bat`.
 Atau jalankan perintah ini di terminal root folder:
 ```bash
 npm run start:lan
@@ -27,7 +27,7 @@ Agar PC staf lain dapat mengakses server ini, Anda harus membuka port di Windows
 Buka **PowerShell sebagai Administrator** dan jalankan perintah berikut (asumsi port 3000):
 
 ```powershell
-New-NetFirewallRule -DisplayName "ClonePDF Local" -Direction Inbound -Protocol TCP -LocalPort 3000 -Action Allow
+New-NetFirewallRule -DisplayName "PDFVault Local" -Direction Inbound -Protocol TCP -LocalPort 3000 -Action Allow
 ```
 
 ## 4. Cara Akses dari PC Client

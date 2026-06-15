@@ -17,7 +17,7 @@ export default function Navbar() {
               <FileText className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-lg text-white tracking-tight">
-              iLovePDF<span className="text-[#e2001a]">Clone</span>
+              PDF<span className="text-[#e2001a]">Vault</span>
             </span>
           </Link>
 

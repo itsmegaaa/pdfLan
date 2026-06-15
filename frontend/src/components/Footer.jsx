@@ -19,12 +19,12 @@ export default function Footer() {
               <div className="w-7 h-7 bg-[#e2001a] rounded-lg flex items-center justify-center">
                 <FileText className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="font-bold text-white">iLovePDF<span className="text-[#e2001a]">Clone</span></span>
+              <span className="font-bold text-white">PDF<span className="text-[#e2001a]">Vault</span></span>
             </div>
             <p className="text-sm text-[#8b90b0] leading-relaxed mb-4">
               Tool PDF gratis & open source. Semua proses langsung di browser atau server lokal kamu — tidak ada data yang dikirim ke cloud.
             </p>
-            <p className="text-xs text-[#4a5070]">© 2026 iLovePDF Clone. Open Source.</p>
+            <p className="text-xs text-[#4a5070]">© 2026 PDFVault. Open Source.</p>
           </div>
 
           {/* Tool links per category */}

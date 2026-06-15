@@ -1,6 +1,6 @@
 @echo off
 echo ========================================================
-echo Memulai ClonePDF Server di Background (PM2)
+echo Memulai PDFVault Server di Background (PM2)
 echo ========================================================
 echo.
 
@@ -17,8 +17,8 @@ cd ..
 
 echo.
 echo [3/4] Menjalankan server di background...
-call pm2 delete clonepdf-server >nul 2>&1
-call pm2 start backend/index.js --name "clonepdf-server"
+call pm2 delete pdfvault-server >nul 2>&1
+call pm2 start backend/index.js --name "pdfvault-server"
 
 echo.
 echo [4/4] Menyimpan konfigurasi agar otomatis jalan (opsional)...

@@ -12,7 +12,7 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **LAN Mode Support:** Menambahkan skrip `start:lan` dan `dev:lan` di `package.json` untuk menjalankan aplikasi dengan *single local server PC* mode.
 - **File Validation:** Menambahkan middleware pada Express untuk memvalidasi ekstensi file, tipe MIME, dan *magic bytes* secara mendalam (mencegah *bypass* ekstensi palsu pada PDF/JPG/PNG).
 - **Global Error Handler:** Menambahkan *global error handler* di backend untuk memastikan *error* (seperti limit ukuran file dari Multer) dikembalikan dalam format JSON, bukan HTML.
-- **Documentation:** Membuat `LOCAL_LAN_SETUP.md` dan `start-clonepdf-lan.bat` untuk mempermudah setup dan eksekusi server di lingkungan Windows.
+- **Documentation:** Membuat `LOCAL_LAN_SETUP.md` dan `start-pdfvault-lan.bat` untuk mempermudah setup dan eksekusi server di lingkungan Windows.
 
 ### Fixed
 - **Proxy Configuration:** Mengubah *proxy target* Vite di `vite.config.js` dari `localhost` ke `127.0.0.1` untuk menghindari *error ECONNREFUSED* (Network Error) yang disebabkan oleh resolusi IPv6 bawaan pada Node 18+.
@@ -39,7 +39,7 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.0.0] - 2026-06-15
 ### Added
-- **Initial Release:** Inisialisasi awal proyek iLovePDF Clone (Frontend Vite/React + Backend Node/Express).
+- **Initial Release:** Inisialisasi awal proyek PDFVault (Frontend Vite/React + Backend Node/Express).
 - **Client-Side Tools (Phase 1):** Fitur manipulasi PDF 100% di browser via `pdf-lib`.
 - **Backend Tools (Phase 2):** Implementasi konversi dan kompresi tingkat lanjut via *local system binaries*.
 - **Architecture:** Cron job untuk *auto-cleanup* file di `tmp/` setiap 15 menit.
