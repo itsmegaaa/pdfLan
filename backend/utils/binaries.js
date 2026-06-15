@@ -1,7 +1,11 @@
 const { execa } = require('execa');
 const fs = require('fs-extra');
 const path = require('path');
+const pLimit = require('p-limit');
 require('dotenv').config();
+
+// Batasan konkurensi: maksimal 2 proses biner eksternal jalan bersamaan
+const limit = pLimit(2);
 
 // Helpers paths dari .env
 const LIBREOFFICE_PATH = process.env.LIBREOFFICE_PATH || 'soffice';
@@ -12,7 +16,7 @@ const POPPLER_PATH = process.env.POPPLER_PATH || ''; // folder path where pdftop
 /**
  * Konversi menggunakan LibreOffice (Word, PPT, Excel ke PDF / sebaliknya).
  */
-exports.libreOfficeConvert = async (inputPath, outputDir, outFilter) => {
+exports.libreOfficeConvert = (inputPath, outputDir, outFilter) => limit(async () => {
   const args = [
     '--headless'
   ];
@@ -28,18 +32,18 @@ exports.libreOfficeConvert = async (inputPath, outputDir, outFilter) => {
 
   args.push('--convert-to', outFilter, '--outdir', outputDir, inputPath);
 
-  await execa(LIBREOFFICE_PATH, args);
+  await execa(LIBREOFFICE_PATH, args, { stdio: 'ignore' });
   // LibreOffice membuat file output di outdir dengan basename dari input
   const ext = outFilter.split(':')[0]; // e.g., 'pdf' or 'docx'
   const baseName = path.basename(inputPath, path.extname(inputPath));
   return path.join(outputDir, `${baseName}.${ext}`);
-};
+});
 
 /**
  * Kompresi PDF menggunakan Ghostscript
  * Level: 'low' (prepress), 'medium' (ebook), 'high' (screen)
  */
-exports.ghostscriptCompress = async (inputPath, outputPath, level = 'medium') => {
+exports.ghostscriptCompress = (inputPath, outputPath, level = 'medium') => limit(async () => {
   const settings = {
     low: '/prepress', // High quality, low compression
     medium: '/ebook', // Medium quality, medium compression
@@ -57,14 +61,14 @@ exports.ghostscriptCompress = async (inputPath, outputPath, level = 'medium') =>
     `-sOutputFile=${outputPath}`,
     inputPath
   ];
-  await execa(GHOSTSCRIPT_PATH, args);
+  await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
   return outputPath;
-};
+});
 
 /**
  * Tambahkan proteksi password menggunakan QPDF
  */
-exports.qpdfProtect = async (inputPath, outputPath, userPass, ownerPass, permissions = []) => {
+exports.qpdfProtect = (inputPath, outputPath, userPass, ownerPass, permissions = []) => limit(async () => {
   const args = [
     '--encrypt',
     userPass,
@@ -83,28 +87,28 @@ exports.qpdfProtect = async (inputPath, outputPath, userPass, ownerPass, permiss
   else args.push('--extract=n');
 
   args.push('--', inputPath, outputPath);
-  await execa(QPDF_PATH, args);
+  await execa(QPDF_PATH, args, { stdio: 'ignore' });
   return outputPath;
-};
+});
 
 /**
  * Buka proteksi password menggunakan QPDF
  */
-exports.qpdfUnlock = async (inputPath, outputPath, password) => {
+exports.qpdfUnlock = (inputPath, outputPath, password) => limit(async () => {
   const args = [
     `--password=${password}`,
     '--decrypt',
     inputPath,
     outputPath
   ];
-  await execa(QPDF_PATH, args);
+  await execa(QPDF_PATH, args, { stdio: 'ignore' });
   return outputPath;
-};
+});
 
 /**
  * PDF/A Conversion menggunakan Ghostscript
  */
-exports.ghostscriptPdfA = async (inputPath, outputPath) => {
+exports.ghostscriptPdfA = (inputPath, outputPath) => limit(async () => {
   const args = [
     '-dPDFA',
     '-dBATCH',
@@ -115,14 +119,14 @@ exports.ghostscriptPdfA = async (inputPath, outputPath) => {
     `-sOutputFile=${outputPath}`,
     inputPath
   ];
-  await execa(GHOSTSCRIPT_PATH, args);
+  await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
   return outputPath;
-};
+});
 
 /**
  * Ekstrak halaman PDF ke JPG menggunakan Poppler (pdftoppm)
  */
-exports.popplerPdfToJpg = async (inputPath, outputDir, quality = 85) => {
+exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async () => {
   const binary = POPPLER_PATH ? path.join(POPPLER_PATH, 'pdftoppm') : 'pdftoppm';
   const prefix = path.join(outputDir, 'page');
   
@@ -134,8 +138,8 @@ exports.popplerPdfToJpg = async (inputPath, outputDir, quality = 85) => {
     prefix
   ];
   
-  await execa(binary, args);
+  await execa(binary, args, { stdio: 'ignore' });
   // pdftoppm otomatis menambahkan -01.jpg, -02.jpg dst. Ambil file-file tersebut.
   const files = await fs.readdir(outputDir);
   return files.filter(f => f.endsWith('.jpg')).map(f => path.join(outputDir, f));
-};
+});

@@ -51,7 +51,6 @@ const upload = multer({
 
 const OUTPUT_DIR = path.resolve(process.env.OUTPUT_DIR || './tmp/outputs');
 
-// Helper Wrapper (Handles try/catch & cleanup on fail)
 const asyncHandler = (fn) => async (req, res, next) => {
   try {
     await fn(req, res, next);
@@ -61,6 +60,10 @@ const asyncHandler = (fn) => async (req, res, next) => {
       return res.status(500).json({ success: false, message: `Dependency tool tidak ditemukan. Pastikan path di file .env sudah benar. Error: ${err.message}` });
     }
     res.status(500).json({ success: false, message: err.message || 'Terjadi kesalahan internal server' });
+  } finally {
+    if (req.file && req.file.path) {
+      fs.remove(req.file.path).catch(e => console.error("Failed to delete temp input file:", e));
+    }
   }
 };
 
@@ -234,7 +237,6 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
   res.json({ success: true, fileId: path.basename(zipFile), filename: `${baseName}_images.zip` });
 }));
 
-// ── DOWNLOAD ROUTE ─────────────────────────────────────────────────
 router.get('/download/:fileId', (req, res) => {
   const { fileId } = req.params;
   const { filename } = req.query;
@@ -245,11 +247,11 @@ router.get('/download/:fileId', (req, res) => {
     return res.status(404).send('File tidak ditemukan atau sudah expired.');
   }
   
-  if (filename) {
-    res.download(filePath, filename);
-  } else {
-    res.download(filePath);
-  }
+  res.download(filePath, filename || safeFileId, (err) => {
+    if (err) console.error("Error downloading file:", err);
+    // Hapus file output segera setelah di-download
+    fs.remove(filePath).catch(e => console.error("Failed to delete output file:", e));
+  });
 });
 
 module.exports = router;
