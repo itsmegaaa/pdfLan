@@ -12,12 +12,28 @@ This repository contains the LAN-specific version of PDFVault, optimized for loc
 - **Extract Images**: Extract all images from a PDF file.
 
 ## Prerequisites for Host PC
-To run this application as a server on your local network, the Host PC requires:
-- **Node.js** (v18 or higher recommended)
-- **NPM** or **Yarn**
-- **PM2** (Required if using the background `.bat` scripts. Install via `npm install -g pm2`)
-- **LibreOffice** (Required for Word/Excel/PowerPoint to PDF conversion)
-- **Ghostscript** (Required for PDF compression and advanced manipulation)
+To run this application as a server on your local network, the Host PC requires the following to be installed:
+
+1. **Node.js (v18 or higher)**
+   - Download and install from [nodejs.org](https://nodejs.org/).
+   - This will automatically install NPM.
+
+2. **PM2** (Process Manager)
+   - Required if you want to use the background `.bat` scripts.
+   - After installing Node.js, open Terminal/Command Prompt and run:
+     ```bash
+     npm install -g pm2
+     ```
+
+3. **LibreOffice**
+   - Required for converting Office files (Word/Excel/PowerPoint) to PDF.
+   - Download and install from [libreoffice.org](https://www.libreoffice.org/).
+   - *Note down the installation path (usually `C:\Program Files\LibreOffice\program\soffice.exe`) for your `.env` file.*
+
+4. **Ghostscript**
+   - Required for PDF compression and advanced PDF manipulation.
+   - Download the 64-bit version from [ghostscript.com](https://ghostscript.com/releases/gsdnld.html).
+   - *Note down the executable path (usually `C:\Program Files\gs\gs[version]\bin\gswin64c.exe`) for your `.env` file.*
 
 > Note: Client PCs accessing the app via browser do not need to install anything.
 
