@@ -118,6 +118,11 @@ If you are not on Windows or prefer to run things manually:
    npm run dev
    ```
 
-## License
+## ☕ Support / Donate
+
+If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development!  
+👉 **[Donate & Support via Tako.id](https://tako.id/itsmega)**
+
+## 📝 License
 
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
