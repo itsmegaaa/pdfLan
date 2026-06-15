@@ -123,6 +123,8 @@ If you are not on Windows or prefer to run things manually:
 If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development!  
 👉 **[Donate & Support via Tako.id](https://tako.id/itsmega)**
 
+<img src="https://tako.id/overlay/qr-code?overlay_key=nea1adwgfvljjnamqbqg4q3g" width="200" alt="Tako QR Code">
+
 ## 📝 License
 
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
