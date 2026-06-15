@@ -4,6 +4,15 @@ PDFVault is a self-hosted, offline-first PDF tool designed to be run within your
 
 This repository contains the LAN-specific version of PDFVault, optimized for local execution.
 
+---
+### ☕ Support / Donate
+If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development!  
+👉 **[Donate & Support via Tako.id](https://tako.id/itsmega)**  
+<br>
+<img src="https://tako.id/overlay/qr-code?overlay_key=nea1adwgfvljjnamqbqg4q3g" width="150" alt="Tako QR Code">
+
+---
+
 ## ✨ Features
 
 PDFVault is packed with powerful, enterprise-grade tools that process your files securely.
@@ -118,12 +127,6 @@ If you are not on Windows or prefer to run things manually:
    npm run dev
    ```
 
-## ☕ Support / Donate
-
-If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development!  
-👉 **[Donate & Support via Tako.id](https://tako.id/itsmega)**
-
-<img src="https://tako.id/overlay/qr-code?overlay_key=nea1adwgfvljjnamqbqg4q3g" width="200" alt="Tako QR Code">
 
 ## 📝 License
 
