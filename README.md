@@ -4,12 +4,35 @@ PDFVault is a self-hosted, offline-first PDF tool designed to be run within your
 
 This repository contains the LAN-specific version of PDFVault, optimized for local execution.
 
-## Features
-- **Offline First**: Runs entirely on your local machine or network. No internet connection required after installation.
-- **Privacy Focused**: Documents never leave your machine or local network.
-- **Merge PDF**: Combine multiple PDFs into a single file easily.
-- **Image to PDF**: Convert images (JPG, PNG, etc.) to PDF documents.
-- **Extract Images**: Extract all images from a PDF file.
+## ✨ Features
+
+PDFVault is packed with powerful, enterprise-grade tools that process your files securely.
+
+### 🛡️ Core Advantages
+- **Offline First & Privacy Focused**: 100% of the processing happens on your local machine or LAN. Documents are NEVER uploaded to an external server. Your data stays yours.
+- **Auto Cleanup**: Temporary files are aggressively and automatically deleted from the server within milliseconds after processing.
+- **Smart Concurrency Limit**: Built-in queue system ensures the server never freezes, even if multiple users process files at the exact same time.
+
+### 📄 Organize & Edit PDF
+- **Visual Page Builder**: A drag-and-drop interface to easily rearrange, delete, and organize pages.
+- **Merge PDF**: Combine multiple PDFs into a single file with custom ordering.
+- **Split PDF**: Visually select pages to split or extract from a large document.
+- **Rotate PDF**: Fix upside-down pages with a single click.
+
+### 🔄 Convert FROM PDF
+- **PDF to Word/PPT/Excel**: Convert PDFs back into editable Office documents with high accuracy (powered by LibreOffice).
+- **PDF to JPG**: Extract high-quality images from every page of your PDF (powered by Poppler).
+- **PDF to PDF/A**: Convert your documents into the standard format for long-term archiving.
+
+### 🔁 Convert TO PDF
+- **Word/PPT/Excel to PDF**: Turn your Office documents into universally readable PDFs.
+- **Image to PDF**: Convert JPG, PNG, and other image formats into a single PDF document.
+- **HTML to PDF**: Capture webpages perfectly into PDF format (powered by Chromium/Puppeteer).
+
+### 🔒 Security & Optimization
+- **Compress PDF**: Dramatically reduce the file size of your PDFs without losing quality (powered by Ghostscript).
+- **Protect PDF**: Encrypt your PDFs with strong passwords and restrict permissions (e.g., disable printing or copying).
+- **Unlock PDF**: Remove passwords and security restrictions from PDFs you own (powered by QPDF).
 
 ## Prerequisites for Host PC
 To run this application as a server on your local network, the Host PC requires the following to be installed.
