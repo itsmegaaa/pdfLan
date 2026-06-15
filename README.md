@@ -11,9 +11,19 @@ This repository contains the LAN-specific version of PDFVault, optimized for loc
 - **Image to PDF**: Convert images (JPG, PNG, etc.) to PDF documents.
 - **Extract Images**: Extract all images from a PDF file.
 
-## Prerequisites
+## Prerequisites for Host PC
+To run this application as a server on your local network, the Host PC requires:
 - **Node.js** (v18 or higher recommended)
 - **NPM** or **Yarn**
+- **PM2** (Required if using the background `.bat` scripts. Install via `npm install -g pm2`)
+- **LibreOffice** (Required for Word/Excel/PowerPoint to PDF conversion)
+- **Ghostscript** (Required for PDF compression and advanced manipulation)
+
+> Note: Client PCs accessing the app via browser do not need to install anything.
+
+## Detailed LAN Setup
+For a complete guide on how to configure the Host PC, setup `.env` variables, and configure the Windows Firewall so other computers can access it, please read:
+👉 **[Local LAN Setup Guide](docs/LOCAL_LAN_SETUP.md)**
 
 ## Quick Start (Windows)
 
