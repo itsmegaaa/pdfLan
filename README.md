@@ -6,8 +6,18 @@ This repository contains the LAN-specific version of PDFVault, optimized for loc
 
 ---
 ### ☕ Support / Donate
-If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development!  
-👉 **[Donate & Support via Tako.id](https://tako.id/itsmega)**  
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/tako_qr.png" width="150" alt="Tako QR Code">
+    </td>
+    <td align="left">
+      If you find this project helpful, saves you time, or keeps your company's documents secure, please consider supporting the development! <br><br>
+      👉 **<a href="https://tako.id/itsmega">Donate & Support via Tako.id</a>**
+    </td>
+  </tr>
+</table>
 
 ---
 
