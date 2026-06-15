@@ -14,8 +14,14 @@ This repository contains the LAN-specific version of PDFVault, optimized for loc
 ## Prerequisites for Host PC
 To run this application as a server on your local network, the Host PC requires the following to be installed.
 
-**💡 Easiest Way (Windows 10/11):**
-Open PowerShell and run these commands to install everything automatically using `winget`:
+**💡 Easiest Way (Using Chocolatey - Recommended):**
+If you have [Chocolatey](https://chocolatey.org/) installed, open PowerShell as Administrator and run this one-liner to install everything you need:
+```powershell
+choco install nodejs pm2 libreoffice ghostscript qpdf poppler tesseract chromium -y
+```
+
+**Alternative Way (Using Winget - Windows 10/11 built-in):**
+Open PowerShell and run:
 ```powershell
 winget install OpenJS.NodeJS -e
 winget install TheDocumentFoundation.LibreOffice -e
@@ -23,7 +29,7 @@ winget install ArtifexSoftware.GhostScript -e
 ```
 
 1. **Node.js (v18 or higher)**
-   - Installed via `winget` above, or manually from [nodejs.org](https://nodejs.org/).
+   - Installed via script above, or manually from [nodejs.org](https://nodejs.org/).
 
 2. **PM2** (Process Manager)
    - Required if you want to use the background `.bat` scripts.
