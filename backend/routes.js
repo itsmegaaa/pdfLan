@@ -249,8 +249,13 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
   // Gunakan dynamic import karena library ESM-only
   const { removeBackground } = await import('@imgly/background-removal-node');
 
+  // Path absolut ke file model/assets bawaan imgly
+  const publicPath = "file://" + path.join(__dirname, 'node_modules/@imgly/background-removal-node/dist/').replace(/\\/g, '/');
+
   // Hapus background
-  const blob = await removeBackground(req.file.path);
+  const blob = await removeBackground(req.file.path, {
+    publicPath: publicPath
+  });
   
   // Convert Blob ke Buffer
   const buffer = Buffer.from(await blob.arrayBuffer());
