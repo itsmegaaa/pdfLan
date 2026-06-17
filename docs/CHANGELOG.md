@@ -6,6 +6,10 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-06-17
+### Fixed
+- **Ghostscript Execution (Windows):** Memperbaiki *error* `'gs' tidak dikenali sebagai perintah internal atau eksternal` dengan menambahkan deteksi sistem operasi di `backend/utils/binaries.js`. Aplikasi kini secara otomatis menggunakan perintah `gswin64c` apabila dijalankan pada OS Windows.
+
 ## [1.0.4] - 2026-06-15
 ### Added
 - **Host Prerequisites Guide:** Menambahkan panduan instalasi Node.js, PM2, LibreOffice, Ghostscript, dll. menggunakan `winget` dan `choco` di dokumentasi README.
