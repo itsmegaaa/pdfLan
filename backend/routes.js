@@ -246,18 +246,29 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
     throw new Error('Hanya file gambar JPG/PNG yang didukung');
   }
 
-  const { pathToFileURL } = require('url');
+  const { pathToFileURL, fileURLToPath } = require('url');
   
   // Gunakan dynamic import karena library ESM-only
   const { removeBackground } = await import('@imgly/background-removal-node');
 
-  // Path absolut ke file model/assets bawaan imgly yang benar untuk Windows (file:///)
+  // Path absolut ke file model/assets bawaan imgly
   const distPath = path.join(__dirname, 'node_modules/@imgly/background-removal-node/dist/');
   const publicPath = pathToFileURL(distPath).href + '/';
 
+  // Custom fetch untuk membaca file:// karena native fetch Node.js tidak mensupport file://
+  const customFetch = async (url, options) => {
+    if (url.startsWith('file://')) {
+      const filePath = fileURLToPath(url);
+      const data = await fs.readFile(filePath);
+      return new Response(data);
+    }
+    return fetch(url, options);
+  };
+
   // Hapus background
   const blob = await removeBackground(req.file.path, {
-    publicPath: publicPath
+    publicPath: publicPath,
+    fetchArgs: { fetch: customFetch }
   });
   
   // Convert Blob ke Buffer
