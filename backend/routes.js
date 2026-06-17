@@ -265,8 +265,11 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
     return fetch(url, options);
   };
 
+  // Baca image sebagai Buffer (Uint8Array)
+  const imageBuffer = await fs.readFile(req.file.path);
+
   // Hapus background
-  const blob = await removeBackground(req.file.path, {
+  const blob = await removeBackground(new Uint8Array(imageBuffer), {
     publicPath: publicPath,
     fetchArgs: { fetch: customFetch }
   });
