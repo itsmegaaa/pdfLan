@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Toaster, toast } from 'goey-toast';
+import { GooeyToaster, gooeyToast } from 'goey-toast';
+import 'goey-toast/styles.css';
 import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -61,13 +62,13 @@ function ToastNotifier() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      gooeyToast.error(error);
     }
   }, [error]);
 
   useEffect(() => {
     if (result) {
-      toast.success('File berhasil diproses!');
+      gooeyToast.success('File berhasil diproses!');
     }
   }, [result]);
 
@@ -117,7 +118,7 @@ export default function App() {
           </Suspense>
         </main>
         <Footer />
-        <Toaster position="bottom-right" />
+        <GooeyToaster position="bottom-right" theme="dark" />
       </div>
     </BrowserRouter>
   );
