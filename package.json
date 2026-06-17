@@ -1,6 +1,6 @@
 {
   "name": "pdfvault",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "scripts": {
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "cd frontend && npm run dev",
