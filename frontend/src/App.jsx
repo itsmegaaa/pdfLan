@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'goey-toast';
 import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -97,17 +97,7 @@ export default function App() {
           </Suspense>
         </main>
         <Footer />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: '#1a1d27',
-              color: '#e8eaf6',
-              border: '1px solid #2d3150',
-              borderRadius: '12px',
-            },
-          }}
-        />
+        <Toaster position="bottom-right" />
       </div>
     </BrowserRouter>
   );
