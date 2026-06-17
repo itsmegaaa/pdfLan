@@ -45,6 +45,9 @@ PDFVault is packed with powerful, enterprise-grade tools that process your files
 - **Image to PDF**: Convert JPG, PNG, and other image formats into a single PDF document.
 - **HTML to PDF**: Capture webpages perfectly into PDF format (powered by Chromium/Puppeteer).
 
+### 🖼️ Image Tools
+- **Remove Background**: Cleanly remove backgrounds from JPG/PNG images entirely on your local machine (powered by AI, without cloud API).
+
 ### 🔒 Security & Optimization
 - **Compress PDF**: Dramatically reduce the file size of your PDFs without losing quality (powered by Ghostscript).
 - **Protect PDF**: Encrypt your PDFs with strong passwords and restrict permissions (e.g., disable printing or copying).
