@@ -6,6 +6,14 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-06-17
+### Added
+- **Remove Background Tool:** Menambahkan fitur hapus latar belakang gambar secara lokal (*client-side & server-side processing* aman) menggunakan model AI dari `@imgly/background-removal-node`.
+- **Global Toast Notifications:** Mengganti alert error manual di frontend dengan *library* `goey-toast` yang lebih interaktif dan global untuk notifikasi sukses, gagal, dan loading.
+- **Image Tools Category:** Menambahkan kategori menu baru "Image Tools" pada _sidebar_ dan _home page_.
+
+### Fixed
+- **Imgly File Pathing & Protocol Error:** Memperbaiki resolusi letak file model statis `.wasm` dan file model `.onnx` pada sistem Windows dengan mengimplementasikan _custom_ fetch (`pathToFileURL` dan pembungkusan Blob beserta mimetype) untuk menghindari error `ENOENT` dan `Unsupported protocol: c:`.
 ## [1.0.5] - 2026-06-17
 ### Fixed
 - **Ghostscript Execution (Windows):** Memperbaiki *error* `'gs' tidak dikenali sebagai perintah internal atau eksternal` dengan menambahkan deteksi sistem operasi di `backend/utils/binaries.js`. Aplikasi kini secara otomatis menggunakan perintah `gswin64c` apabila dijalankan pada OS Windows.
