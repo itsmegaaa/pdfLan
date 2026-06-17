@@ -2,6 +2,7 @@ const { execa } = require('execa');
 const fs = require('fs-extra');
 const path = require('path');
 const pLimit = require('p-limit');
+const os = require('os');
 require('dotenv').config();
 
 // Batasan konkurensi: maksimal 2 proses biner eksternal jalan bersamaan
@@ -9,7 +10,7 @@ const limit = pLimit(2);
 
 // Helpers paths dari .env
 const LIBREOFFICE_PATH = process.env.LIBREOFFICE_PATH || 'soffice';
-const GHOSTSCRIPT_PATH = process.env.GHOSTSCRIPT_PATH || 'gs';
+const GHOSTSCRIPT_PATH = process.env.GHOSTSCRIPT_PATH || (os.platform() === 'win32' ? 'gswin64c' : 'gs');
 const QPDF_PATH = process.env.QPDF_PATH || 'qpdf';
 const POPPLER_PATH = process.env.POPPLER_PATH || ''; // folder path where pdftoppm is located (or empty if in PATH)
 
