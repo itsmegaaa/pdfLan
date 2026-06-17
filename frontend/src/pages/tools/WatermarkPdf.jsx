@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { watermarkPdf } from '../../utils/clientPdf';
+import PdfPreview from '../../components/PdfPreview';
 
 const POSITIONS = [
   { v: 'center', label: 'Tengah' },
@@ -13,7 +14,7 @@ const POSITIONS = [
 ];
 
 export default function WatermarkPdf() {
-  const { startProcess, setProgress, setResult, setError } = useToolStore();
+  const { files, startProcess, setProgress, setResult, setError } = useToolStore();
   const [text, setText] = useState('CONFIDENTIAL');
   const [opacity, setOpacity] = useState(0.3);
   const [fontSize, setFontSize] = useState(60);
@@ -78,17 +79,34 @@ export default function WatermarkPdf() {
             </div>
           </div>
           {/* Preview */}
-          <div className="p-6 bg-[#22263a] rounded-xl flex items-center justify-center min-h-20 relative overflow-hidden">
-            <p className="text-xs text-[#4a5070] absolute top-2 left-3">Preview</p>
-            <span
-              style={{
-                color, opacity, fontSize: Math.min(fontSize * 0.4, 32),
-                transform: `rotate(${rotation}deg)`,
-                fontWeight: 'bold', letterSpacing: 2,
-              }}
-            >
-              {text || 'WATERMARK'}
-            </span>
+          <div className="p-6 bg-[#22263a] rounded-xl flex flex-col items-center justify-center relative overflow-hidden min-h-[300px]">
+            <p className="text-xs text-[#4a5070] absolute top-2 left-3 z-10">Preview (Halaman 1)</p>
+            {files && files.length > 0 ? (
+              <div className="relative inline-block border border-[#2d3150] shadow-2xl mt-4">
+                <PdfPreview file={files[0]} pageNumber={1} scale={0.8} />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden mix-blend-multiply">
+                  <span
+                    style={{
+                      color, opacity, fontSize: Math.min(fontSize, 120),
+                      transform: `rotate(${rotation}deg)`,
+                      fontWeight: 'bold', letterSpacing: 2,
+                    }}
+                  >
+                    {text || 'WATERMARK'}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <span
+                style={{
+                  color, opacity, fontSize: Math.min(fontSize * 0.4, 32),
+                  transform: `rotate(${rotation}deg)`,
+                  fontWeight: 'bold', letterSpacing: 2,
+                }}
+              >
+                {text || 'WATERMARK'}
+              </span>
+            )}
           </div>
         </div>
       }
