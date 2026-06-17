@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Toaster } from 'goey-toast';
+import { Toaster, toast } from 'goey-toast';
 import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -55,10 +55,30 @@ function StoreResetter() {
   return null;
 }
 
+function ToastNotifier() {
+  const error = useToolStore((state) => state.error);
+  const result = useToolStore((state) => state.result);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (result) {
+      toast.success('File berhasil diproses!');
+    }
+  }, [result]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <StoreResetter />
+      <ToastNotifier />
       <div className="min-h-screen flex flex-col bg-[#0f1117]">
         <Navbar />
         <main className="flex-1">

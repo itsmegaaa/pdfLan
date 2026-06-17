@@ -136,13 +136,7 @@ export default function ToolLayout({
         </div>
       )}
 
-      {/* Error */}
-      {error && (
-        <div className="mt-4 flex items-start gap-3 p-4 bg-red-900/10 border border-red-800/30 rounded-xl">
-          <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-400">{error}</p>
-        </div>
-      )}
+
 
       {/* Action button */}
       {files.length > 0 && (
