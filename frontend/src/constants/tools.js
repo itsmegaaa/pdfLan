@@ -296,6 +296,19 @@ export const TOOLS = [
     multiple: false,
     clientSide: false,
   },
+
+  // ── IMAGE TOOLS ───────────────────────────────────────────────────
+  {
+    id: "remove-background",
+    name: "Remove Background",
+    desc: "Hapus background gambar dan export PNG transparan.",
+    icon: "🪄",
+    category: "image",
+    route: "/remove-background",
+    accept: { "image/jpeg": [".jpg", ".jpeg"], "image/png": [".png"] },
+    multiple: false,
+    clientSide: false,
+  },
 ];
 
 export const CATEGORIES = [
@@ -305,4 +318,5 @@ export const CATEGORIES = [
   { id: "convert", label: "Convert PDF" },
   { id: "edit", label: "Edit PDF" },
   { id: "security", label: "PDF Security" },
+  { id: "image", label: "Image Tools" },
 ];

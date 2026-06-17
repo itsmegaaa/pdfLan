@@ -237,6 +237,31 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
   res.json({ success: true, fileId: path.basename(zipFile), filename: `${baseName}_images.zip` });
 }));
 
+// ── IMAGE TOOLS ───────────────────────────────────────────────────
+router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (req, res) => {
+  if (!req.file) throw new Error('File tidak ditemukan');
+  
+  const ext = path.extname(req.file.originalname).toLowerCase();
+  if (!['.jpg', '.jpeg', '.png'].includes(ext)) {
+    throw new Error('Hanya file gambar JPG/PNG yang didukung');
+  }
+
+  // Gunakan dynamic import karena library ESM-only
+  const { removeBackground } = await import('@imgly/background-removal-node');
+
+  // Hapus background
+  const blob = await removeBackground(req.file.path);
+  
+  // Convert Blob ke Buffer
+  const buffer = Buffer.from(await blob.arrayBuffer());
+
+  const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.png`);
+  await fs.writeFile(outFile, buffer);
+
+  const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
+  res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}-no-bg.png` });
+}));
+
 router.get('/download/:fileId', (req, res) => {
   const { fileId } = req.params;
   const { filename } = req.query;

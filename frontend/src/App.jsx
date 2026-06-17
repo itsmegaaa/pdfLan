@@ -37,6 +37,8 @@ const RedactPdf = lazy(() => import('./pages/tools/RedactPdf'));
 const CropPdf = lazy(() => import('./pages/tools/CropPdf'));
 const PdfForms = lazy(() => import('./pages/tools/PdfForms'));
 
+const RemoveBackground = lazy(() => import('./pages/tools/RemoveBackground'));
+
 function PageLoader() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
@@ -114,6 +116,7 @@ export default function App() {
               <Route path="/redact-pdf" element={<RedactPdf />} />
               <Route path="/crop-pdf" element={<CropPdf />} />
               <Route path="/pdf-forms" element={<PdfForms />} />
+              <Route path="/remove-background" element={<RemoveBackground />} />
             </Routes>
           </Suspense>
         </main>

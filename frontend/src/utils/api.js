@@ -63,6 +63,9 @@ export const apiCompare = (file1, file2) => {
   return api.post('/compare', fd);
 };
 
+export const apiRemoveBackground = (file) =>
+  api.post('/image/remove-background', toFormData(file));
+
 export const apiDownloadUrl = (fileId) =>
   `${import.meta.env.VITE_API_BASE_URL || '/api'}/download/${fileId}`;
 

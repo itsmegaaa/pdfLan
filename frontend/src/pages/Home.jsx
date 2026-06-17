@@ -31,11 +31,11 @@ export default function Home() {
             🚀 100% Gratis · Open Source · Lokal
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-tight">
-            Semua Tool PDF<br />
+            PDF & Office Tools<br />
             <span className="text-[#e2001a]">dalam Satu Tempat</span>
           </h1>
           <p className="text-lg text-[#8b90b0] max-w-2xl mx-auto mb-8">
-            Merge, split, compress, convert, edit PDF — tanpa upload ke cloud.
+            Merge, split, compress, convert, edit PDF, hingga manipulasi gambar — tanpa upload ke cloud.
             Semua diproses langsung di browser atau server lokal kamu.
           </p>
 
