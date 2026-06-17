@@ -1,7 +1,8 @@
 const { execa } = require('execa');
 const fs = require('fs-extra');
 const path = require('path');
-const pLimit = require('p-limit');
+const pLimitReq = require('p-limit');
+const pLimit = pLimitReq.default || pLimitReq;
 const os = require('os');
 require('dotenv').config();
 
