@@ -4,7 +4,7 @@ Semua perubahan yang signifikan pada proyek ini akan didokumentasikan di file in
 
 Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), dan proyek ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Released]
 
 ## [1.0.6] - 2026-06-17
 ### Added
@@ -14,6 +14,7 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 - **Imgly File Pathing & Protocol Error:** Memperbaiki resolusi letak file model statis `.wasm` dan file model `.onnx` pada sistem Windows dengan mengimplementasikan _custom_ fetch (`pathToFileURL` dan pembungkusan Blob beserta mimetype) untuk menghindari error `ENOENT` dan `Unsupported protocol: c:`.
+
 ## [1.0.5] - 2026-06-17
 ### Fixed
 - **Ghostscript Execution (Windows):** Memperbaiki *error* `'gs' tidak dikenali sebagai perintah internal atau eksternal` dengan menambahkan deteksi sistem operasi di `backend/utils/binaries.js`. Aplikasi kini secara otomatis menggunakan perintah `gswin64c` apabila dijalankan pada OS Windows.
