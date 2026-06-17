@@ -265,11 +265,12 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
     return fetch(url, options);
   };
 
-  // Baca image sebagai Buffer (Uint8Array)
+  // Baca image sebagai Buffer dan bungkus dalam Blob beserta mimetype
   const imageBuffer = await fs.readFile(req.file.path);
+  const imageBlob = new Blob([imageBuffer], { type: req.file.mimetype });
 
   // Hapus background
-  const blob = await removeBackground(new Uint8Array(imageBuffer), {
+  const blob = await removeBackground(imageBlob, {
     publicPath: publicPath,
     fetchArgs: { fetch: customFetch }
   });
