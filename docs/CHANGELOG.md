@@ -9,6 +9,7 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [1.0.5] - 2026-06-17
 ### Fixed
 - **Ghostscript Execution (Windows):** Memperbaiki *error* `'gs' tidak dikenali sebagai perintah internal atau eksternal` dengan menambahkan deteksi sistem operasi di `backend/utils/binaries.js`. Aplikasi kini secara otomatis menggunakan perintah `gswin64c` apabila dijalankan pada OS Windows.
+- **Server Crash & Process Conflict:** Memperbaiki *crash loop* pada PM2 (*TypeError: pLimit is not a function*) dengan memperbarui sintaks impor modul eksternal. Mematikan proses lama (`clonepdf-server`) yang secara tidak sengaja merespons *request* kompresi dengan kode Ghostscript usang.
 
 ## [1.0.4] - 2026-06-15
 ### Added
