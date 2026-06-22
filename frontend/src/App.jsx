@@ -37,6 +37,7 @@ const CropPdf = lazy(() => import('./pages/tools/CropPdf'));
 const PdfForms = lazy(() => import('./pages/tools/PdfForms'));
 
 const RemoveBackground = lazy(() => import('./pages/tools/RemoveBackground'));
+const Changelog = lazy(() => import('./pages/Changelog'));
 
 function PageLoader() {
   return (
@@ -115,6 +116,7 @@ export default function App() {
                 <Route path="/crop-pdf" element={<CropPdf />} />
                 <Route path="/pdf-forms" element={<PdfForms />} />
                 <Route path="/remove-background" element={<RemoveBackground />} />
+                <Route path="/changelog" element={<Changelog />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>

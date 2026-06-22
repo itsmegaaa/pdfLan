@@ -23,20 +23,12 @@ export default function Navbar() {
 
           {/* Nav links desktop */}
           <div className="hidden md:flex items-center gap-6">
-            {[
-              { label: 'Organize', href: '/?cat=organize' },
-              { label: 'Convert', href: '/?cat=convert' },
-              { label: 'Edit', href: '/?cat=edit' },
-              { label: 'Security', href: '/?cat=security' },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-sm text-[#8b90b0] hover:text-white transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
+            <Link
+              to="/changelog"
+              className="text-sm font-medium text-[#8b90b0] hover:text-white transition-colors"
+            >
+              Changelog
+            </Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -53,22 +45,13 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-[#1a1d27] border-t border-[#2d3150] px-4 py-3 space-y-1">
-          {[
-            { label: 'Semua Tools', href: '/' },
-            { label: 'Organize PDF', href: '/?cat=organize' },
-            { label: 'Convert PDF', href: '/?cat=convert' },
-            { label: 'Edit PDF', href: '/?cat=edit' },
-            { label: 'PDF Security', href: '/?cat=security' },
-          ].map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="block py-2 text-sm text-[#8b90b0] hover:text-white transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
+          <Link
+            to="/changelog"
+            className="block py-2 text-sm font-medium text-[#8b90b0] hover:text-white transition-colors"
+            onClick={() => setOpen(false)}
+          >
+            Changelog
+          </Link>
         </div>
       )}
     </nav>
