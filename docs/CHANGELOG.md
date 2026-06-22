@@ -1,9 +1,5 @@
 # Changelog
 
-Semua perubahan yang signifikan pada proyek ini akan didokumentasikan di file ini.
-
-Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), dan proyek ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Released]
 
 ## [1.0.7] - 2026-06-22
@@ -13,7 +9,7 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Filter Kategori Beranda:** Milih kategori di halaman depan sekarang langsung nyambung ke URL (`/?cat=...`), jadi gampang kalau mau nge-share link kategori spesifik.
 
 ### Changed
-- **Fitur Masuk Bengkel:** Buat sementara waktu, fitur `Compare PDF`, `Repair PDF`, dan `OCR PDF` kita taruh paling bawah dan dilabelin "DIPERBAIKI". Fiturnya dibikin redup dan nggak bisa diklik dulu.
+- **Maintenance:** Buat sementara waktu, fitur `Compare PDF`, `Repair PDF`, dan `OCR PDF`.
 
 ### Fixed
 - **Server Gantung Pas ZIP:** Ngebenerin *bug* di mana proses kompresi ZIP yang gagal malah bikin *server* macet (zombie request) karena *promise*-nya nggak di-handle.
