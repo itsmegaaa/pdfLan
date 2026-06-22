@@ -8,21 +8,23 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.0.7] - 2026-06-22
 ### Added
-- **Global Error Boundary:** Mengintegrasikan `<ErrorBoundary>` di `App.jsx` untuk mencegah layar putih (crash) pada SPA ketika terjadi kesalahan internal pada komponen.
-- **Sign PDF Page Selection:** Menambahkan fitur untuk memilih spesifik halaman saat menambahkan tanda tangan digital di *Sign PDF*.
-- **Category URL Sync:** Filter kategori di beranda kini terhubung secara reaktif ke parameter URL (`/?cat=...`) menggunakan `useSearchParams`.
+- **Anti Layar Putih (Error Boundary):** Udah dipasang `<ErrorBoundary>` di `App.jsx`. Jadi kalau ada komponen yang error, webnya nggak bakal nge-blank putih lagi, tapi munculin pesan error yang rapi.
+- **Pilih Halaman Sign PDF:** Sekarang fitur *Sign PDF* udah bisa milih mau nempel tanda tangan di halaman berapa. Nggak cuma mentok di halaman pertama doang.
+- **Filter Kategori Beranda:** Milih kategori di halaman depan sekarang langsung nyambung ke URL (`/?cat=...`), jadi gampang kalau mau nge-share link kategori spesifik.
 
 ### Changed
-- **Maintenance Mode:** Menyingkirkan fungsionalitas `Compare PDF`, `Repair PDF`, dan `OCR PDF` ke dalam mode *maintenance* (tampil redup dengan badge "DIPERBAIKI" di daftar menu bawah).
+- **Fitur Masuk Bengkel:** Buat sementara waktu, fitur `Compare PDF`, `Repair PDF`, dan `OCR PDF` kita taruh paling bawah dan dilabelin "DIPERBAIKI". Fiturnya dibikin redup dan nggak bisa diklik dulu.
 
 ### Fixed
-- **Backend Stream Hang:** Memperbaiki *unhandled promise rejection* saat proses kompresi ZIP gagal, menghindari *zombie request* yang membebani memori.
-- **Cron Job Crash:** Mengisolasi operasi *file system* di dalam *Cron Job* agar tidak menghentikan keseluruhan *loop* jika satu file terkunci.
-- **Memory Leaks (PDF.js & ObjectURL):** Memperbaiki penumpukan memori RAM pada browser dengan mengimplementasikan algoritma *LRU Cache* di `PdfPreview.jsx` serta manajemen `URL.revokeObjectURL` pada komponen konversi gambar.
-- **React State Bug:** Memperbaiki error saat drag-and-drop dan penghapusan array di `DropZone.jsx` dan `OrganizePdf.jsx` dengan sistem UUID yang stabil.
-- **Redact Coordinates:** Mengkalibrasi ulang posisi blok sensor di fitur *Redact PDF* berdasarkan rasio aktual DOM *width* melawan PDF *width*.
-- **Poppler Numeric Sort:** Mengurutkan hasil halaman *convert* dari `pdftoppm` secara numerik murni (Regex), bukan abjad.
-- **OOM Prevention:** Menambahkan batasan ukuran file *hard-limit* 5MB khusus untuk *route* Hapus Background agar tidak membuat server Node JS mogok (OOM).
+- **Server Gantung Pas ZIP:** Ngebenerin *bug* di mana proses kompresi ZIP yang gagal malah bikin *server* macet (zombie request) karena *promise*-nya nggak di-handle.
+- **Auto-Delete Macet:** Ngebenerin *script cron job* yang suka berhenti jalan kalau ada satu file yang nyangkut/terkunci. Sekarang operasi file-nya udah dibungkus *try-catch* satu per satu.
+- **Browser Lemot/Makan RAM (Memory Leak):** 
+  - Udah nerapin *LRU Cache* di `PdfPreview.jsx` biar PDF.js nggak makan RAM terus-terusan.
+  - Gambar *preview* di *JpgToPdf* sekarang otomatis dibersihin dari memori (`revokeObjectURL`) kalau udah nggak dipakai.
+- **Drag & Drop Error:** Ngebenerin *bug* hapus file yang suka ngaco pas lagi *drag-and-drop* di `DropZone.jsx` sama `OrganizePdf.jsx`. Sekarang udah pakai ID unik (UUID) biar stabil.
+- **Sensor PDF Meleset:** Koordinat kotak hitam di fitur *Redact PDF* udah dikalibrasi ulang. Sekarang kotak sensornya bakal pas banget di posisi mouse, nggak meleset lagi gara-gara beda resolusi layar.
+- **Halaman PDF to JPG Acak-acakan:** Benerin urutan halaman hasil `pdftoppm` yang berantakan karena disortir pakai abjad (10 muncul sebelum 2). Sekarang udah pakai *numeric sort* murni.
+- **Server Mati Kehabisan RAM (OOM):** Ngasih batesan maksimal ukuran file 5MB khusus buat fitur *Hapus Background*, soalnya model AI-nya boros banget dan suka bikin *server Node.js* mati kalau ukuran filenya kegedean.
 
 ## [1.0.6] - 2026-06-17
 ### Added
