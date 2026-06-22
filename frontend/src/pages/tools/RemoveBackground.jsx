@@ -10,12 +10,26 @@ export default function RemoveBackground() {
     if (!files || files.length === 0) return;
     const file = files[0];
 
+    let currentProgress = 0;
+    let interval;
+
     try {
       startProcess();
-      setProgress(10);
+      
+      // Fake progress berjalan dari 0 sampai mentok di 99
+      interval = setInterval(() => {
+        if (currentProgress < 99) {
+          // Tambah 2-7% setiap 400ms agar realistis
+          currentProgress += Math.random() * 5 + 2;
+          if (currentProgress > 99) currentProgress = 99;
+          setProgress(Math.floor(currentProgress));
+        }
+      }, 400);
       
       const response = await apiRemoveBackground(file);
-      setProgress(90);
+      
+      clearInterval(interval);
+      setProgress(99);
 
       const { fileId, filename } = response.data;
       
@@ -24,8 +38,8 @@ export default function RemoveBackground() {
         filename
       });
 
-      setProgress(100);
     } catch (err) {
+      clearInterval(interval);
       setError(err.message || 'Gagal menghapus background gambar.');
     }
   };

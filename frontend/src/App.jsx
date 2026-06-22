@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { GooeyToaster, gooeyToast } from 'goey-toast';
 import 'goey-toast/styles.css';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -61,18 +61,49 @@ function StoreResetter() {
 function ToastNotifier() {
   const error = useToolStore((state) => state.error);
   const result = useToolStore((state) => state.result);
+  const isProcessing = useToolStore((state) => state.isProcessing);
+  const toastIdRef = useRef(null);
 
   useEffect(() => {
-    if (error) {
-      gooeyToast.error(error);
+    if (isProcessing) {
+      toastIdRef.current = gooeyToast('Sedang memproses...', {
+        id: 'global-process-toast',
+      });
     }
-  }, [error]);
+  }, [isProcessing]);
 
   useEffect(() => {
-    if (result) {
-      gooeyToast.success('File berhasil diproses!');
+    if (error && !isProcessing) {
+      if (toastIdRef.current) {
+        gooeyToast.update(toastIdRef.current, {
+          title: 'Gagal diproses',
+          description: typeof error === 'string' ? error : 'Terjadi kesalahan sistem',
+          type: 'error',
+          action: {
+            label: 'Tutup',
+            onClick: () => gooeyToast.dismiss('global-process-toast')
+          }
+        });
+        toastIdRef.current = null;
+      } else {
+        gooeyToast.error('Gagal diproses', { description: typeof error === 'string' ? error : 'Terjadi kesalahan sistem' });
+      }
     }
-  }, [result]);
+  }, [error, isProcessing]);
+
+  useEffect(() => {
+    if (result && !isProcessing) {
+      if (toastIdRef.current) {
+        gooeyToast.update(toastIdRef.current, {
+          title: 'File berhasil diproses!',
+          type: 'success'
+        });
+        toastIdRef.current = null;
+      } else {
+        gooeyToast.success('File berhasil diproses!');
+      }
+    }
+  }, [result, isProcessing]);
 
   return null;
 }
@@ -122,7 +153,16 @@ export default function App() {
           </ErrorBoundary>
         </main>
         <Footer />
-        <GooeyToaster position="bottom-right" theme="dark" />
+        <GooeyToaster
+          position="top-center"
+          theme="dark"
+          preset="bouncy"
+          showProgress={true}
+          closeButton="top-right"
+          toastOptions={{
+            style: { zoom: 1.5 }
+          }}
+        />
       </div>
     </BrowserRouter>
   );
