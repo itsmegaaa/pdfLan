@@ -129,7 +129,8 @@ exports.ghostscriptPdfA = (inputPath, outputPath) => limit(async () => {
  * Ekstrak halaman PDF ke JPG menggunakan Poppler (pdftoppm)
  */
 exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async () => {
-  const binary = POPPLER_PATH ? path.join(POPPLER_PATH, 'pdftoppm') : 'pdftoppm';
+  const binaryName = os.platform() === 'win32' ? 'pdftoppm.exe' : 'pdftoppm';
+  const binary = POPPLER_PATH ? path.join(POPPLER_PATH, binaryName) : binaryName;
   const prefix = path.join(outputDir, 'page');
   
   const args = [
@@ -143,5 +144,12 @@ exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async ()
   await execa(binary, args, { stdio: 'ignore' });
   // pdftoppm otomatis menambahkan -01.jpg, -02.jpg dst. Ambil file-file tersebut.
   const files = await fs.readdir(outputDir);
-  return files.filter(f => f.endsWith('.jpg')).map(f => path.join(outputDir, f));
+  return files
+    .filter(f => f.endsWith('.jpg'))
+    .sort((a, b) => {
+      const numA = parseInt(a.replace(/[^\d]/g, ''), 10);
+      const numB = parseInt(b.replace(/[^\d]/g, ''), 10);
+      return numA - numB;
+    })
+    .map(f => path.join(outputDir, f));
 });

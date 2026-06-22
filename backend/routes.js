@@ -96,6 +96,9 @@ const fileSignatureCheck = async (req, res, next) => {
     }
     next();
   } catch (err) {
+    if (req.file && req.file.path) {
+      await fs.remove(req.file.path).catch(e => console.error("Failed to delete temp input file on signature check:", e));
+    }
     next(err);
   }
 };
@@ -204,10 +207,13 @@ router.post('/convert/html-to-pdf', asyncHandler(async (req, res) => {
     browserArgs.executablePath = process.env.CHROMIUM_PATH;
   }
   const browser = await puppeteer.launch(browserArgs);
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: 'networkidle2' });
-  await page.pdf({ path: outFile, format: 'A4', printBackground: true });
-  await browser.close();
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.pdf({ path: outFile, format: 'A4', printBackground: true });
+  } finally {
+    await browser.close();
+  }
   
   res.json({ success: true, fileId: path.basename(outFile), filename: 'webpage.pdf' });
 }));
@@ -230,7 +236,11 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
   await archive.finalize();
   
   // Tunggu stream selesai
-  await new Promise(resolve => output.on('close', resolve));
+  await new Promise((resolve, reject) => {
+    output.on('close', resolve);
+    output.on('error', reject);
+    archive.on('error', reject);
+  });
   await fs.remove(tempDir);
   
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
@@ -244,6 +254,11 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
   const ext = path.extname(req.file.originalname).toLowerCase();
   if (!['.jpg', '.jpeg', '.png'].includes(ext)) {
     throw new Error('Hanya file gambar JPG/PNG yang didukung');
+  }
+
+  // Khusus remove-background, limit file size ke 5MB untuk mencegah OOM
+  if (req.file.size > 5 * 1024 * 1024) {
+    throw new Error('Ukuran file untuk Hapus Background maksimal 5MB. Memori server terbatas.');
   }
 
   const { pathToFileURL, fileURLToPath } = require('url');
@@ -297,8 +312,7 @@ router.get('/download/:fileId', (req, res) => {
   
   res.download(filePath, filename || safeFileId, (err) => {
     if (err) console.error("Error downloading file:", err);
-    // Hapus file output segera setelah di-download
-    fs.remove(filePath).catch(e => console.error("Failed to delete output file:", e));
+    // File dihapus oleh cron job TTL, jangan dihapus instan untuk menghindari putus koneksi
   });
 });
 

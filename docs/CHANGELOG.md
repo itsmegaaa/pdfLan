@@ -6,6 +6,24 @@ Format didasarkan pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+## [1.0.7] - 2026-06-22
+### Added
+- **Global Error Boundary:** Mengintegrasikan `<ErrorBoundary>` di `App.jsx` untuk mencegah layar putih (crash) pada SPA ketika terjadi kesalahan internal pada komponen.
+- **Sign PDF Page Selection:** Menambahkan fitur untuk memilih spesifik halaman saat menambahkan tanda tangan digital di *Sign PDF*.
+- **Category URL Sync:** Filter kategori di beranda kini terhubung secara reaktif ke parameter URL (`/?cat=...`) menggunakan `useSearchParams`.
+
+### Changed
+- **Maintenance Mode:** Menyingkirkan fungsionalitas `Compare PDF`, `Repair PDF`, dan `OCR PDF` ke dalam mode *maintenance* (tampil redup dengan badge "DIPERBAIKI" di daftar menu bawah).
+
+### Fixed
+- **Backend Stream Hang:** Memperbaiki *unhandled promise rejection* saat proses kompresi ZIP gagal, menghindari *zombie request* yang membebani memori.
+- **Cron Job Crash:** Mengisolasi operasi *file system* di dalam *Cron Job* agar tidak menghentikan keseluruhan *loop* jika satu file terkunci.
+- **Memory Leaks (PDF.js & ObjectURL):** Memperbaiki penumpukan memori RAM pada browser dengan mengimplementasikan algoritma *LRU Cache* di `PdfPreview.jsx` serta manajemen `URL.revokeObjectURL` pada komponen konversi gambar.
+- **React State Bug:** Memperbaiki error saat drag-and-drop dan penghapusan array di `DropZone.jsx` dan `OrganizePdf.jsx` dengan sistem UUID yang stabil.
+- **Redact Coordinates:** Mengkalibrasi ulang posisi blok sensor di fitur *Redact PDF* berdasarkan rasio aktual DOM *width* melawan PDF *width*.
+- **Poppler Numeric Sort:** Mengurutkan hasil halaman *convert* dari `pdftoppm` secara numerik murni (Regex), bukan abjad.
+- **OOM Prevention:** Menambahkan batasan ukuran file *hard-limit* 5MB khusus untuk *route* Hapus Background agar tidak membuat server Node JS mogok (OOM).
+
 ## [1.0.6] - 2026-06-17
 ### Added
 - **Remove Background Tool:** Menambahkan fitur hapus latar belakang gambar secara lokal (*client-side & server-side processing* aman) menggunakan model AI dari `@imgly/background-removal-node`.

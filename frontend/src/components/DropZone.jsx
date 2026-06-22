@@ -104,7 +104,7 @@ export default function DropZone({
               </div>
               {onRemove && (
                 <button
-                  onClick={(e) => { e.stopPropagation(); onRemove(idx); }}
+                  onClick={(e) => { e.stopPropagation(); onRemove(file.id || idx); }}
                   className="text-[#8b90b0] hover:text-red-400 transition-colors p-1"
                   aria-label="Hapus file"
                 >

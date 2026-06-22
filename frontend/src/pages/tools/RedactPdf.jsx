@@ -40,7 +40,8 @@ export default function RedactPdf() {
     if (!drawing || !previewRect) return;
     setDrawing(false);
     if (previewRect.w > 5 && previewRect.h > 5) {
-      setAreas((prev) => [...prev, { page: currentPage, ...previewRect }]);
+      const rect = e.currentTarget.getBoundingClientRect();
+      setAreas((prev) => [...prev, { page: currentPage, ...previewRect, domW: rect.width, domH: rect.height }]);
     }
     setPreviewRect(null);
     setStartPos(null);

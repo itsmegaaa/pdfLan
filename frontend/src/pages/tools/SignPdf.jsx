@@ -12,6 +12,7 @@ export default function SignPdf() {
   const [typedName, setTypedName] = useState('');
   const [uploadedImg, setUploadedImg] = useState(null);
   const [position, setPosition] = useState({ x: 50, y: 50 }); // % from top-left
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     if (mode === 'draw' && canvasRef.current) {
@@ -20,6 +21,11 @@ export default function SignPdf() {
         penColor: '#ffffff',
       });
     }
+    return () => {
+      if (padRef.current) {
+        padRef.current.off();
+      }
+    };
   }, [mode]);
 
   const clearPad = () => padRef.current?.clear();
@@ -57,7 +63,7 @@ export default function SignPdf() {
       setProgress(50);
       const pdfBytes = await files[0].arrayBuffer();
       const doc = await PDFDocument.load(pdfBytes);
-      const page = doc.getPages()[0];
+      const page = doc.getPages()[pageNumber - 1] || doc.getPages()[0];
       const { width, height } = page.getSize();
       const img = await doc.embedPng(imgBytes);
       const sigW = 160, sigH = 60;
@@ -119,7 +125,13 @@ export default function SignPdf() {
               className="w-full text-sm text-[#8b90b0]" />
           )}
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <label className="block text-sm text-[#8b90b0] mb-1">Halaman</label>
+              <input type="number" min={1} value={pageNumber}
+                onChange={(e) => setPageNumber(Number(e.target.value))}
+                className="w-full px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
+            </div>
             <div>
               <label className="block text-sm text-[#8b90b0] mb-1">Posisi X ({position.x}%)</label>
               <input type="range" min={0} max={80} value={position.x}

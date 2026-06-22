@@ -52,6 +52,25 @@ export default function JpgToPdf() {
     }
   };
 
+  const removeItem = (id) => {
+    setItems((p) => {
+      const removed = p.find(x => x.id === id);
+      if (removed) URL.revokeObjectURL(removed.url);
+      return p.filter((x) => x.id !== id);
+    });
+  };
+
+  const handleReset = () => {
+    items.forEach(item => URL.revokeObjectURL(item.url));
+    reset();
+    setItems([]);
+  };
+
+  // Cleanup object URLs on unmount
+  useEffect(() => {
+    return () => items.forEach(item => URL.revokeObjectURL(item.url));
+  }, []);
+
   const handleProcess = async () => {
     if (!items.length) return;
     try {
@@ -98,7 +117,7 @@ export default function JpgToPdf() {
           <button onClick={handleDownload} className="flex items-center gap-2 px-6 py-3 bg-[#e2001a] hover:bg-[#b8001a] text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-900/30">
             <Download className="w-4 h-4" /> Unduh {result.filename || 'File'}
           </button>
-          <button onClick={() => { reset(); setItems([]); }} className="flex items-center gap-2 px-6 py-3 bg-[#22263a] hover:bg-[#2d3150] text-white font-semibold rounded-xl transition-colors">
+          <button onClick={handleReset} className="flex items-center gap-2 px-6 py-3 bg-[#22263a] hover:bg-[#2d3150] text-white font-semibold rounded-xl transition-colors">
             <RefreshCw className="w-4 h-4" /> Proses File Lain
           </button>
         </div>
@@ -128,7 +147,7 @@ export default function JpgToPdf() {
         <p className="text-[#8b90b0]">Upload beberapa gambar dan gabungkan menjadi satu PDF. Drag untuk mengubah urutan.</p>
       </div>
 
-      <DropZone onFiles={addImages} accept={{ 'image/*': ['.jpg', '.jpeg', '.png', '.webp'] }} multiple={true} />
+      <DropZone onFiles={addImages} accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} />
 
       {items.length > 0 && (
         <div className="mt-6 space-y-4">
@@ -147,7 +166,7 @@ export default function JpgToPdf() {
             <SortableContext items={items.map((x) => x.id)} strategy={rectSortingStrategy}>
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
                 {items.map((item) => (
-                  <SortableImage key={item.id} item={item} onRemove={(id) => setItems((p) => p.filter((x) => x.id !== id))} />
+                  <SortableImage key={item.id} item={item} onRemove={removeItem} />
                 ))}
               </div>
             </SortableContext>

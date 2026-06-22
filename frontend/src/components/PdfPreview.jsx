@@ -7,6 +7,7 @@ import pdfWorker from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const documentCache = new Map();
+const MAX_CACHE_SIZE = 5;
 
 /**
  * Renders a single page of a PDF file onto a canvas.
@@ -29,8 +30,14 @@ export default function PdfPreview({ file, pageNumber = 1, scale = 1.0, classNam
       setLoading(true);
       setError(null);
       try {
-        let pdfPromise = documentCache.get(file);
-        if (!pdfPromise) {
+        let cacheEntry = documentCache.get(file);
+        if (!cacheEntry) {
+          if (documentCache.size >= MAX_CACHE_SIZE) {
+            const firstKey = documentCache.keys().next().value;
+            const oldTask = documentCache.get(firstKey);
+            documentCache.delete(firstKey);
+            oldTask.destroy().catch(() => {});
+          }
           let source;
           if (file instanceof File) {
             const buf = await file.arrayBuffer();
@@ -40,11 +47,11 @@ export default function PdfPreview({ file, pageNumber = 1, scale = 1.0, classNam
           } else {
             source = { url: file };
           }
-          pdfPromise = pdfjsLib.getDocument(source).promise;
-          documentCache.set(file, pdfPromise);
+          cacheEntry = pdfjsLib.getDocument(source);
+          documentCache.set(file, cacheEntry);
         }
 
-        const pdf = await pdfPromise;
+        const pdf = await cacheEntry.promise;
         const page = await pdf.getPage(pageNumber);
         const viewport = page.getViewport({ scale });
 

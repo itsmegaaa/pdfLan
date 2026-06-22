@@ -9,7 +9,7 @@ const useToolStore = create((set) => ({
 
   setFiles: (files) => set({ files, error: null, result: null }),
   addFiles: (newFiles) => set((state) => ({ files: [...state.files, ...newFiles] })),
-  removeFile: (index) => set((state) => ({ files: state.files.filter((_, i) => i !== index) })),
+  removeFile: (id) => set((state) => ({ files: state.files.filter((f, i) => (f.id ? f.id !== id : i !== id)) })),
   reorderFiles: (files) => set({ files }),
 
   startProcess: () => set({ isProcessing: true, progress: 0, error: null, result: null }),

@@ -1,11 +1,17 @@
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import ToolCard from '../components/ToolCard';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeCategory = searchParams.get('cat') || 'all';
   const [searchQuery, setSearchQuery] = useState('');
+
+  const setActiveCategory = (cat) => {
+    setSearchParams(cat === 'all' ? {} : { cat });
+  };
 
   const filtered = useMemo(() => {
     return TOOLS.filter((tool) => {

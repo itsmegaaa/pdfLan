@@ -36,3 +36,5 @@ backend/node_modules/
 frontend/dist/
 test.pdf
 release/
+bug.md
+rangkuman_bug.md

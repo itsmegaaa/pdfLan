@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
   timeout: 120000, // 2 menit untuk file besar
 });
 
@@ -53,20 +53,10 @@ export const apiUnlock = (file, password) =>
 export const apiOcr = (file, lang) =>
   api.post('/ocr', toFormData(file, { lang }));
 
-export const apiRepair = (file) =>
-  api.post('/repair', toFormData(file));
-
-export const apiCompare = (file1, file2) => {
-  const fd = new FormData();
-  fd.append('file1', file1);
-  fd.append('file2', file2);
-  return api.post('/compare', fd);
-};
-
 export const apiRemoveBackground = (file) =>
   api.post('/image/remove-background', toFormData(file));
 
 export const apiDownloadUrl = (fileId) =>
-  `${import.meta.env.VITE_API_BASE_URL || '/api'}/download/${fileId}`;
+  `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'}/download/${fileId}`;
 
 export default api;

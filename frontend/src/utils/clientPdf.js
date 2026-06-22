@@ -187,15 +187,17 @@ export async function redactPdf(file, areas) {
   const doc = await PDFDocument.load(bytes);
   const pages = doc.getPages();
 
-  areas.forEach(({ page, x, y, w, h }) => {
+  areas.forEach(({ page, x, y, w, h, domW, domH }) => {
     const p = pages[page - 1];
     if (!p) return;
-    const { height } = p.getSize();
+    const { width, height } = p.getSize();
+    const scaleX = domW ? width / domW : 1;
+    const scaleY = domH ? height / domH : 1;
     p.drawRectangle({
-      x,
-      y: height - y - h, // flip Y (PDF origin is bottom-left)
-      width: w,
-      height: h,
+      x: x * scaleX,
+      y: height - (y * scaleY) - (h * scaleY), // flip Y (PDF origin is bottom-left)
+      width: w * scaleX,
+      height: h * scaleY,
       color: rgb(0, 0, 0),
       opacity: 1,
     });

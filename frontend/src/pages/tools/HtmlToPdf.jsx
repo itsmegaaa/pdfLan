@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useToolStore from '../../store/useToolStore';
 import { CheckCircle, Download, RefreshCw } from 'lucide-react';
 import ProgressBar from '../../components/ProgressBar';
+import { apiHtmlToPdf, apiDownloadUrl } from '../../utils/api';
 
 export default function HtmlToPdf() {
   const { startProcess, setProgress, setResult, setError, isProcessing, progress, result, reset } = useToolStore();
@@ -12,16 +13,12 @@ export default function HtmlToPdf() {
     try {
       startProcess();
       setProgress(30);
-      const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
-      const res = await fetch(`${apiBase}/convert/html-to-pdf`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-      });
-      const data = await res.json();
+      const res = await apiHtmlToPdf(url);
+      const data = res.data;
       if (!data.success) throw new Error(data.message);
       setProgress(90);
       const finalFilename = data.filename || 'page.pdf';
-      setResult({ url: `${apiBase}/download/${data.fileId}?filename=${encodeURIComponent(finalFilename)}`, filename: finalFilename });
+      setResult({ url: `${apiDownloadUrl(data.fileId)}?filename=${encodeURIComponent(finalFilename)}`, filename: finalFilename });
     } catch (err) {
       setError(err.message || 'Gagal mengkonversi HTML. Pastikan Puppeteer berjalan.');
     }

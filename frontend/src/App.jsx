@@ -4,6 +4,7 @@ import 'goey-toast/styles.css';
 import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import useToolStore from './store/useToolStore';
 
 // Pages (lazy loaded)
@@ -28,11 +29,9 @@ const UnlockPdf = lazy(() => import('./pages/tools/UnlockPdf'));
 const ProtectPdf = lazy(() => import('./pages/tools/ProtectPdf'));
 const OrganizePdf = lazy(() => import('./pages/tools/OrganizePdf'));
 const PdfToPdfa = lazy(() => import('./pages/tools/PdfToPdfa'));
-const RepairPdf = lazy(() => import('./pages/tools/RepairPdf'));
 const PageNumbers = lazy(() => import('./pages/tools/PageNumbers'));
 
 const OcrPdf = lazy(() => import('./pages/tools/OcrPdf'));
-const ComparePdf = lazy(() => import('./pages/tools/ComparePdf'));
 const RedactPdf = lazy(() => import('./pages/tools/RedactPdf'));
 const CropPdf = lazy(() => import('./pages/tools/CropPdf'));
 const PdfForms = lazy(() => import('./pages/tools/PdfForms'));
@@ -85,40 +84,40 @@ export default function App() {
       <div className="min-h-screen flex flex-col bg-[#0f1117]">
         <Navbar />
         <main className="flex-1">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/merge-pdf" element={<MergePdf />} />
-              <Route path="/split-pdf" element={<SplitPdf />} />
-              <Route path="/compress-pdf" element={<CompressPdf />} />
-              <Route path="/pdf-to-word" element={<PdfToWord />} />
-              <Route path="/pdf-to-powerpoint" element={<PdfToPowerPoint />} />
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/merge-pdf" element={<MergePdf />} />
+                <Route path="/split-pdf" element={<SplitPdf />} />
+                <Route path="/compress-pdf" element={<CompressPdf />} />
+                <Route path="/pdf-to-word" element={<PdfToWord />} />
+                <Route path="/pdf-to-powerpoint" element={<PdfToPowerPoint />} />
 
-              <Route path="/word-to-pdf" element={<WordToPdf />} />
-              <Route path="/powerpoint-to-pdf" element={<PowerPointToPdf />} />
-              <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
-              <Route path="/edit-pdf" element={<EditPdf />} />
-              <Route path="/pdf-to-jpg" element={<PdfToJpg />} />
-              <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
-              <Route path="/sign-pdf" element={<SignPdf />} />
-              <Route path="/watermark-pdf" element={<WatermarkPdf />} />
-              <Route path="/rotate-pdf" element={<RotatePdf />} />
-              <Route path="/html-to-pdf" element={<HtmlToPdf />} />
-              <Route path="/unlock-pdf" element={<UnlockPdf />} />
-              <Route path="/protect-pdf" element={<ProtectPdf />} />
-              <Route path="/organize-pdf" element={<OrganizePdf />} />
-              <Route path="/pdf-to-pdfa" element={<PdfToPdfa />} />
-              <Route path="/repair-pdf" element={<RepairPdf />} />
-              <Route path="/page-numbers" element={<PageNumbers />} />
+                <Route path="/word-to-pdf" element={<WordToPdf />} />
+                <Route path="/powerpoint-to-pdf" element={<PowerPointToPdf />} />
+                <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
+                <Route path="/edit-pdf" element={<EditPdf />} />
+                <Route path="/pdf-to-jpg" element={<PdfToJpg />} />
+                <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
+                <Route path="/sign-pdf" element={<SignPdf />} />
+                <Route path="/watermark-pdf" element={<WatermarkPdf />} />
+                <Route path="/rotate-pdf" element={<RotatePdf />} />
+                <Route path="/html-to-pdf" element={<HtmlToPdf />} />
+                <Route path="/unlock-pdf" element={<UnlockPdf />} />
+                <Route path="/protect-pdf" element={<ProtectPdf />} />
+                <Route path="/organize-pdf" element={<OrganizePdf />} />
+                <Route path="/pdf-to-pdfa" element={<PdfToPdfa />} />
+                <Route path="/page-numbers" element={<PageNumbers />} />
 
-              <Route path="/ocr-pdf" element={<OcrPdf />} />
-              <Route path="/compare-pdf" element={<ComparePdf />} />
-              <Route path="/redact-pdf" element={<RedactPdf />} />
-              <Route path="/crop-pdf" element={<CropPdf />} />
-              <Route path="/pdf-forms" element={<PdfForms />} />
-              <Route path="/remove-background" element={<RemoveBackground />} />
-            </Routes>
-          </Suspense>
+                <Route path="/ocr-pdf" element={<OcrPdf />} />
+                <Route path="/redact-pdf" element={<RedactPdf />} />
+                <Route path="/crop-pdf" element={<CropPdf />} />
+                <Route path="/pdf-forms" element={<PdfForms />} />
+                <Route path="/remove-background" element={<RemoveBackground />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </main>
         <Footer />
         <GooeyToaster position="bottom-right" theme="dark" />

@@ -26,10 +26,9 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
 });
-app.use(limiter);
 
 // ── API Routes (MUST BE BEFORE STATIC/CATCH-ALL) ───────────────────
-app.use('/api', routes);
+app.use('/api', limiter, routes);
 
 // ── Frontend Static Files & SPA Catch-all ──────────────────────────
 const frontendDistPath = path.join(__dirname, '../frontend/dist');
@@ -56,7 +55,7 @@ app.use((err, req, res, next) => {
 });
 
 // ── Cron Job (Auto Cleanup) ────────────────────────────────────────
-const TTL_MINUTES = parseInt(process.env.FILE_TTL_MINUTES || '120', 10);
+const TTL_MINUTES = parseInt(process.env.FILE_TTL_MINUTES || '10', 10);
 
 cron.schedule('*/15 * * * *', async () => {
   console.log('[Cron] Menjalankan pembersihan file...');
@@ -69,10 +68,14 @@ cron.schedule('*/15 * * * *', async () => {
       for (const file of files) {
         if (file === '.gitkeep') continue;
         const filePath = path.join(dir, file);
-        const stats = await fs.stat(filePath);
-        if (now - stats.mtimeMs > maxAgeMs) {
-          await fs.remove(filePath);
-          console.log(`[Cron] Menghapus: ${file}`);
+        try {
+          const stats = await fs.stat(filePath);
+          if (now - stats.mtimeMs > maxAgeMs) {
+            await fs.remove(filePath);
+            console.log(`[Cron] Menghapus: ${file}`);
+          }
+        } catch (fileErr) {
+          console.error(`[Cron] Gagal menghapus ${filePath}:`, fileErr.message);
         }
       }
     } catch (err) {

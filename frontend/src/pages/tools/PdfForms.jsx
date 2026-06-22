@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { PDFDocument } from 'pdf-lib';
@@ -8,6 +8,11 @@ export default function PdfForms() {
   const files = useToolStore((s) => s.files);
   const [fields, setFields] = useState([]);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(false);
+    setFields([]);
+  }, [files]);
 
   const loadFields = async () => {
     if (!files[0]) return;

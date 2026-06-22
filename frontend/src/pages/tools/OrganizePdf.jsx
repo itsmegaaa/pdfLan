@@ -85,7 +85,7 @@ export default function OrganizePdf() {
       }
       setProgress(95);
       const blob = new Blob([await out.save()], { type: 'application/pdf' });
-      setResult({ blob, filename: files[0]? files[0].name : "organized.pdf" });
+      setResult({ blob, filename: file ? file.name : "organized.pdf" });
     } catch (err) {
       setError(err.message || 'Gagal mengorganisir PDF');
     }
