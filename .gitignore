@@ -39,3 +39,5 @@ release/
 bug.md
 rangkuman_bug.md
 .agents/
+.agent/
+CHANGELOG.md

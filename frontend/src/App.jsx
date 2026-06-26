@@ -31,6 +31,7 @@ const OrganizePdf = lazy(() => import('./pages/tools/OrganizePdf'));
 const PdfToPdfa = lazy(() => import('./pages/tools/PdfToPdfa'));
 const PageNumbers = lazy(() => import('./pages/tools/PageNumbers'));
 
+const ScanToPdf = lazy(() => import('./pages/tools/ScanToPdf'));
 const OcrPdf = lazy(() => import('./pages/tools/OcrPdf'));
 const RedactPdf = lazy(() => import('./pages/tools/RedactPdf'));
 const CropPdf = lazy(() => import('./pages/tools/CropPdf'));
@@ -142,6 +143,7 @@ export default function App() {
                 <Route path="/pdf-to-pdfa" element={<PdfToPdfa />} />
                 <Route path="/page-numbers" element={<PageNumbers />} />
 
+                <Route path="/scan-to-pdf" element={<ScanToPdf />} />
                 <Route path="/ocr-pdf" element={<OcrPdf />} />
                 <Route path="/redact-pdf" element={<RedactPdf />} />
                 <Route path="/crop-pdf" element={<CropPdf />} />

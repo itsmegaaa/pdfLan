@@ -6,7 +6,8 @@
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "cd backend && node index.js",
     "dev:lan": "concurrently \"cd frontend && npm run dev -- --host 0.0.0.0\" \"cd backend && node index.js\"",
-    "start:lan": "cd frontend && npm run build && cd ../backend && node index.js"
+    "start:lan": "cd frontend && npm run build && cd ../backend && node index.js",
+    "manager": "node tools/server-manager.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

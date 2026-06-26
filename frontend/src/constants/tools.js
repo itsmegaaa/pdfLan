@@ -278,6 +278,17 @@ export const TOOLS = [
     multiple: false,
     clientSide: false,
   },
+  {
+    id: "scan-to-pdf",
+    name: "Scan to PDF",
+    desc: "Perbaiki foto dokumen miring jadi PDF rapi seperti mesin scanner.",
+    icon: "📸",
+    category: "image",
+    route: "/scan-to-pdf",
+    accept: { "image/*": [".jpg", ".jpeg", ".png"] },
+    multiple: true,
+    clientSide: true,
+  },
 
   // ── UNDER MAINTENANCE ───────────────────────────────────────────────────
   {

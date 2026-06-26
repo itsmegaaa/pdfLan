@@ -135,13 +135,16 @@ exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async ()
   
   const args = [
     '-jpeg',
-    '-jpegopt', `quality=${quality}`,
     '-r', '150', // DPI
     inputPath,
     prefix
   ];
   
-  await execa(binary, args, { stdio: 'ignore' });
+  try {
+    await execa(binary, args, { stdio: 'pipe' });
+  } catch (error) {
+    throw new Error(`Gagal memproses PDF dengan pdftoppm. Pastikan PDF tidak dienkripsi/password dan tidak rusak. (Details: ${error.stderr || error.message})`);
+  }
   // pdftoppm otomatis menambahkan -01.jpg, -02.jpg dst. Ambil file-file tersebut.
   const files = await fs.readdir(outputDir);
   return files

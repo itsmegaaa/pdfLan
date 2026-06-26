@@ -20,7 +20,9 @@ function SortablePage({ page, onDelete, onRotate }) {
         <GripVertical className="w-3 h-3 text-white" />
       </div>
       <div className="p-2 flex-1 flex items-center justify-center">
-        <PdfPreview file={page.file} pageNumber={page.originalIndex + 1} scale={0.3} />
+        <div style={{ transform: `rotate(${page.rotation || 0}deg)`, transition: 'transform 0.3s ease' }}>
+          <PdfPreview file={page.file} pageNumber={page.originalIndex + 1} scale={0.3} />
+        </div>
       </div>
       <div className="flex items-center justify-between px-2 pb-2 mt-auto">
         <div className="flex flex-col truncate pr-2">
@@ -76,7 +78,7 @@ export default function EditPdf() {
   const handleDelete = (id) => setPages((p) => p.filter((x) => x.id !== id));
 
   const handleRotate = (id) =>
-    setPages((p) => p.map((x) => x.id === id ? { ...x, rotation: (x.rotation + 90) % 360 } : x));
+    setPages((p) => p.map((x) => x.id === id ? { ...x, rotation: x.rotation + 90 } : x));
 
   const handleProcess = async () => {
     if (!pages.length) return;
