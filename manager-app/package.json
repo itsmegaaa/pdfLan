@@ -1,0 +1,25 @@
+{
+  "name": "pdfvault-manager",
+  "version": "1.0.0",
+  "description": "Desktop Manager for PDFVault",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.pdfvault.manager",
+    "productName": "PDFVault Manager",
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    }
+  },
+  "dependencies": {
+    "sharp": "^0.35.2"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  }
+}

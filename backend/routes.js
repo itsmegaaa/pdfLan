@@ -1,8 +1,10 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs-extra');
+const crypto = require('crypto');
+const uuidv4 = crypto.randomUUID.bind(crypto);
+const fs = require('fs');
+const fsp = require('fs').promises;
 const { ZipArchive } = require('archiver');
 const puppeteer = require('puppeteer');
 const tesseract = require('tesseract.js');
@@ -62,7 +64,7 @@ const asyncHandler = (fn) => async (req, res, next) => {
     res.status(500).json({ success: false, message: err.message || 'Terjadi kesalahan internal server' });
   } finally {
     if (req.file && req.file.path) {
-      fs.remove(req.file.path).catch(e => console.error("Failed to delete temp input file:", e));
+      fsp.rm(req.file.path, { force: true }).catch(e => console.error("Failed to delete temp input file:", e));
     }
   }
 };
@@ -73,31 +75,31 @@ const fileSignatureCheck = async (req, res, next) => {
   try {
     const ext = path.extname(req.file.originalname).toLowerCase();
     const buffer = Buffer.alloc(4);
-    const fd = await fs.open(req.file.path, 'r');
-    await fs.read(fd, buffer, 0, 4, 0);
-    await fs.close(fd);
+    const fh = await fsp.open(req.file.path, 'r');
+    await fh.read(buffer, 0, 4, 0);
+    await fh.close();
     
     const hex = buffer.toString('hex').toUpperCase();
     
     // PDF magic number is %PDF (25504446)
     if (ext === '.pdf' && !hex.startsWith('25504446')) {
-      await fs.remove(req.file.path);
+      await fsp.rm(req.file.path, { force: true });
       return res.status(400).json({ success: false, message: 'File signature tidak valid (bukan PDF asli).' });
     }
     // JPEG magic numbers (FFD8FF)
     if ((ext === '.jpg' || ext === '.jpeg') && !hex.startsWith('FFD8FF')) {
-      await fs.remove(req.file.path);
+      await fsp.rm(req.file.path, { force: true });
       return res.status(400).json({ success: false, message: 'File signature tidak valid (bukan JPG asli).' });
     }
     // PNG magic numbers (89504E47)
     if (ext === '.png' && !hex.startsWith('89504E47')) {
-      await fs.remove(req.file.path);
+      await fsp.rm(req.file.path, { force: true });
       return res.status(400).json({ success: false, message: 'File signature tidak valid (bukan PNG asli).' });
     }
     next();
   } catch (err) {
     if (req.file && req.file.path) {
-      await fs.remove(req.file.path).catch(e => console.error("Failed to delete temp input file on signature check:", e));
+      await fsp.rm(req.file.path, { force: true }).catch(e => console.error("Failed to delete temp input file on signature check:", e));
     }
     next(err);
   }
@@ -110,7 +112,7 @@ const uploadMiddleware = [upload.single('file'), fileSignatureCheck];
 router.post('/convert/pdf-to-word', uploadMiddleware, asyncHandler(async (req, res) => {
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.docx`);
   const finalFile = await libreOfficeConvert(req.file.path, OUTPUT_DIR, 'docx:MS Word 2007 XML');
-  await fs.rename(finalFile, outFile);
+  await fsp.rename(finalFile, outFile);
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}.docx` });
 }));
@@ -118,7 +120,7 @@ router.post('/convert/pdf-to-word', uploadMiddleware, asyncHandler(async (req, r
 router.post('/convert/pdf-to-powerpoint', uploadMiddleware, asyncHandler(async (req, res) => {
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.pptx`);
   const finalFile = await libreOfficeConvert(req.file.path, OUTPUT_DIR, 'pptx:Impress MS PowerPoint 2007 XML');
-  await fs.rename(finalFile, outFile);
+  await fsp.rename(finalFile, outFile);
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}.pptx` });
 }));
@@ -128,7 +130,7 @@ router.post('/convert/pdf-to-powerpoint', uploadMiddleware, asyncHandler(async (
 router.post('/convert/word-to-pdf', uploadMiddleware, asyncHandler(async (req, res) => {
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.pdf`);
   const finalFile = await libreOfficeConvert(req.file.path, OUTPUT_DIR, 'pdf');
-  await fs.rename(finalFile, outFile);
+  await fsp.rename(finalFile, outFile);
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}.pdf` });
 }));
@@ -136,7 +138,7 @@ router.post('/convert/word-to-pdf', uploadMiddleware, asyncHandler(async (req, r
 router.post('/convert/ppt-to-pdf', uploadMiddleware, asyncHandler(async (req, res) => {
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.pdf`);
   const finalFile = await libreOfficeConvert(req.file.path, OUTPUT_DIR, 'pdf');
-  await fs.rename(finalFile, outFile);
+  await fsp.rename(finalFile, outFile);
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}.pdf` });
 }));
@@ -144,7 +146,7 @@ router.post('/convert/ppt-to-pdf', uploadMiddleware, asyncHandler(async (req, re
 router.post('/convert/excel-to-pdf', uploadMiddleware, asyncHandler(async (req, res) => {
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.pdf`);
   const finalFile = await libreOfficeConvert(req.file.path, OUTPUT_DIR, 'pdf');
-  await fs.rename(finalFile, outFile);
+  await fsp.rename(finalFile, outFile);
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}.pdf` });
 }));
@@ -193,7 +195,7 @@ router.post('/ocr', uploadMiddleware, asyncHandler(async (req, res) => {
   // OCR processing (currently just mock/placeholder processing for basic text extraction logic)
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}-ocr.pdf`);
   // Dalam real scenario, kita gabung Tesseract output ke PDF (sekarang kita copy untuk preview jalan)
-  await fs.copy(req.file.path, outFile);
+  await fsp.copyFile(req.file.path, outFile);
   res.json({ success: true, fileId: path.basename(outFile), filename: req.file.originalname });
 }));
 
@@ -220,7 +222,7 @@ router.post('/convert/html-to-pdf', asyncHandler(async (req, res) => {
 
 router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, res) => {
   const tempDir = path.join(OUTPUT_DIR, uuidv4());
-  await fs.ensureDir(tempDir);
+  await fsp.mkdir(tempDir);
   
   const jpgFiles = await popplerPdfToJpg(req.file.path, tempDir, 85);
   
@@ -241,7 +243,7 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
     output.on('error', reject);
     archive.on('error', reject);
   });
-  await fs.remove(tempDir);
+  await fsp.rm(tempDir, { recursive: true, force: true });
   
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(zipFile), filename: `${baseName}_images.zip` });
@@ -274,14 +276,14 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
   const customFetch = async (url, options) => {
     if (url.startsWith('file://')) {
       const filePath = fileURLToPath(url);
-      const data = await fs.readFile(filePath);
+      const data = await fsp.readFile(filePath);
       return new Response(data);
     }
     return fetch(url, options);
   };
 
   // Baca image sebagai Buffer dan bungkus dalam Blob beserta mimetype
-  const imageBuffer = await fs.readFile(req.file.path);
+  const imageBuffer = await fsp.readFile(req.file.path);
   const imageBlob = new Blob([imageBuffer], { type: req.file.mimetype });
 
   // Hapus background
@@ -294,7 +296,7 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
   const buffer = Buffer.from(await blob.arrayBuffer());
 
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.png`);
-  await fs.writeFile(outFile, buffer);
+  await fsp.writeFile(outFile, buffer);
 
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}-no-bg.png` });

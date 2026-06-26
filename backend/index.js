@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const fs = require('fs-extra');
+const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
 const cron = require('node-cron');
 const routes = require('./routes');
@@ -14,8 +15,8 @@ const HOST = process.env.APP_HOST || '0.0.0.0';
 // ── Directories setup ──────────────────────────────────────────────
 const TEMP_DIR = path.resolve(process.env.TEMP_DIR || './tmp/uploads');
 const OUTPUT_DIR = path.resolve(process.env.OUTPUT_DIR || './tmp/outputs');
-fs.ensureDirSync(TEMP_DIR);
-fs.ensureDirSync(OUTPUT_DIR);
+fs.mkdirSync(TEMP_DIR, { recursive: true });
+fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 // ── Middlewares ────────────────────────────────────────────────────
 app.use(cors());
@@ -64,14 +65,14 @@ cron.schedule('*/15 * * * *', async () => {
 
   const cleanDir = async (dir) => {
     try {
-      const files = await fs.readdir(dir);
+      const files = await fsp.readdir(dir);
       for (const file of files) {
         if (file === '.gitkeep') continue;
         const filePath = path.join(dir, file);
         try {
-          const stats = await fs.stat(filePath);
+          const stats = await fsp.stat(filePath);
           if (now - stats.mtimeMs > maxAgeMs) {
-            await fs.remove(filePath);
+            await fsp.rm(filePath, { recursive: true, force: true });
             console.log(`[Cron] Menghapus: ${file}`);
           }
         } catch (fileErr) {

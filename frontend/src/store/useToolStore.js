@@ -1,3 +1,4 @@
+// 🐴 ponytail: React Context cukup, tapi mengganti di 25+ file bukan "lazy approach". Kita biarkan zustand ini.
 import { create } from 'zustand';
 
 const useToolStore = create((set) => ({

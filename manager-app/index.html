@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PDFVault Server Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --panel-bg: rgba(30, 41, 59, 0.6);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --btn-start: linear-gradient(135deg, #10b981, #059669);
+      --btn-stop: linear-gradient(135deg, #ef4444, #dc2626);
+      --btn-restart: linear-gradient(135deg, #f59e0b, #d97706);
+      --btn-status: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #1e293b, #0f172a);
+      color: var(--text-main);
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .title-area h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 5px 0;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .title-area .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .status-container {
+      padding: 10px 16px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .status-indicator.online {
+      background: #10b981;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulse-green 2s infinite;
+    }
+
+    .status-indicator.offline {
+      background: #ef4444;
+      box-shadow: 0 0 12px #ef4444;
+    }
+
+    @keyframes pulse-green {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .status-text {
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: row;
+      gap: 25px;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .right-panel {
+      flex: 1.5;
+      display: flex;
+      flex-direction: column;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 10px 15px -3px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .logs-header {
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logs-header::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+    }
+
+    .logs {
+      padding: 15px 20px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .logs div { margin-bottom: 4px; }
+    .logs span.time { color: #64748b; margin-right: 8px; }
+    .logs span.msg { color: #e2e8f0; }
+
+    button {
+      position: relative;
+      padding: 14px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0));
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-start { background: var(--btn-start); }
+    .btn-stop { background: var(--btn-stop); }
+    .btn-restart { background: var(--btn-restart); }
+    .btn-status { background: var(--btn-status); }
+
+    .btn-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+  </style>
+</head>
+<body>
+  
+  <div class="header">
+    <div class="title-area">
+      <h1>PDFVault</h1>
+      <p class="subtitle">Server Manager & Control Panel</p>
+    </div>
+    <div class="status-container">
+      <div id="status-indicator" class="status-indicator"></div>
+      <div id="status-text" class="status-text">MEMERIKSA...</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="left-panel">
+      <button id="btn-start" class="btn-start">
+        <div class="btn-icon">▶️</div> Start Server
+      </button>
+      <button id="btn-stop" class="btn-stop">
+        <div class="btn-icon">⏹️</div> Stop Server
+      </button>
+      <button id="btn-restart" class="btn-restart">
+        <div class="btn-icon">🔄</div> Restart Server
+      </button>
+      <button id="btn-status" class="btn-status">
+        <div class="btn-icon">ℹ️</div> Lihat Status
+      </button>
+    </div>
+    
+    <div class="right-panel">
+      <div class="logs-header">Terminal Logs</div>
+      <div class="logs" id="logs">
+        <div><span class="time">[System]</span><span class="msg">Aplikasi siap digunakan.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>
