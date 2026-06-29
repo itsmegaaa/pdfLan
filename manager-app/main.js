@@ -31,7 +31,11 @@ app.on('window-all-closed', function () {
 });
 
 // IPC handlers for PM2 commands
-const projectDir = path.join(__dirname, '..');
+// When packaged as a portable exe, __dirname is in a Temp folder.
+// We must use PORTABLE_EXECUTABLE_DIR to get the folder where the .exe actually sits.
+const projectDir = process.env.PORTABLE_EXECUTABLE_DIR 
+  ? process.env.PORTABLE_EXECUTABLE_DIR 
+  : (app.isPackaged ? require('path').dirname(process.execPath) : path.join(__dirname, '..'));
 
 const executeCommand = (command, callback) => {
   exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
