@@ -355,9 +355,11 @@ export default function ScanToPdf() {
         }
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        useToolStore.setState({ result: { blob, filename: `scanned_docs_${Date.now()}.pdf` } });
+        const filename = `scanned_docs_${Date.now()}.pdf`;
+        downloadBlob(blob, filename);
+        toast.success(`${filename} berhasil diunduh!`);
       } else {
-        // JPEG format - export individually asynchronously
+        // JPEG format - export individually
         for (let idx = 0; idx < scannedPages.length; idx++) {
           const page = scannedPages[idx];
           await new Promise((resolve) => {
@@ -382,6 +384,7 @@ export default function ScanToPdf() {
             img.src = page.dataUrl;
           });
         }
+        toast.success(`${scannedPages.length} halaman JPEG berhasil diunduh!`);
       }
       setScannedPages([]);
     } catch (err) {

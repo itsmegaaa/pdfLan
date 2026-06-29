@@ -4,7 +4,7 @@ const path = require('path');
 const pLimitReq = require('p-limit');
 const pLimit = pLimitReq.default || pLimitReq;
 const os = require('os');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
 // Batasan konkurensi: maksimal 2 proses biner eksternal jalan bersamaan
 const limit = pLimit(2);

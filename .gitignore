@@ -41,3 +41,10 @@ rangkuman_bug.md
 .agents/
 .agent/
 CHANGELOG.md
+
+# Native Manager App
+*.exe
+
+# Electron Manager App
+manager-app/node_modules/
+manager-app/dist/
