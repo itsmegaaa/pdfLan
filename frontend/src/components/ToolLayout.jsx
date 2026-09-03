@@ -51,28 +51,47 @@ export default function ToolLayout({
   // ── Result screen ────────────────────────────────────────────────
   if (result) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center py-16 px-4 text-center">
-        <div className="w-20 h-20 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center mb-6 animate-bounce-once">
-          <CheckCircle className="w-10 h-10 text-green-400" />
+      <div className="max-w-2xl mx-auto py-12 px-4 text-center">
+        <div className="w-16 h-16 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-once">
+          <CheckCircle className="w-8 h-8 text-green-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Selesai! 🎉</h2>
-        <p className="text-[#8b90b0] mb-8">File siap diunduh.</p>
+        <h2 className="text-2xl font-bold text-white mb-1">Selesai! 🎉</h2>
+        <p className="text-sm text-[#8b90b0] mb-6">File Anda telah berhasil diproses dan siap diunduh.</p>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 px-6 py-3 bg-[#e2001a] hover:bg-[#b8001a] text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-900/30"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#e2001a] hover:bg-[#b8001a] text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-900/30"
           >
             <Download className="w-4 h-4" />
             Unduh {result.filename || 'File'}
           </button>
           <button
             onClick={reset}
-            className="flex items-center gap-2 px-6 py-3 bg-[#22263a] hover:bg-[#2d3150] text-white font-semibold rounded-xl transition-colors"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#22263a] hover:bg-[#2d3150] text-white font-semibold rounded-xl transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
-            Proses File Lain
+            Proses Ulang / Bersihkan
           </button>
+        </div>
+
+        {/* Next file quick dropzone */}
+        <div className="mt-8 pt-6 border-t border-[#2d3150]/60 text-left">
+          <p className="text-xs font-semibold text-[#8b90b0] uppercase tracking-wider mb-3 text-center">
+            Atau Drop / Masukkan File PDF Berikutnya:
+          </p>
+          <DropZone
+            onFiles={(newFiles) => {
+              newFiles.forEach(f => {
+                if (!f.id) f.id = Math.random().toString(36).substring(2, 9);
+              });
+              setFiles(multiple ? newFiles : newFiles);
+            }}
+            accept={accept}
+            multiple={multiple}
+            files={[]}
+            onRemove={removeFile}
+          />
         </div>
       </div>
     );

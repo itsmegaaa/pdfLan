@@ -111,6 +111,7 @@ export default function Navbar() {
                           <Link
                             key={tool.id}
                             to={tool.route}
+                            onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
                           >
                             <span className="text-sm">{tool.icon}</span>
@@ -130,6 +131,7 @@ export default function Navbar() {
                           <Link
                             key={tool.id}
                             to={tool.route}
+                            onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
                           >
                             <span className="text-sm">{tool.icon}</span>
@@ -149,6 +151,7 @@ export default function Navbar() {
                           <Link
                             key={tool.id}
                             to={tool.route}
+                            onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
                           >
                             <span className="text-sm">{tool.icon}</span>
@@ -169,6 +172,7 @@ export default function Navbar() {
                             <Link
                               key={tool.id}
                               to={tool.route}
+                              onClick={() => setToolsOpen(false)}
                               className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
                             >
                               <span className="text-sm">{tool.icon}</span>
