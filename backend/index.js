@@ -107,35 +107,31 @@ if (require.main === module) {
   const sslCertPath = process.env.SSL_CERT_PATH ? path.resolve(__dirname, process.env.SSL_CERT_PATH) : defaultCertPath;
 
   const hasSslFiles = fs.existsSync(sslKeyPath) && fs.existsSync(sslCertPath);
-  const isHttpsEnabled = process.env.USE_HTTPS === 'true' || (process.env.USE_HTTPS !== 'false' && hasSslFiles);
+  const HTTPS_PORT = parseInt(process.env.HTTPS_PORT || '3443', 10);
 
-  let server;
-  let protocol = 'http';
+  // 1. Jalankan HTTP Server Standar (Port 3000)
+  const httpServer = http.createServer(app);
+  httpServer.listen(PORT, HOST, () => {
+    console.log(`🚀 HTTP Server aktif di http://${HOST}:${PORT}`);
+    console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
+    console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
+  });
 
-  if (isHttpsEnabled && hasSslFiles) {
+  // 2. Jalankan HTTPS Server Bersamaan (Port 3443) jika sertifikat SSL tersedia
+  if (hasSslFiles) {
     try {
       const sslOptions = {
         key: fs.readFileSync(sslKeyPath),
         cert: fs.readFileSync(sslCertPath)
       };
-      server = https.createServer(sslOptions, app);
-      protocol = 'https';
+      const httpsServer = https.createServer(sslOptions, app);
+      httpsServer.listen(HTTPS_PORT, HOST, () => {
+        console.log(`🔒 HTTPS Server aktif di https://${HOST}:${HTTPS_PORT} (SSL Cert: ${path.basename(sslCertPath)})`);
+      });
     } catch (sslErr) {
-      console.warn('⚠️ Gagal memuat sertifikat SSL, fallback ke HTTP:', sslErr.message);
-      server = http.createServer(app);
+      console.warn('⚠️ Gagal menyalakan HTTPS listener:', sslErr.message);
     }
-  } else {
-    server = http.createServer(app);
   }
-
-  server.listen(PORT, HOST, () => {
-    console.log(`🚀 Server berjalan di ${protocol}://${HOST}:${PORT}`);
-    console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
-    console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
-    if (protocol === 'https') {
-      console.log(`🔒 SSL Aktif  (Cert: ${path.basename(sslCertPath)})`);
-    }
-  });
 }
 
 module.exports = app;
