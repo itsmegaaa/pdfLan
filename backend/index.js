@@ -107,30 +107,32 @@ if (require.main === module) {
   const sslCertPath = process.env.SSL_CERT_PATH ? path.resolve(__dirname, process.env.SSL_CERT_PATH) : defaultCertPath;
 
   const hasSslFiles = fs.existsSync(sslKeyPath) && fs.existsSync(sslCertPath);
-  const HTTPS_PORT = parseInt(process.env.HTTPS_PORT || '3443', 10);
+  const isHttps = process.env.USE_HTTPS === 'true' || (process.env.USE_HTTPS !== 'false' && hasSslFiles);
 
-  // 1. Jalankan HTTP Server Standar (Port 3000)
-  const httpServer = http.createServer(app);
-  httpServer.listen(PORT, HOST, () => {
-    console.log(`🚀 HTTP Server aktif di http://${HOST}:${PORT}`);
-    console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
-    console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
-  });
-
-  // 2. Jalankan HTTPS Server Bersamaan (Port 3443) jika sertifikat SSL tersedia
-  if (hasSslFiles) {
+  if (isHttps && hasSslFiles) {
     try {
       const sslOptions = {
         key: fs.readFileSync(sslKeyPath),
         cert: fs.readFileSync(sslCertPath)
       };
       const httpsServer = https.createServer(sslOptions, app);
-      httpsServer.listen(HTTPS_PORT, HOST, () => {
-        console.log(`🔒 HTTPS Server aktif di https://${HOST}:${HTTPS_PORT} (SSL Cert: ${path.basename(sslCertPath)})`);
+      httpsServer.listen(PORT, HOST, () => {
+        console.log(`🔒 HTTPS Server aktif di https://${HOST}:${PORT} (SSL Cert: ${path.basename(sslCertPath)})`);
+        console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
+        console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
       });
     } catch (sslErr) {
-      console.warn('⚠️ Gagal menyalakan HTTPS listener:', sslErr.message);
+      console.warn('⚠️ Gagal menyalakan HTTPS, fallback ke HTTP:', sslErr.message);
+      http.createServer(app).listen(PORT, HOST, () => {
+        console.log(`🚀 HTTP Server aktif di http://${HOST}:${PORT}`);
+      });
     }
+  } else {
+    http.createServer(app).listen(PORT, HOST, () => {
+      console.log(`🚀 HTTP Server aktif di http://${HOST}:${PORT}`);
+      console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
+      console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
+    });
   }
 }
 

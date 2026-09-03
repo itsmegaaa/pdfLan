@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FileText, Menu, X, ChevronDown, Sparkles, ShieldCheck, Coffee, ArrowRight } from 'lucide-react';
+import { FileText, Menu, X, ChevronDown, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
@@ -216,17 +216,6 @@ export default function Navbar() {
               <span>GitHub</span>
             </a>
 
-            {/* Donate / Support Button */}
-            <a
-              href="https://tako.id/itsmega"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-gradient-to-r from-[#e2001a] to-[#c70017] hover:from-[#f3001c] hover:to-[#db001a] shadow-md shadow-red-950/40 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <Coffee className="w-3.5 h-3.5" />
-              <span>Support</span>
-            </a>
-
           </div>
 
           {/* Mobile hamburger button */}
@@ -307,15 +296,6 @@ export default function Navbar() {
             >
               <GithubIcon className="w-4 h-4" />
               <span>GitHub Repository</span>
-            </a>
-            <a
-              href="https://tako.id/itsmega"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-red-600 to-rose-600 shadow-md"
-            >
-              <Coffee className="w-4 h-4" />
-              <span>Support & Donasi (Tako.id)</span>
             </a>
           </div>
 
