@@ -2,105 +2,99 @@
 
 ## [1.0.8] - 2026-06-29
 ### Added
-- **Scan to PDF (Smart Scanner):** Fitur pemindai dokumen cerdas langsung dari browser! Dilengkapi algoritma OpenCV.js buat:
-  - Deteksi sudut kertas/dokumen otomatis (*auto edge detection*).
-  - Koreksi kemiringan perspektif (*perspective dewarping*) dengan kaca pembesar (*magnifier UI*) yang presisi.
-  - Berbagai filter dokumen: Hitam-Putih tajam (*B&W threshold*), Abu-abu (*Grayscale*), serta pengaturan *Brightness* & *Contrast*.
-  - *Multi-Page Scanning*: Upload & scan banyak lembar sekaligus, atur ulang urutan halaman di galeri, dan simpan jadi satu PDF atau ZIP JPEG beresolusi tinggi.
-  - *Auto-Enhance & Smart Rotation*: Penajaman teks otomatis (*unsharp mask*) dan deteksi orientasi otomatis.
-- **PDFVault Manager (Desktop App):** Dibuatin aplikasi kontrol server bawaan Windows (`ManagerApp.cs` / `PDFVault_Manager_v5.exe`) dan Electron. Sekarang bisa nyalain, matiin, restart server, intip *live log*, dan mantau RAM/Disk/status alat (*LibreOffice, Ghostscript, QPDF, Poppler*) cukup dengan sekali klik tanpa buka terminal.
-- **Dukungan Docker Penuh:** Sekarang sudah ada `Dockerfile` dan `docker-compose.yml` lengkap. Cukup jalankan `docker compose up -d --build`, semua *dependency* langsung siap tanpa perlu install manual di OS host.
-- **Indikator Upload Realtime:** Semua halaman konversi & kompresi sekarang punya *progress bar* yang nampilin progres upload file dalam ukuran MB dan persentase yang akurat.
-- **Admin & Diagnostics API:** Endpoint baru `/api/admin` dengan proteksi PIN untuk memantau metrik performa, beban server, dan tombol bersih-bersih sampah secara manual.
-- **Komponen Advanced Uploader:** Modul baru pengunggah file dengan dukungan *chunked/resumable upload* untuk menangani file dokumen berukuran besar.
+- **Scan to PDF (Smart Document Scanner):** In-browser smart scanner powered by OpenCV.js featuring:
+  - Automatic paper edge and contour detection (*auto edge detection*).
+  - Perspective correction and dewarping with an interactive magnifier UI for millimeter-accurate corner adjustments.
+  - Document filters: Sharp Black & White (with adjustable threshold slider), Grayscale, Brightness, and Contrast controls.
+  - Multi-Page Scanning & Gallery: Upload or scan multiple sheets into a queue, reorder pages, and export as a unified PDF or high-resolution JPEG ZIP package.
+  - Auto-Enhance & Smart Rotation: Automatic text sharpening (unsharp masking) and portrait/landscape orientation detection.
+- **PDFVault Server Manager (Desktop GUI):** Native Windows desktop manager (`ManagerApp.cs` / executable) and Electron app. Manage server services (Start, Stop, Restart), view live streaming logs, monitor CPU/RAM/Disk metrics, and check external binary health (LibreOffice, Ghostscript, QPDF, Poppler) with zero terminal interaction.
+- **Complete Docker Support:** Comprehensive `Dockerfile` and `docker-compose.yml` bundling all required binary dependencies for effortless deployment across Linux, macOS, and Windows.
+- **Real-Time Upload Progress Tracker:** Upload progress bars displaying uploaded megabytes (MB) and accurate percentage indicators across all tools.
+- **Admin Diagnostics API:** New protected `/api/admin` endpoint for system health inspection, throughput metrics, and manual temporary storage cleanup.
+- **Advanced Uploader Component:** Chunked and resumable upload architecture for handling large document uploads smoothly.
 
 ### Security
-- **SSRF Guard Protection:** Validasi keamanan ketat untuk fitur *HTML to PDF*. Melarang request ke localhost, private IP (*RFC 1918/4193*), dan memblokir upaya *request interception* pada sub-resource halaman web.
+- **SSRF Guard Protection:** Strict security validation on HTML-to-PDF URL conversions. Blocks access to private IP ranges (RFC 1918/4193), localhost, and link-local addresses, with active sub-resource request interception.
 
 ### Fixed
-- **Ekstensi File Multer:** Memperbaiki bug penyimpanan file upload agar ekstensi asli file tidak terpotong, mencegah error pembacaan tipe file oleh alat CLI *backend*.
-- **Bug Tampilan Ukuran File (NaN):** Memperbaiki fungsi `formatFileSize` agar tidak memunculkan teks `NaN undefined` saat ukuran file belum siap.
-- **Respons Interceptor Axios:** Memperbaiki error handling di frontend agar kode status HTTP (seperti 401 saat input PIN salah) tetap bisa dibaca oleh halaman admin.
+- **Multer File Extension Handling:** Fixed storage pathing so uploaded files preserve original file extensions, preventing binary CLI execution failures.
+- **File Size Formatter (NaN Glitch):** Guarded `formatFileSize` against undefined values to eliminate `NaN undefined` visual bugs.
+- **Axios Response Interceptor:** Restored error response propagation so HTTP error status codes (e.g. 401 for unauthorized admin PIN) are correctly caught by the frontend.
 
 ## [1.0.7] - 2026-06-22
 ### Added
-- **Anti Layar Putih (Error Boundary):** Udah dipasang `<ErrorBoundary>` di `App.jsx`. Jadi kalau ada komponen yang error, webnya nggak bakal nge-blank putih lagi, tapi munculin pesan error yang rapi.
-- **Pilih Halaman Sign PDF:** Sekarang fitur *Sign PDF* udah bisa milih mau nempel tanda tangan di halaman berapa. Nggak cuma mentok di halaman pertama doang.
-- **Filter Kategori Beranda:** Milih kategori di halaman depan sekarang langsung nyambung ke URL (`/?cat=...`), jadi gampang kalau mau nge-share link kategori spesifik.
+- **Error Boundary:** Added `<ErrorBoundary>` wrapper in `App.jsx` to prevent white-screen crashes on unexpected component errors and present clean recovery options.
+- **Sign PDF Page Selector:** Users can now select any specific page to place digital signatures rather than being restricted to the first page.
+- **Home Category Deep-Linking:** Homepage category filters now synchronize with URL query parameters (`/?cat=...`), making category URLs shareable.
 
 ### Changed
-- **Maintenance:** Buat sementara waktu, fitur `Compare PDF`, `Repair PDF`, dan `OCR PDF`.
+- **Maintenance Notice:** Temporarily suspended `Compare PDF`, `Repair PDF`, and `OCR PDF` for maintenance.
 
 ### Fixed
-- **Server Gantung Pas ZIP:** Ngebenerin *bug* di mana proses kompresi ZIP yang gagal malah bikin *server* macet (zombie request) karena *promise*-nya nggak di-handle.
-- **Auto-Delete Macet:** Ngebenerin *script cron job* yang suka berhenti jalan kalau ada satu file yang nyangkut/terkunci. Sekarang operasi file-nya udah dibungkus *try-catch* satu per satu.
-- **Browser Lemot/Makan RAM (Memory Leak):** 
-  - Udah nerapin *LRU Cache* di `PdfPreview.jsx` biar PDF.js nggak makan RAM terus-terusan.
-  - Gambar *preview* di *JpgToPdf* sekarang otomatis dibersihin dari memori (`revokeObjectURL`) kalau udah nggak dipakai.
-- **Drag & Drop Error:** Ngebenerin *bug* hapus file yang suka ngaco pas lagi *drag-and-drop* di `DropZone.jsx` sama `OrganizePdf.jsx`. Sekarang udah pakai ID unik (UUID) biar stabil.
-- **Sensor PDF Meleset:** Koordinat kotak hitam di fitur *Redact PDF* udah dikalibrasi ulang. Sekarang kotak sensornya bakal pas banget di posisi mouse, nggak meleset lagi gara-gara beda resolusi layar.
-- **Halaman PDF to JPG Acak-acakan:** Benerin urutan halaman hasil `pdftoppm` yang berantakan karena disortir pakai abjad (10 muncul sebelum 2). Sekarang udah pakai *numeric sort* murni.
-- **Server Mati Kehabisan RAM (OOM):** Ngasih batesan maksimal ukuran file 5MB khusus buat fitur *Hapus Background*, soalnya model AI-nya boros banget dan suka bikin *server Node.js* mati kalau ukuran filenya kegedean.
+- **ZIP Hang on Failure:** Resolved a zombie request condition where failed ZIP compression left backend promises unhandled.
+- **Auto-Cleanup Exception Handling:** Wrapped file deletion cron operations in individual `try-catch` blocks to prevent locked files from halting the cleanup daemon.
+- **PDF.js Memory Leaks:** Implemented an LRU cache in `PdfPreview.jsx` to cap PDF.js canvas memory consumption, and ensured object URLs are immediately revoked in `JpgToPdf`.
+- **Drag-and-Drop ID Mapping:** Fixed file removal glitch during drag-and-drop reordering in `DropZone.jsx` and `OrganizePdf.jsx` by assigning UUIDs to every item.
+- **Redact PDF Coordinate Calibration:** Calibrated sensor box mouse coordinates to ensure black-out redactions match cursor positions across varying display DPI scales.
+- **PDF-to-JPG Page Ordering:** Fixed lexicographical page sorting bug from `pdftoppm` output (where page 10 appeared before page 2) with pure numeric sorting.
+- **Out-of-Memory Protection (Background Removal):** Imposed a 5MB upload limit on the AI background removal tool to prevent Node.js process exhaustion.
 
 ## [1.0.6] - 2026-06-17
 ### Added
-- **Fitur Hapus Background:** Nambahin alat ajaib buat hapus background gambar. Prosesnya pakai AI dari `@imgly/background-removal-node` dan diproses secara aman.
-- **Notifikasi Keren (Toast):** Ganti tampilan *alert error* jadul pakai library `goey-toast`. Sekarang notifikasi kalau berhasil, gagal, atau lagi loading jadi jauh lebih mulus dan interaktif.
-- **Kategori Image Tools:** Bikin kategori baru "Image Tools" di menu samping dan beranda biar fiturnya gampang dicari.
+- **AI Background Removal:** Integrated local image background removal powered by `@imgly/background-removal-node` without external cloud dependencies.
+- **Modern Toast Notifications:** Replaced legacy alerts with `goey-toast` for smooth animated notifications during async tasks.
+- **Image Tools Category:** Added dedicated "Image Tools" category on the navigation bar and home page.
 
 ### Fixed
-- **Pathing AI Imgly Windows:** Benerin error `ENOENT` dan `Unsupported protocol: c:` pas Node.js nyoba muat model AI statis (`.wasm` dan `.onnx`) di Windows. Udah diakalin pakai *custom fetch* dan URL lokal biar kebaca sempurna.
+- **Windows Pathing for AI Models:** Fixed `ENOENT` and `Unsupported protocol: c:` errors when loading local ONNX and WASM runtime assets on Windows.
 
 ## [1.0.5] - 2026-06-17
 ### Fixed
-- **Ghostscript Windows:** Ngebenerin error CMD yang bilang `'gs' tidak dikenali`. Ternyata Windows pakainya `gswin64c`. Udah dibikin deteksi otomatis OS-nya, jadi sekarang langsung nyambung.
-- **Server Bentrok & PM2 Crash:** Benerin *crash loop* di PM2 gara-gara typo pas ngimport `p-limit`. Sekalian matiin sisa-sisa proses *server* lama yang diam-diam ngerebut *request* PDF dari belakang.
+- **Ghostscript Binary Detection on Windows:** Added automatic detection for `gswin64c` on Windows environments instead of generic `gs`.
+- **PM2 Port Conflict & Crash Loop:** Fixed crash loop caused by `p-limit` import syntax and terminated orphaned background processes.
 
 ## [1.0.4] - 2026-06-15
 ### Added
-- **Panduan Install Tools:** Nambahin *guide* gampang buat install LibreOffice, Ghostscript, dkk pakai `winget` atau `choco` langsung di README.
-- **Sistem Antrean (Limit):** Biar CPU nggak *hang* pas lagi banyak orang kompres PDF barengan, dibikin sistem antrean pakai `p-limit`. Maksimal 2 proses gede yang jalan berbarengan.
-- **Sapu Bersih File:** File hasil editan sama aslinya sekarang bakal langsung lenyap (*auto-delete*) secepat kilat abis selesai di-download. Nggak ada file yang numpuk.
+- **Prerequisites Setup Guide:** Added one-line installation guides for Chocolatey and Winget in README.
+- **Concurrency Rate Limiting:** Implemented task queuing with `p-limit` (maximum 2 heavy CLI processes concurrently) to protect CPU stability.
+- **Aggressive Auto-Cleanup:** Files are immediately wiped from server storage upon download completion.
 
 ### Changed
-- **Hemat RAM Server:** Output *log* dari LibreOffice/Ghostscript sengaja dimatiin (`stdio: 'ignore'`) pas *execa* jalan, biar RAM Node.js nggak kepenuhan nyimpen teks nggak penting.
+- **Server Memory Optimization:** Suppressed noisy stdout/stderr streams from LibreOffice and Ghostscript subprocesses (`stdio: 'ignore'`).
 
 ## [1.0.3] - 2026-06-15
 ### Added
-- **Jalan Diam-diam di Background:** Udah disediain *file `.bat`* khusus biar *server* bisa nyala di belakang layar pakai `pm2`. Nggak ada lagi layar *command prompt* hitam yang menuhin layar PC.
-- **Mode Server Lokal (LAN):** Ditambahin *script* NPM khusus buat nyalain mode *LAN*.
-- **Sekuriti Ekstensi Bodong:** Nambahin penjaga pintu masuk (*middleware*) buat ngecek beneran nggak sih filenya itu PDF/JPG/PNG? Mencegah orang nge-*bypass* upload ekstensi palsu.
-- **Pesan Error Rapi:** Pasang *error handler* di backend biar kalau ada kegagalan (misalnya upload file kegedean), responsnya tetep ngasih data JSON, bukan HTML jelek.
-- **Dokumentasi Panduan LAN:** Bikin contekan cara *setup* jaringan lokal.
+- **Background Execution:** Added Windows `.bat` scripts for seamless background execution via PM2.
+- **LAN Server Mode:** Dedicated npm scripts for host binding and LAN network operation.
+- **File Extension & MIME Validation:** Added strict multer middleware to block unauthorized file uploads.
+- **Structured Error Responses:** Unified JSON error payload responses across all endpoints.
+- **LAN Setup Documentation:** Created comprehensive local network deployment guide.
 
 ### Fixed
-- **Benerin Network Error:** Ubah setting `localhost` jadi `127.0.0.1` di *proxy* Vite buat ngehindarin masalah *ECONNREFUSED* gara-gara nge-*resolve* IPv6 di Node terbaru.
-- **API URL Dinamis:** Semua URL *frontend* yang tadinya di-*hardcode* narik ke `localhost:3001` udah dirombak jadi relatif (`/api`). Jadi kalau dibuka lewat HP/PC lain via WiFi, nggak bakal meleset nyari server.
-- **Handle Binari Ilang:** Kalau LibreOffice atau Ghostscript lupa di-*install*, *server* sekarang nggak bakal *crash*, tapi bakal ngasih tau pakai pesan error yang santun.
-- **Drag & Drop Nge-bug:** Fitur tarik ulur urutan file di `Merge PDF` kemaren macet. Udah dibenerin dengan nyamain *ID* file ke pustaka `dnd-kit`.
-- **Crash Render Halaman Banyak:** Cegah memori meledak pas buka *Edit PDF* atau *Organize PDF* buat file yang halamannya banyak. Udah pasang sistem *cache*, jadi PDF-nya cuma dimuat sekali, nggak dilooping berkali-kali.
+- **Vite Proxy Network Resolution:** Configured proxy targets to `127.0.0.1` to prevent Node.js IPv6 `ECONNREFUSED` issues.
+- **Dynamic API URLs:** Replaced hardcoded API URLs with relative paths (`/api`) for seamless multi-device LAN access.
+- **Graceful Missing Binary Handling:** Graceful error reporting if LibreOffice or Ghostscript are not installed on host.
+- **Multi-Page Render Cache:** Implemented caching in visual builders to prevent memory spikes on large PDF documents.
 
 ### Changed
-- **Rombak Split PDF:** Tampilan fitur potong PDF diganti total jadi *Visual Page Builder*. Sekarang kamu bisa langsung pilih/klik kotak-kotak halaman mana aja yang mau dipotong dari layar.
+- **Visual Page Builder:** Overhauled Split PDF into an interactive visual page grid.
 
 ## [1.0.2] - 2026-06-15
 ### Fixed
-- **Bebasin Blokir CORS:** Benerin error izin akses lintas-asal di backend. Sekarang akses dari *device* mana aja dilepas bebaskan (asal masih fase *development*).
-- **File Ketinggalan di Menu:** Ngebenerin *bug* aneh di mana file yang baru aja dimasukin ke *Merge PDF* tiba-tiba ikut nongol pas kita pindah menu ke *Split PDF*. Sekarang kalau pindah menu, *file*-nya otomatis dibersihin.
-- **Tampilan Daftar File Ilang:** Ngebenerin UI *ToolLayout* yang suka ngumpetin *list* file gara-gara *custom UI* tumpang tindih.
-- **Loading & Sukses UI:** Ngasih animasi layar *loading* dan layar "Selesai!" ke alat-alat yang desain antarmukanya dirakit secara *custom*.
-- **Konversi MS Office Gagal:** Benerin error `Write Code: 16` pas pakai LibreOffice. Sekarang konversi PDF ke format Office jalan lancar jaya.
+- **CORS Configuration:** Permissive CORS handling for local development and multi-device LAN clients.
+- **State Leak Across Routes:** Cleared tool state when switching between different tools.
+- **UI Layout Polishing:** Resolved component overlap issues in `ToolLayout.jsx`.
+- **Office Document Conversion:** Fixed `Write Code: 16` error during LibreOffice conversions.
 
 ### Changed
-- **Pertahanin Nama Asli:** Nama file yang udah selesai diproses bakalan tetep pakai nama aslinya, nggak pakai nama aneh bawaan sistem lagi.
-- **Rombak Tampilan Rotate PDF:** Desain ulang menu *Rotate PDF* biar lebih enak dilihat dan dipakai.
-- **Edit PDF Ala Visual:** Halaman *Edit PDF* diubah gaya tampilannya jadi kayak meja kerja visual buat coret-coret/nempelin halaman.
+- **Original Filename Preservation:** Processed files now retain their original filename on download.
+- **Redesigned Rotate & Edit PDF:** Enhanced visual editing workspace and rotation controls.
 
 ## [1.0.0] - 2026-06-15
 ### Added
-- **Rilis Perdana:** Akhirnya proyek **pdfLan** (sebelumnya PDFVault) lahir ke dunia! Stack-nya pakai React/Vite buat depan, Node/Express buat mesin belakangnya.
-- **Fitur PDF Jalur Cepat (Client-Side):** Manipulasi PDF kayak gabung, misah, sampai putar halaman diproses 100% langsung di memori browser pakai `pdf-lib`. Jauh lebih ngebut.
-- **Fitur PDF Jalur Berat (Server-Side):** Fitur yang butuh tenaga kuda kayak *Compress* atau ubah format ke Ms. Office dikerjain *server* dari belakang layar lewat *binaries* sistem.
-- **Tukang Sapu Otomatis:** Bikin *cron job* yang diem-diem ngebersihin file sampah di folder `tmp/` tiap 15 menit. Nggak bakal bikin disk PC bengkak.
-- **Command Santai:** Cukup satu kali pencet `npm start`, *frontend* sama *backend* langsung jalan dua-duanya berkat `concurrently`. Nggak perlu repot nyalain satu per satu.
-- **Modal Dasar:** Udah disiapin *file* penting kayak `.env`, abaikan Git (`.gitignore`), sama rakitan *Tailwind* biar UI-nya cakep sejak awal.
+- **Initial Release:** Launched pdfLan (PDFVault) built with React/Vite frontend and Node.js/Express backend.
+- **Client-Side PDF Processing:** In-memory PDF operations (merge, split, rotate, organize) via `pdf-lib`.
+- **Server-Side CLI Engine:** Heavy-duty conversions and compression powered by Ghostscript, LibreOffice, and Poppler.
+- **Automated Temp File Cleanup:** Periodic cleanup cron removing temporary files from `tmp/` every 15 minutes.
+- **Unified Startup:** Simultaneous frontend and backend orchestration using `concurrently`.

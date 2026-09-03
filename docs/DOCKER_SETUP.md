@@ -1,51 +1,51 @@
-# 🐳 Panduan Deployment PDFVault dengan Docker
+# 🐳 PDFVault Docker Deployment Guide
 
-Docker adalah cara termudah dan paling portabel untuk menjalankan PDFVault. Dengan satu perintah, seluruh stack (Node.js, LibreOffice, Ghostscript, QPDF, Poppler, Chromium) sudah berjalan tanpa perlu instalasi manual apapun.
+Docker is the easiest and most portable way to run PDFVault. With a single command, the entire stack (Node.js, LibreOffice, Ghostscript, QPDF, Poppler, Chromium) is provisioned and running without any manual software installations on the host system.
 
-## Prasyarat
+## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows / macOS)  
 - Docker Engine 24+ & Docker Compose v2+ (Linux)
 
 ---
 
-## 🚀 Quick Start (3 Langkah)
+## 🚀 Quick Start (3 Steps)
 
-### Langkah 1 — Clone Repository
+### Step 1 — Clone the Repository
 ```bash
 git clone https://github.com/itsmegaaa/pdfLan.git
 cd pdfLan
 ```
 
-### Langkah 2 — (Opsional) Konfigurasi Kustom
-Salin template environment Docker:
+### Step 2 — (Optional) Custom Configuration
+Copy the Docker environment template:
 ```bash
 cp .env.docker .env
 ```
-Edit file `.env` jika ingin mengubah port atau setting lainnya.
+Edit `.env` if you want to change the port or other operational settings.
 
-### Langkah 3 — Build & Jalankan
+### Step 3 — Build & Start
 ```bash
 docker compose up -d --build
 ```
 
-Proses build pertama memerlukan waktu **5–15 menit** karena mengunduh dan menginstal LibreOffice, Ghostscript, dan tool lainnya. Build berikutnya jauh lebih cepat karena layer sudah di-cache.
+The initial build takes **5–15 minutes** as it downloads and installs all underlying binaries (LibreOffice, Ghostscript, Chromium, Poppler, etc.). Subsequent builds will be near-instantaneous thanks to Docker layer caching.
 
-Setelah selesai, buka browser dan akses:
+Once finished, open your browser and navigate to:
 ```
 http://localhost:3000
 ```
 
 ---
 
-## 🌐 Akses dari PC Lain di LAN
+## 🌐 Access from Other Devices on the LAN
 
-Setelah container berjalan, PC staf lain di jaringan yang sama dapat mengakses:
+Once the container is running, other client machines on the same local network can access the application:
 ```
-http://<IP_PC_SERVER>:3000
+http://<HOST_SERVER_IP>:3000
 ```
 
-Untuk menemukan IP PC Server:
+To find the Host Server's local IP address:
 ```bash
 # Windows
 ipconfig
@@ -55,77 +55,77 @@ ip addr show | grep "inet "
 ```
 
 > [!WARNING]
-> **Jangan** mengekspos port ini ke internet publik. PDFVault dirancang untuk jaringan LAN internal.
+> **Security Notice**: Do not expose this port directly to the public internet. PDFVault is designed for private local network use.
 
 ---
 
-## 📋 Perintah Berguna
+## 📋 Useful Commands
 
-| Perintah | Fungsi |
+| Command | Description |
 |---|---|
-| `docker compose up -d --build` | Build ulang & jalankan di background |
-| `docker compose up -d` | Jalankan (tanpa build ulang) |
-| `docker compose down` | Hentikan & hapus container |
-| `docker compose logs -f` | Lihat log real-time |
-| `docker compose restart pdfvault` | Restart service |
-| `docker compose ps` | Status container |
+| `docker compose up -d --build` | Rebuild and run in the background |
+| `docker compose up -d` | Start services (without rebuilding) |
+| `docker compose down` | Stop and remove containers |
+| `docker compose logs -f` | View real-time container logs |
+| `docker compose restart pdfvault` | Restart the application container |
+| `docker compose ps` | Check container status |
 
 ---
 
-## ⚙️ Konfigurasi (`docker-compose.yml`)
+## ⚙️ Configuration (`docker-compose.yml`)
 
-Semua konfigurasi dapat diubah via file `.env` di root project:
+All settings can be customized via `.env` in the project root:
 
-| Variabel | Default | Keterangan |
+| Variable | Default | Description |
 |---|---|---|
-| `APP_PORT` | `3000` | Port yang di-expose ke host |
-| `FILE_TTL_MINUTES` | `120` | Waktu simpan file temp (menit) |
-| `MAX_FILE_SIZE_MB` | `50` | Batas ukuran file upload (MB) |
-| `CORS_ORIGIN` | `*` | CORS origin (batasi jika perlu) |
+| `APP_PORT` | `3000` | Port exposed to the host machine |
+| `FILE_TTL_MINUTES` | `120` | Retention duration for temp files (minutes) |
+| `MAX_FILE_SIZE_MB` | `50` | Maximum upload file size limit (MB) |
+| `CORS_ORIGIN` | `*` | Allowed CORS origin |
 
 ---
 
-## 📦 Isi Image Docker
+## 📦 Docker Image Contents
 
-Image ini berbasis `node:20-slim` (Debian) dan sudah ter-bundle dengan:
+The image is based on `node:20-slim` (Debian) and comes pre-bundled with:
 
-| Tool | Versi | Kegunaan |
+| Tool | Version | Purpose |
 |---|---|---|
-| **Node.js** | 20 LTS | Runtime server |
-| **LibreOffice** | Latest stable | Konversi Office ↔ PDF |
-| **Ghostscript** | Latest stable | Kompresi & PDF/A |
-| **QPDF** | Latest stable | Enkripsi & dekripsi PDF |
-| **Poppler** (`pdftoppm`) | Latest stable | PDF → JPG |
-| **Chromium** | Latest stable | HTML → PDF (Puppeteer) |
+| **Node.js** | 20 LTS | Server runtime |
+| **LibreOffice** | Latest stable | Office ↔ PDF conversion |
+| **Ghostscript** | Latest stable | Compression & PDF/A |
+| **QPDF** | Latest stable | PDF encryption & unlocking |
+| **Poppler** (`pdftoppm`) | Latest stable | PDF → JPG extraction |
+| **Chromium** | Latest stable | HTML → PDF conversion (Puppeteer) |
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Container langsung berhenti / exit
+### Container stops immediately / exits with error
 ```bash
-# Lihat log untuk detail error
+# Inspect container logs for details
 docker compose logs pdfvault
 ```
 
-### LibreOffice gagal mengkonversi
-Pastikan container memiliki cukup **memory (minimal 1GB)**. LibreOffice membutuhkan banyak RAM.
+### LibreOffice conversion failure
+Ensure the container has sufficient **memory (minimum 1GB RAM allocated)**. LibreOffice requires enough memory for headless document processing.
 ```bash
-# Cek penggunaan resource
+# Check resource usage
 docker stats pdfvault
 ```
 
-### Port 3000 sudah dipakai
-Edit file `.env` dan ubah `APP_PORT` ke port lain, misalnya `8080`:
-```
+### Port 3000 is already in use
+Edit your `.env` file and change `APP_PORT` to another available port (e.g. `8080`):
+```env
 APP_PORT=8080
 ```
-Lalu jalankan ulang:
+Then restart the stack:
 ```bash
 docker compose down && docker compose up -d
 ```
 
-### Reset data temp
+### Resetting temporary files and volumes
 ```bash
 docker compose down
 docker volume rm pdflan_pdfvault_tmp
