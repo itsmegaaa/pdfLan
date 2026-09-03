@@ -35,6 +35,10 @@ build/
 tmp/
 backend/data/
 backend/qpdf/
+backend/certs/
+*.pem
+*.key
+*.crt
 *metrics.json
 frontend/node_modules/
 backend/node_modules/

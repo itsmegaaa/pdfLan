@@ -1,10 +1,11 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 require('dotenv').config();
+const fs = require('fs');
+const fsp = require('fs').promises;
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const fs = require('fs');
-const fsp = require('fs').promises;
-const path = require('path');
 const cron = require('node-cron');
 const routes = require('./routes');
 const adminRoutes = require('./adminRoutes');
@@ -97,10 +98,43 @@ if (process.env.NODE_ENV !== 'test') {
 
 // ── Start Server ───────────────────────────────────────────────────
 if (require.main === module) {
-  app.listen(PORT, HOST, () => {
-    console.log(`🚀 Server berjalan di http://${HOST}:${PORT}`);
+  const http = require('http');
+  const https = require('https');
+
+  const defaultKeyPath = path.resolve(__dirname, 'certs/key.pem');
+  const defaultCertPath = path.resolve(__dirname, 'certs/cert.pem');
+  const sslKeyPath = process.env.SSL_KEY_PATH ? path.resolve(__dirname, process.env.SSL_KEY_PATH) : defaultKeyPath;
+  const sslCertPath = process.env.SSL_CERT_PATH ? path.resolve(__dirname, process.env.SSL_CERT_PATH) : defaultCertPath;
+
+  const hasSslFiles = fs.existsSync(sslKeyPath) && fs.existsSync(sslCertPath);
+  const isHttpsEnabled = process.env.USE_HTTPS === 'true' || (process.env.USE_HTTPS !== 'false' && hasSslFiles);
+
+  let server;
+  let protocol = 'http';
+
+  if (isHttpsEnabled && hasSslFiles) {
+    try {
+      const sslOptions = {
+        key: fs.readFileSync(sslKeyPath),
+        cert: fs.readFileSync(sslCertPath)
+      };
+      server = https.createServer(sslOptions, app);
+      protocol = 'https';
+    } catch (sslErr) {
+      console.warn('⚠️ Gagal memuat sertifikat SSL, fallback ke HTTP:', sslErr.message);
+      server = http.createServer(app);
+    }
+  } else {
+    server = http.createServer(app);
+  }
+
+  server.listen(PORT, HOST, () => {
+    console.log(`🚀 Server berjalan di ${protocol}://${HOST}:${PORT}`);
     console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
     console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
+    if (protocol === 'https') {
+      console.log(`🔒 SSL Aktif  (Cert: ${path.basename(sslCertPath)})`);
+    }
   });
 }
 
