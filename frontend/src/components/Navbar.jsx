@@ -212,7 +212,7 @@ export default function Navbar() {
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-[#8b90b0] hover:text-white hover:bg-[#1e2338]/60 transition-colors"
               title="GitHub Repository"
             >
-              <Github className="w-4 h-4" />
+              <GithubIcon className="w-4 h-4" />
               <span>GitHub</span>
             </a>
 
@@ -305,7 +305,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 py-2 text-sm font-medium text-[#8b90b0] hover:text-white"
             >
-              <Github className="w-4 h-4" />
+              <GithubIcon className="w-4 h-4" />
               <span>GitHub Repository</span>
             </a>
             <a
