@@ -141,19 +141,22 @@ export default function OrganizePdf() {
         <p className="text-[#8b90b0]">Urutkan, hapus, atau putar halaman PDF. Drag untuk mengubah urutan.</p>
       </div>
 
-      {!pages.length ? (
-        <DropZone onFiles={(f) => loadPages(f[0])} accept={{ 'application/pdf': ['.pdf'] }} multiple={false} />
-      ) : (
-        <div className="space-y-4">
+      {/* Pages Workspace */}
+      {pages.length > 0 && (
+        <div className="space-y-4 mb-8">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-[#8b90b0]">{pages.length} halaman</p>
+            <p className="text-sm text-[#8b90b0]"><strong className="text-white">{pages.length}</strong> halaman ({file?.name})</p>
             <div className="flex gap-2">
-              <button onClick={() => { setPages([]); setFile(null); reset(); }}
-                className="px-3 py-1.5 bg-[#22263a] text-[#8b90b0] hover:text-white rounded-lg text-xs transition-colors">
-                Ganti File
+              <button
+                onClick={() => { setPages([]); setFile(null); reset(); }}
+                className="px-3 py-1.5 bg-[#22263a] text-[#8b90b0] hover:text-white rounded-lg text-xs transition-colors"
+              >
+                Bersihkan
               </button>
-              <button onClick={handleProcess}
-                className="px-4 py-1.5 bg-[#e2001a] text-white font-semibold rounded-lg text-sm hover:bg-[#b8001a] transition-colors">
+              <button
+                onClick={handleProcess}
+                className="px-5 py-2 bg-[#e2001a] hover:bg-[#b8001a] text-white font-semibold rounded-xl text-sm transition-colors shadow-lg shadow-red-900/30"
+              >
                 Simpan PDF
               </button>
             </div>
@@ -170,6 +173,16 @@ export default function OrganizePdf() {
           </DndContext>
         </div>
       )}
+
+      {/* DropZone for uploading or replacing PDF */}
+      <div className={pages.length > 0 ? "pt-6 border-t border-[#2d3150]/60" : ""}>
+        {pages.length > 0 && (
+          <p className="text-xs font-semibold text-[#8b90b0] uppercase tracking-wider mb-3">
+            Ganti / Drag & Drop File PDF Baru:
+          </p>
+        )}
+        <DropZone onFiles={(f) => loadPages(f[0])} accept={{ 'application/pdf': ['.pdf'] }} multiple={false} />
+      </div>
     </div>
   );
 }

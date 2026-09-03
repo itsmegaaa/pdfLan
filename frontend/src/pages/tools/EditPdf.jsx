@@ -165,23 +165,22 @@ export default function EditPdf() {
         <p className="text-[#8b90b0]">Unggah banyak PDF sekaligus. Hapus, putar, atau geser halaman antar dokumen sesuka Anda.</p>
       </div>
 
-      {!pages.length ? (
-        <DropZone onFiles={addFiles} accept={{ 'application/pdf': ['.pdf'] }} multiple={true} />
-      ) : (
-        <div className="space-y-4">
+      {/* Pages Workspace */}
+      {pages.length > 0 && (
+        <div className="space-y-4 mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <p className="text-sm text-[#8b90b0]">Total: {pages.length} halaman tergabung</p>
+            <p className="text-sm text-[#8b90b0]">Total: <strong className="text-white">{pages.length}</strong> halaman tergabung</p>
             <div className="flex flex-wrap gap-2">
-              <label className="cursor-pointer px-3 py-1.5 bg-[#2d3150] hover:bg-[#3a3f5c] text-white rounded-lg text-xs transition-colors flex items-center gap-1">
-                <Plus className="w-3 h-3" /> Tambah PDF Lain
-                <input type="file" multiple accept="application/pdf" className="hidden" onChange={handleAddMoreFiles} />
-              </label>
-              <button onClick={() => { setPages([]); reset(); }}
-                className="px-3 py-1.5 bg-[#22263a] text-[#8b90b0] hover:text-white rounded-lg text-xs transition-colors">
+              <button
+                onClick={() => { setPages([]); reset(); }}
+                className="px-3 py-1.5 bg-[#22263a] text-[#8b90b0] hover:text-white rounded-lg text-xs transition-colors"
+              >
                 Bersihkan Semua
               </button>
-              <button onClick={handleProcess}
-                className="px-4 py-1.5 bg-[#e2001a] text-white font-semibold rounded-lg text-sm hover:bg-[#b8001a] transition-colors ml-auto sm:ml-0">
+              <button
+                onClick={handleProcess}
+                className="px-5 py-2 bg-[#e2001a] hover:bg-[#b8001a] text-white font-semibold rounded-xl text-sm transition-colors shadow-lg shadow-red-900/30"
+              >
                 Buat PDF Baru
               </button>
             </div>
@@ -198,6 +197,16 @@ export default function EditPdf() {
           </DndContext>
         </div>
       )}
+
+      {/* DropZone for uploading initial or subsequent PDFs */}
+      <div className={pages.length > 0 ? "pt-6 border-t border-[#2d3150]/60" : ""}>
+        {pages.length > 0 && (
+          <p className="text-xs font-semibold text-[#8b90b0] uppercase tracking-wider mb-3">
+            Tambah / Drag & Drop File PDF Lainnya:
+          </p>
+        )}
+        <DropZone onFiles={addFiles} accept={{ 'application/pdf': ['.pdf'] }} multiple={true} />
+      </div>
     </div>
   );
 }
