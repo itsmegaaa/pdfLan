@@ -5,18 +5,28 @@ import { apiUnlock } from '../../utils/api';
 import { Eye, EyeOff } from 'lucide-react';
 
 export default function UnlockPdf() {
-  const { startProcess, setProgress, setResult, setError } = useToolStore();
+  const { startProcess, setUploadProgress, setResult, setError } = useToolStore();
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
 
   const handleProcess = async (files) => {
     try {
-      startProcess();
-      setProgress(30);
-      const res = await apiUnlock(files[0], password);
-      setProgress(90);
+      const file = files[0];
+      const totalMb = file?.size ? (file.size / (1024 * 1024)).toFixed(1) : 0;
+      startProcess('Menyiapkan file...', `Ukuran dokumen: ${totalMb} MB`);
+
+      const res = await apiUnlock(file, password, (e) => {
+        if (e.total) {
+          const percent = Math.round((e.loaded * 100) / e.total);
+          const loadedMb = (e.loaded / (1024 * 1024)).toFixed(1);
+          setUploadProgress(percent, percent < 100
+            ? `Mengunggah: ${loadedMb} MB / ${totalMb} MB`
+            : 'File terunggah! Membuka enkripsi PDF...');
+        }
+      });
+
       const { fileId, filename } = res.data;
-      const finalFilename = filename || files[0].name;
+      const finalFilename = filename || file.name;
       setResult({ url: `${import.meta.env.VITE_API_BASE_URL}/download/${fileId}?filename=${encodeURIComponent(finalFilename)}`, filename: finalFilename });
     } catch (err) {
       setError(err.message || 'Gagal membuka kunci PDF. Password mungkin salah.');

@@ -5,16 +5,26 @@ import { apiCompress } from '../../utils/api';
 import { formatFileSize } from '../../utils/fileHelpers';
 
 export default function CompressPdf() {
-  const { startProcess, setProgress, setResult, setError } = useToolStore();
+  const { startProcess, setUploadProgress, setResult, setError } = useToolStore();
   const files = useToolStore((s) => s.files);
   const [level, setLevel] = useState('medium');
 
   const handleProcess = async (files) => {
     try {
-      startProcess();
-      setProgress(20);
-      const res = await apiCompress(files[0], level);
-      setProgress(90);
+      const file = files[0];
+      const totalMb = file?.size ? (file.size / (1024 * 1024)).toFixed(1) : 0;
+      startProcess('Menyiapkan file...', `Ukuran dokumen: ${totalMb} MB`);
+
+      const res = await apiCompress(file, level, (e) => {
+        if (e.total) {
+          const percent = Math.round((e.loaded * 100) / e.total);
+          const loadedMb = (e.loaded / (1024 * 1024)).toFixed(1);
+          setUploadProgress(percent, percent < 100
+            ? `Mengunggah: ${loadedMb} MB / ${totalMb} MB`
+            : 'File terunggah! Ghostscript sedang mengompresi PDF...');
+        }
+      });
+
       const { fileId, filename } = res.data;
       setResult({ url: `${import.meta.env.VITE_API_BASE_URL}/download/${fileId}?filename=${encodeURIComponent(filename)}`, filename });
     } catch (err) {

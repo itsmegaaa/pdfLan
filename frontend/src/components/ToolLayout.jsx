@@ -29,7 +29,7 @@ export default function ToolLayout({
   showFileList = true,
   children,
 }) {
-  const { files, isProcessing, progress, result, error, setFiles, removeFile, reset } = useToolStore();
+  const { files, isProcessing, progress, statusMessage, statusDetail, result, error, setFiles, removeFile, reset } = useToolStore();
 
   const handleProcess = async () => {
     if (!files.length) return;
@@ -85,10 +85,10 @@ export default function ToolLayout({
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="w-16 h-16 border-4 border-[#e2001a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white font-semibold">Sedang memproses…</p>
-            <p className="text-sm text-[#8b90b0] mt-1">Harap tunggu sebentar</p>
+            <p className="text-white font-semibold text-lg">{statusMessage || 'Sedang memproses…'}</p>
+            <p className="text-sm text-[#8b90b0] mt-1">{statusDetail || 'Harap tunggu sebentar, dokumen sedang diolah'}</p>
           </div>
-          <ProgressBar progress={progress} />
+          <ProgressBar progress={progress} label={statusMessage || 'Memproses…'} />
         </div>
       </div>
     );

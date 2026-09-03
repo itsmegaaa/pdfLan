@@ -4,42 +4,32 @@ import useToolStore from '../../store/useToolStore';
 import { apiRemoveBackground, apiDownloadUrl } from '../../utils/api';
 
 export default function RemoveBackground() {
-  const { startProcess, setProgress, setResult, setError } = useToolStore();
+  const { startProcess, setUploadProgress, setResult, setError } = useToolStore();
 
   const handleProcess = async (files) => {
     if (!files || files.length === 0) return;
     const file = files[0];
-
-    let currentProgress = 0;
-    let interval;
+    const totalMb = file?.size ? (file.size / (1024 * 1024)).toFixed(1) : 0;
 
     try {
-      startProcess();
-      
-      // Fake progress berjalan dari 0 sampai mentok di 99
-      interval = setInterval(() => {
-        if (currentProgress < 99) {
-          // Tambah 2-7% setiap 400ms agar realistis
-          currentProgress += Math.random() * 5 + 2;
-          if (currentProgress > 99) currentProgress = 99;
-          setProgress(Math.floor(currentProgress));
+      startProcess('Menyiapkan gambar...', `Ukuran gambar: ${totalMb} MB`);
+
+      const response = await apiRemoveBackground(file, (e) => {
+        if (e.total) {
+          const percent = Math.round((e.loaded * 100) / e.total);
+          const loadedMb = (e.loaded / (1024 * 1024)).toFixed(1);
+          setUploadProgress(percent, percent < 100
+            ? `Mengunggah: ${loadedMb} MB / ${totalMb} MB`
+            : 'Gambar terunggah! Model AI sedang menghapus background...');
         }
-      }, 400);
-      
-      const response = await apiRemoveBackground(file);
-      
-      clearInterval(interval);
-      setProgress(99);
+      });
 
       const { fileId, filename } = response.data;
-      
       setResult({
         url: apiDownloadUrl(fileId) + `?filename=${encodeURIComponent(filename)}`,
         filename
       });
-
     } catch (err) {
-      clearInterval(interval);
       setError(err.message || 'Gagal menghapus background gambar.');
     }
   };

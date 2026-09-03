@@ -7,6 +7,7 @@ const fsp = require('fs').promises;
 const path = require('path');
 const cron = require('node-cron');
 const routes = require('./routes');
+const adminRoutes = require('./adminRoutes');
 
 const app = express();
 const PORT = process.env.APP_PORT || process.env.PORT || 3000;
@@ -27,6 +28,9 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
 });
+
+// ── Admin Routes ───────────────────────────────────────────────────
+app.use('/api/admin', adminRoutes);
 
 // ── API Routes (MUST BE BEFORE STATIC/CATCH-ALL) ───────────────────
 app.use('/api', limiter, routes);
@@ -58,40 +62,46 @@ app.use((err, req, res, next) => {
 // ── Cron Job (Auto Cleanup) ────────────────────────────────────────
 const TTL_MINUTES = parseInt(process.env.FILE_TTL_MINUTES || '10', 10);
 
-cron.schedule('*/15 * * * *', async () => {
-  console.log('[Cron] Menjalankan pembersihan file...');
-  const now = Date.now();
-  const maxAgeMs = TTL_MINUTES * 60 * 1000;
+if (process.env.NODE_ENV !== 'test') {
+  cron.schedule('*/15 * * * *', async () => {
+    console.log('[Cron] Menjalankan pembersihan file...');
+    const now = Date.now();
+    const maxAgeMs = TTL_MINUTES * 60 * 1000;
 
-  const cleanDir = async (dir) => {
-    try {
-      const files = await fsp.readdir(dir);
-      for (const file of files) {
-        if (file === '.gitkeep') continue;
-        const filePath = path.join(dir, file);
-        try {
-          const stats = await fsp.stat(filePath);
-          if (now - stats.mtimeMs > maxAgeMs) {
-            await fsp.rm(filePath, { recursive: true, force: true });
-            console.log(`[Cron] Menghapus: ${file}`);
+    const cleanDir = async (dir) => {
+      try {
+        const files = await fsp.readdir(dir);
+        for (const file of files) {
+          if (file === '.gitkeep') continue;
+          const filePath = path.join(dir, file);
+          try {
+            const stats = await fsp.stat(filePath);
+            if (now - stats.mtimeMs > maxAgeMs) {
+              await fsp.rm(filePath, { recursive: true, force: true });
+              console.log(`[Cron] Menghapus: ${file}`);
+            }
+          } catch (fileErr) {
+            console.error(`[Cron] Gagal menghapus ${filePath}:`, fileErr.message);
           }
-        } catch (fileErr) {
-          console.error(`[Cron] Gagal menghapus ${filePath}:`, fileErr.message);
         }
+      } catch (err) {
+        console.error(`[Cron] Gagal membersihkan direktori ${dir}:`, err);
       }
-    } catch (err) {
-      console.error(`[Cron] Gagal membersihkan direktori ${dir}:`, err);
-    }
-  };
+    };
 
-  await cleanDir(TEMP_DIR);
-  await cleanDir(OUTPUT_DIR);
-  console.log('[Cron] Pembersihan selesai.');
-});
+    await cleanDir(TEMP_DIR);
+    await cleanDir(OUTPUT_DIR);
+    console.log('[Cron] Pembersihan selesai.');
+  });
+}
 
 // ── Start Server ───────────────────────────────────────────────────
-app.listen(PORT, HOST, () => {
-  console.log(`🚀 Server berjalan di http://${HOST}:${PORT}`);
-  console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
-  console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
-});
+if (require.main === module) {
+  app.listen(PORT, HOST, () => {
+    console.log(`🚀 Server berjalan di http://${HOST}:${PORT}`);
+    console.log(`📁 Temp Dir:   ${TEMP_DIR}`);
+    console.log(`📁 Output Dir: ${OUTPUT_DIR}`);
+  });
+}
+
+module.exports = app;

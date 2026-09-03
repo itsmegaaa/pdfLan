@@ -1,0 +1,49 @@
+# ── Dependencies ──────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+manager-app/node_modules/
+
+# ── Build outputs ─────────────────────────────────────────────────
+# Note: frontend/dist is INTENTIONALLY excluded here because
+# Docker builds it fresh in Stage 1 (frontend-builder)
+frontend/dist/
+dist/
+build/
+
+# ── Temporary & runtime files ─────────────────────────────────────
+backend/tmp/
+tmp/
+*.log
+
+# ── Environment files (sensitive) ────────────────────────────────
+backend/.env
+.env
+.env.local
+.env.*.local
+
+# ── Git & tooling ─────────────────────────────────────────────────
+.git/
+.gitignore
+.gitattributes
+.agent/
+.agents/
+
+# ── Documentation (not needed in image) ──────────────────────────
+docs/
+*.md
+!README.md
+
+# ── Development/testing tools ─────────────────────────────────────
+rename_script.js
+ManagerApp.cs
+manager-app/
+
+# ── OS specific ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Release artifacts ─────────────────────────────────────────────
+release/
+*.exe

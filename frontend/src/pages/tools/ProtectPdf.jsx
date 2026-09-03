@@ -4,20 +4,30 @@ import useToolStore from '../../store/useToolStore';
 import { apiProtect } from '../../utils/api';
 
 export default function ProtectPdf() {
-  const { startProcess, setProgress, setResult, setError } = useToolStore();
+  const { startProcess, setUploadProgress, setResult, setError } = useToolStore();
   const [userPass, setUserPass] = useState('');
   const [ownerPass, setOwnerPass] = useState('');
   const [perms, setPerms] = useState({ print: true, copy: false, edit: false });
 
   const handleProcess = async (files) => {
     try {
-      startProcess();
-      setProgress(30);
+      const file = files[0];
+      const totalMb = file?.size ? (file.size / (1024 * 1024)).toFixed(1) : 0;
+      startProcess('Menyiapkan file...', `Ukuran dokumen: ${totalMb} MB`);
+
       const permissions = Object.entries(perms).filter(([, v]) => v).map(([k]) => k);
-      const res = await apiProtect(files[0], userPass, ownerPass || userPass, permissions);
-      setProgress(90);
+      const res = await apiProtect(file, userPass, ownerPass || userPass, permissions, (e) => {
+        if (e.total) {
+          const percent = Math.round((e.loaded * 100) / e.total);
+          const loadedMb = (e.loaded / (1024 * 1024)).toFixed(1);
+          setUploadProgress(percent, percent < 100
+            ? `Mengunggah: ${loadedMb} MB / ${totalMb} MB`
+            : 'File terunggah! Mengenkripsi dokumen...');
+        }
+      });
+
       const { fileId, filename } = res.data;
-      const finalFilename = filename || files[0].name;
+      const finalFilename = filename || file.name;
       setResult({ url: `${import.meta.env.VITE_API_BASE_URL}/download/${fileId}?filename=${encodeURIComponent(finalFilename)}`, filename: finalFilename });
     } catch (err) {
       setError(err.message || 'Gagal mengenkripsi PDF. Pastikan backend berjalan.');

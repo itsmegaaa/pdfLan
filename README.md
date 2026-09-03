@@ -1,4 +1,4 @@
-# PDFVault v1.0.6
+# PDFVault v1.0.8
 
 PDFVault is a self-hosted, offline-first PDF tool designed to be run within your Local Area Network (LAN) or on your personal machine. It provides PDF processing capabilities without needing to upload your sensitive documents to external servers.
 
@@ -28,12 +28,19 @@ PDFVault is packed with powerful, enterprise-grade tools that process your files
 - **Offline First & Privacy Focused**: 100% of the processing happens on your local machine or LAN. Documents are NEVER uploaded to an external server. Your data stays yours.
 - **Auto Cleanup**: Temporary files are aggressively and automatically deleted from the server within milliseconds after processing.
 - **Smart Concurrency Limit**: Built-in queue system ensures the server never freezes, even if multiple users process files at the exact same time.
+- **SSRF Guard Protection**: Built-in security guard isolating internal networks and private IP addresses during URL conversions.
 
 ### 📄 Organize & Edit PDF
 - **Visual Page Builder**: A drag-and-drop interface to easily rearrange, delete, and organize pages.
 - **Merge PDF**: Combine multiple PDFs into a single file with custom ordering.
 - **Split PDF**: Visually select pages to split or extract from a large document.
 - **Rotate PDF**: Fix upside-down pages with a single click.
+- **Sign PDF**: Place visual signatures on any selected page.
+- **Redact PDF**: Black out sensitive document sections with calibrated precision.
+
+### 📸 Scanner & Image Tools
+- **Scan to PDF (Smart Scanner)**: Turn physical documents and camera photos into clean PDFs using OpenCV.js (featuring auto edge detection, perspective dewarping, sharpening, B&W/Grayscale filters, and multi-page batch scanning).
+- **Remove Background**: Cleanly remove backgrounds from JPG/PNG images entirely on your local machine (powered by local AI, no external cloud API required).
 
 ### 🔄 Convert FROM PDF
 - **PDF to Word/PPT/Excel**: Convert PDFs back into editable Office documents with high accuracy (powered by LibreOffice).
@@ -43,15 +50,15 @@ PDFVault is packed with powerful, enterprise-grade tools that process your files
 ### 🔁 Convert TO PDF
 - **Word/PPT/Excel to PDF**: Turn your Office documents into universally readable PDFs.
 - **Image to PDF**: Convert JPG, PNG, and other image formats into a single PDF document.
-- **HTML to PDF**: Capture webpages perfectly into PDF format (powered by Chromium/Puppeteer).
-
-### 🖼️ Image Tools
-- **Remove Background**: Cleanly remove backgrounds from JPG/PNG images entirely on your local machine (powered by AI, without cloud API).
+- **HTML to PDF**: Capture webpages perfectly into PDF format (powered by Chromium/Puppeteer with SSRF isolation).
 
 ### 🔒 Security & Optimization
-- **Compress PDF**: Dramatically reduce the file size of your PDFs without losing quality (powered by Ghostscript).
+- **Compress PDF**: Dramatically reduce the file size of your PDFs without losing quality (powered by Ghostscript) with real-time progress indicators.
 - **Protect PDF**: Encrypt your PDFs with strong passwords and restrict permissions (e.g., disable printing or copying).
 - **Unlock PDF**: Remove passwords and security restrictions from PDFs you own (powered by QPDF).
+
+### 🖥️ Desktop Server Manager
+- **PDFVault Manager (GUI)**: Native Windows desktop manager (`ManagerApp.cs` / `PDFVault_Manager_v5.exe`) and Electron app for one-click Start/Stop/Restart, live server logs, RAM/CPU/Disk metrics, binary diagnostics, and manual storage cleanup.
 
 ## Prerequisites for Host PC
 To run this application as a server on your local network, the Host PC requires the following to be installed.
@@ -94,7 +101,28 @@ winget install ArtifexSoftware.GhostScript -e
 For a complete guide on how to configure the Host PC, setup `.env` variables, and configure the Windows Firewall so other computers can access it, please read:
 👉 **[Local LAN Setup Guide](docs/LOCAL_LAN_SETUP.md)**
 
-## Quick Start (Windows)
+## 🐳 Docker Quick Start (Recommended — Any OS)
+
+The easiest way to deploy PDFVault on **any operating system** (Windows, macOS, Linux). No need to install LibreOffice, Ghostscript, QPDF, or any other tool manually — everything is bundled inside the Docker image.
+
+**Requirements**: [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + Compose on Linux).
+
+```bash
+# 1. Clone and enter the project
+git clone https://github.com/itsmegaaa/pdfLan.git && cd pdfLan
+
+# 2. Build and start (first build takes 5-15 minutes)
+docker compose up -d --build
+
+# 3. Access the app
+# Open: http://localhost:3000
+```
+
+For full details, see the 👉 **[Docker Setup Guide](docs/DOCKER_SETUP.md)**
+
+---
+
+
 
 The easiest way to run the application on Windows is to use the provided batch scripts:
 

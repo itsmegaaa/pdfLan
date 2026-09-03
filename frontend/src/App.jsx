@@ -32,13 +32,13 @@ const PdfToPdfa = lazy(() => import('./pages/tools/PdfToPdfa'));
 const PageNumbers = lazy(() => import('./pages/tools/PageNumbers'));
 
 const ScanToPdf = lazy(() => import('./pages/tools/ScanToPdf'));
-const OcrPdf = lazy(() => import('./pages/tools/OcrPdf'));
 const RedactPdf = lazy(() => import('./pages/tools/RedactPdf'));
 const CropPdf = lazy(() => import('./pages/tools/CropPdf'));
 const PdfForms = lazy(() => import('./pages/tools/PdfForms'));
 
 const RemoveBackground = lazy(() => import('./pages/tools/RemoveBackground'));
 const Changelog = lazy(() => import('./pages/Changelog'));
+const TestUpload = lazy(() => import('./pages/TestUpload'));
 
 function PageLoader() {
   return (
@@ -144,12 +144,12 @@ export default function App() {
                 <Route path="/page-numbers" element={<PageNumbers />} />
 
                 <Route path="/scan-to-pdf" element={<ScanToPdf />} />
-                <Route path="/ocr-pdf" element={<OcrPdf />} />
                 <Route path="/redact-pdf" element={<RedactPdf />} />
                 <Route path="/crop-pdf" element={<CropPdf />} />
                 <Route path="/pdf-forms" element={<PdfForms />} />
                 <Route path="/remove-background" element={<RemoveBackground />} />
                 <Route path="/changelog" element={<Changelog />} />
+                <Route path="/test-upload" element={<TestUpload />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>

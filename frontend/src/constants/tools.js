@@ -289,44 +289,6 @@ export const TOOLS = [
     multiple: true,
     clientSide: true,
   },
-
-  // ── UNDER MAINTENANCE ───────────────────────────────────────────────────
-  {
-    id: "repair-pdf",
-    name: "Repair PDF",
-    desc: "Perbaiki file PDF yang rusak atau corrupt.",
-    icon: "🔧",
-    category: "optimize",
-    route: "/repair-pdf",
-    accept: { "application/pdf": [".pdf"] },
-    multiple: false,
-    clientSide: false,
-    maintenance: true,
-  },
-  {
-    id: "ocr-pdf",
-    name: "OCR PDF",
-    desc: "Buat PDF yang dapat dicari teksnya dengan OCR.",
-    icon: "🔍",
-    category: "optimize",
-    route: "/ocr-pdf",
-    accept: { "application/pdf": [".pdf"], "image/*": [".jpg", ".jpeg", ".png"] },
-    multiple: false,
-    clientSide: false,
-    maintenance: true,
-  },
-  {
-    id: "compare-pdf",
-    name: "Compare PDF",
-    desc: "Bandingkan dua PDF dan lihat perbedaannya.",
-    icon: "🔀",
-    category: "edit",
-    route: "/compare-pdf",
-    accept: { "application/pdf": [".pdf"] },
-    multiple: true,
-    clientSide: false,
-    maintenance: true,
-  },
 ];
 
 export const CATEGORIES = [

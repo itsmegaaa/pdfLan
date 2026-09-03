@@ -5,9 +5,6 @@ const crypto = require('crypto');
 const uuidv4 = crypto.randomUUID.bind(crypto);
 const fs = require('fs');
 const fsp = require('fs').promises;
-const { ZipArchive } = require('archiver');
-const puppeteer = require('puppeteer');
-const tesseract = require('tesseract.js');
 const {
   libreOfficeConvert,
   ghostscriptCompress,
@@ -16,6 +13,8 @@ const {
   ghostscriptPdfA,
   popplerPdfToJpg
 } = require('./utils/binaries');
+const { validateUrlSafe, isSafeSubrequest } = require('./utils/ssrfGuard');
+const { recordMetric } = require('./utils/diagnostics');
 
 const router = express.Router();
 
@@ -31,32 +30,42 @@ const allowedMimes = [
   'image/jpeg',
   'image/png'
 ];
-const allowedExts = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.jpg', '.jpeg', '.png'];
 
+// BUG-01 FIX: Restore diskStorage so files are saved WITH their original extension
+// (e.g. "a3f1c2b9.pdf" not "a3f1c2b9"). Without this, all binary tools fail.
 const upload = multer({
   storage: multer.diskStorage({
-    destination: path.resolve(process.env.TEMP_DIR || process.env.UPLOAD_DIR || './tmp/uploads'),
+    destination: path.resolve(process.env.TEMP_DIR || './tmp/uploads'),
     filename: (req, file, cb) => cb(null, `${uuidv4()}${path.extname(file.originalname)}`)
   }),
-  limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE_MB || '50') * 1024 * 1024 },
+  limits: {
+    fileSize: parseInt(process.env.MAX_FILE_SIZE_MB || '50', 10) * 1024 * 1024
+  },
   fileFilter: (req, file, cb) => {
-    if (!allowedMimes.includes(file.mimetype)) {
-      return cb(new Error('Tipe file tidak didukung.'));
-    }
     const ext = path.extname(file.originalname).toLowerCase();
-    if (!allowedExts.includes(ext)) {
-      return cb(new Error('Ekstensi file tidak didukung.'));
+    const allowedExts = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.jpg', '.jpeg', '.png'];
+    if (allowedExts.includes(ext) && allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Tipe file tidak didukung.'));
     }
-    cb(null, true);
   }
 });
 
 const OUTPUT_DIR = path.resolve(process.env.OUTPUT_DIR || './tmp/outputs');
 
 const asyncHandler = (fn) => async (req, res, next) => {
+  const start = Date.now();
+  // BUG-02 FIX: Strip query strings and leading slash cleanly for accurate tool ID
+  const rawPath = (req.path || '').split('?')[0];
+  const toolName = rawPath.replace(/^\/convert\//, '').replace(/^\//, '').trim() || 'general';
+  const fileSize = req.file?.size || 0;
+
   try {
     await fn(req, res, next);
+    recordMetric(toolName, true, Date.now() - start, fileSize);
   } catch (err) {
+    recordMetric(toolName, false, Date.now() - start, fileSize);
     console.error('API Error:', err);
     if (err.code === 'ENOENT') {
       return res.status(500).json({ success: false, message: `Dependency tool tidak ditemukan. Pastikan path di file .env sudah benar. Error: ${err.message}` });
@@ -190,28 +199,48 @@ router.post('/unlock', uploadMiddleware, asyncHandler(async (req, res) => {
   }
 }));
 
-// ── MISC TOOLS (OCR, HTML to PDF, PDF to JPG) ──────────────────────
-router.post('/ocr', uploadMiddleware, asyncHandler(async (req, res) => {
-  // OCR processing (currently just mock/placeholder processing for basic text extraction logic)
-  const outFile = path.join(OUTPUT_DIR, `${uuidv4()}-ocr.pdf`);
-  // Dalam real scenario, kita gabung Tesseract output ke PDF (sekarang kita copy untuk preview jalan)
-  await fsp.copyFile(req.file.path, outFile);
-  res.json({ success: true, fileId: path.basename(outFile), filename: req.file.originalname });
-}));
+// ── MISC TOOLS (HTML to PDF, PDF to JPG) ──────────────────────────
 
 router.post('/convert/html-to-pdf', asyncHandler(async (req, res) => {
   const { url } = req.body;
-  if (!url) throw new Error('URL is required');
+  if (!url) throw new Error('URL wajib diisi');
   
+  // Validasi keamanan SSRF dan protokol URL sebelum membuka browser
+  const validatedUrl = await validateUrlSafe(url);
+
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.pdf`);
-  const browserArgs = { headless: 'new' };
+  const browserArgs = {
+    headless: 'new',
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
+  };
   if (process.env.CHROMIUM_PATH) {
     browserArgs.executablePath = process.env.CHROMIUM_PATH;
   }
+  const puppeteerMod = await import('puppeteer');
+  const puppeteer = puppeteerMod.default || puppeteerMod;
   const browser = await puppeteer.launch(browserArgs);
   try {
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    
+    // Aktifkan request interception untuk mencegah sub-resource mengakses internal network/file
+    await page.setRequestInterception(true);
+    page.on('request', (interceptedRequest) => {
+      if (isSafeSubrequest(interceptedRequest.url())) {
+        interceptedRequest.continue();
+      } else {
+        interceptedRequest.abort();
+      }
+    });
+
+    await page.goto(validatedUrl.toString(), {
+      waitUntil: 'networkidle2',
+      timeout: 30000 // Maksimal 30 detik
+    });
     await page.pdf({ path: outFile, format: 'A4', printBackground: true });
   } finally {
     await browser.close();
@@ -227,6 +256,9 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
   const jpgFiles = await popplerPdfToJpg(req.file.path, tempDir, 85);
   
   // Zip the files
+  const archiverModule = await import('archiver');
+  const ZipArchive = archiverModule.ZipArchive || archiverModule.default;
+
   const zipFile = path.join(OUTPUT_DIR, `${uuidv4()}.zip`);
   const output = fs.createWriteStream(zipFile);
   const archive = new ZipArchive({ zlib: { level: 9 } });
@@ -316,6 +348,11 @@ router.get('/download/:fileId', (req, res) => {
     if (err) console.error("Error downloading file:", err);
     // File dihapus oleh cron job TTL, jangan dihapus instan untuk menghindari putus koneksi
   });
+});
+
+// 404 handler untuk route di bawah /api yang tidak dikenal
+router.use((req, res) => {
+  res.status(404).json({ success: false, message: 'Endpoint API tidak ditemukan' });
 });
 
 module.exports = router;

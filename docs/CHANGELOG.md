@@ -1,5 +1,27 @@
 # [Released]
 
+## [1.0.8] - 2026-06-29
+### Added
+- **Scan to PDF (Smart Scanner):** Fitur pemindai dokumen cerdas langsung dari browser! Dilengkapi algoritma OpenCV.js buat:
+  - Deteksi sudut kertas/dokumen otomatis (*auto edge detection*).
+  - Koreksi kemiringan perspektif (*perspective dewarping*) dengan kaca pembesar (*magnifier UI*) yang presisi.
+  - Berbagai filter dokumen: Hitam-Putih tajam (*B&W threshold*), Abu-abu (*Grayscale*), serta pengaturan *Brightness* & *Contrast*.
+  - *Multi-Page Scanning*: Upload & scan banyak lembar sekaligus, atur ulang urutan halaman di galeri, dan simpan jadi satu PDF atau ZIP JPEG beresolusi tinggi.
+  - *Auto-Enhance & Smart Rotation*: Penajaman teks otomatis (*unsharp mask*) dan deteksi orientasi otomatis.
+- **PDFVault Manager (Desktop App):** Dibuatin aplikasi kontrol server bawaan Windows (`ManagerApp.cs` / `PDFVault_Manager_v5.exe`) dan Electron. Sekarang bisa nyalain, matiin, restart server, intip *live log*, dan mantau RAM/Disk/status alat (*LibreOffice, Ghostscript, QPDF, Poppler*) cukup dengan sekali klik tanpa buka terminal.
+- **Dukungan Docker Penuh:** Sekarang sudah ada `Dockerfile` dan `docker-compose.yml` lengkap. Cukup jalankan `docker compose up -d --build`, semua *dependency* langsung siap tanpa perlu install manual di OS host.
+- **Indikator Upload Realtime:** Semua halaman konversi & kompresi sekarang punya *progress bar* yang nampilin progres upload file dalam ukuran MB dan persentase yang akurat.
+- **Admin & Diagnostics API:** Endpoint baru `/api/admin` dengan proteksi PIN untuk memantau metrik performa, beban server, dan tombol bersih-bersih sampah secara manual.
+- **Komponen Advanced Uploader:** Modul baru pengunggah file dengan dukungan *chunked/resumable upload* untuk menangani file dokumen berukuran besar.
+
+### Security
+- **SSRF Guard Protection:** Validasi keamanan ketat untuk fitur *HTML to PDF*. Melarang request ke localhost, private IP (*RFC 1918/4193*), dan memblokir upaya *request interception* pada sub-resource halaman web.
+
+### Fixed
+- **Ekstensi File Multer:** Memperbaiki bug penyimpanan file upload agar ekstensi asli file tidak terpotong, mencegah error pembacaan tipe file oleh alat CLI *backend*.
+- **Bug Tampilan Ukuran File (NaN):** Memperbaiki fungsi `formatFileSize` agar tidak memunculkan teks `NaN undefined` saat ukuran file belum siap.
+- **Respons Interceptor Axios:** Memperbaiki error handling di frontend agar kode status HTTP (seperti 401 saat input PIN salah) tetap bisa dibaca oleh halaman admin.
+
 ## [1.0.7] - 2026-06-22
 ### Added
 - **Anti Layar Putih (Error Boundary):** Udah dipasang `<ErrorBoundary>` di `App.jsx`. Jadi kalau ada komponen yang error, webnya nggak bakal nge-blank putih lagi, tapi munculin pesan error yang rapi.

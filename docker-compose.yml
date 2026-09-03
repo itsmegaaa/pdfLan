@@ -1,0 +1,59 @@
+services:
+  pdfvault:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdfvault
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      # Server
+      APP_HOST: "0.0.0.0"
+      APP_PORT: "3000"
+      # Paths (all tools are pre-installed inside the image)
+      LIBREOFFICE_PATH: "/usr/bin/soffice"
+      GHOSTSCRIPT_PATH: "/usr/bin/gs"
+      QPDF_PATH: "/usr/bin/qpdf"
+      POPPLER_PATH: "/usr/bin"
+      CHROMIUM_PATH: "/usr/bin/chromium"
+      # Temp directories
+      TEMP_DIR: "/app/backend/tmp/uploads"
+      OUTPUT_DIR: "/app/backend/tmp/outputs"
+      # App settings (override via .env or docker-compose.override.yml)
+      FILE_TTL_MINUTES: "${FILE_TTL_MINUTES:-120}"
+      MAX_FILE_SIZE_MB: "${MAX_FILE_SIZE_MB:-50}"
+      CORS_ORIGIN: "${CORS_ORIGIN:-*}"
+    volumes:
+      # Persist tmp files across container restarts (optional)
+      # Useful for debugging; remove for stricter ephemeral behavior
+      - pdfvault_tmp:/app/backend/tmp
+    # Resource limits to protect the host machine
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+    # Chromium needs these to run inside Docker
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp=unconfined
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  pdfvault_tmp:
+    driver: local
