@@ -3,7 +3,7 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { GripVertical, Trash2, RotateCw, CheckCircle, Download, RefreshCw, Plus } from 'lucide-react';
+import { GripVertical, Trash2, RotateCw, CheckCircle, Download, RefreshCw } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
 import PdfPreview from '../../components/PdfPreview';
 import DropZone from '../../components/DropZone';

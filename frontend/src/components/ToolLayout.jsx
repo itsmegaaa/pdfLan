@@ -85,7 +85,7 @@ export default function ToolLayout({
               newFiles.forEach(f => {
                 if (!f.id) f.id = Math.random().toString(36).substring(2, 9);
               });
-              setFiles(multiple ? newFiles : newFiles);
+              setFiles(newFiles);
             }}
             accept={accept}
             multiple={multiple}

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FileText, Menu, X, ChevronDown, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
+import { FileText, Menu, X, ChevronDown, Sparkles, ShieldCheck } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
