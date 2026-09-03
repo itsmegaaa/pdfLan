@@ -417,16 +417,27 @@ export default function ScanToPdf() {
               </div>
             ))}
             <div 
-              className="relative rounded-xl border-2 border-dashed border-[#2d3150] hover:border-[#e2001a] bg-[#1a1c29] flex flex-col items-center justify-center cursor-pointer aspect-[3/4]"
+              className="relative rounded-xl border-2 border-dashed border-[#2d3150] hover:border-[#e2001a] bg-[#1a1c29] flex flex-col items-center justify-center cursor-pointer aspect-[3/4] transition-colors"
               onClick={() => {
                 const input = document.createElement('input');
                 input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
                 input.onchange = e => handleAppendFiles(Array.from(e.target.files));
                 input.click();
               }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                  handleAppendFiles(Array.from(e.dataTransfer.files));
+                }
+              }}
             >
-              <span className="text-4xl text-[#2d3150]">+</span>
-              <span className="text-sm text-[#8b90b0]">Tambah Halaman</span>
+              <span className="text-4xl text-[#2d3150] mb-1">+</span>
+              <span className="text-xs sm:text-sm text-[#8b90b0] text-center px-2">Klik / Drop Foto Tambahan</span>
             </div>
           </div>
           <div className="bg-[#1a1c29] rounded-2xl p-6 border border-[#2d3150]">
