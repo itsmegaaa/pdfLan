@@ -21,6 +21,7 @@ import { TOOLS } from '../constants/tools';
  * @param {boolean} [props.multiple]
  * @param {function} props.onProcess - async fn called with files when user clicks action button
  * @param {string} [props.actionLabel] - button label, default 'Proses'
+ * @param {boolean} [props.hideAction] - sembunyikan tombol aksi bawaan (untuk halaman custom)
  * @param {React.ReactNode} [props.options] - extra UI between file list and action button
  * @param {boolean} [props.showFileList] - whether to show the default file list (default true)
  * @param {boolean} [props.hideDropZone] - whether to hide the dropzone (default false)
@@ -39,6 +40,7 @@ export default function ToolLayout({
   showFileList = true,
   hideDropZone = false,
   onFilesAdded,
+  hideAction = false,
   batch = false,
   onProcessFile,
   children,
@@ -657,7 +659,7 @@ export default function ToolLayout({
       )}
 
       {/* Action button */}
-      {files.length > 0 && (
+      {files.length > 0 && !hideAction && (
         <div className="mt-10 flex justify-center">
           <button
             onClick={handleProcess}

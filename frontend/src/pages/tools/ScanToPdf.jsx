@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Crop, Wand2, RotateCw, Zap, Download, Image as ImageIcon, Check } from 'lucide-react';
+import { ChevronLeft, Crop, Wand2, RotateCw, Download, Image as ImageIcon, Check, ArrowRight } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
@@ -98,7 +98,39 @@ export default function ScanToPdf() {
       processed: false
     }));
 
-    setTimeout(() => handleAutoDetect(wc), 100);
+    setTimeout(() => autoDetectAndProcess(wc), 150);
+  };
+
+  // Alur otomatis: deteksi sudut dokumen lalu langsung luruskan.
+  // Kalau OpenCV belum siap / deteksi gagal, pakai sudut default.
+  const autoDetectAndProcess = (wc) => {
+    let corners = null;
+    if (cvLoaded) {
+      try {
+        corners = detectCorners(wc);
+      } catch (err) {
+        corners = null;
+      }
+    }
+    if (!corners || corners.length !== 4) {
+      const w = wc.width, h = wc.height;
+      const m = Math.round(Math.min(w, h) * 0.03);
+      corners = [[m,m],[w-m,m],[w-m,h-m],[m,h-m]];
+    }
+    setEditorState(st => ({ ...st, corners }));
+    doProcess(corners);
+  };
+
+  // Luruskan gambar dengan sudut yang diberikan (dipakai otomatis & manual)
+  const doProcess = (corners) => {
+    if (!workCanvasRef.current || !corners || corners.length !== 4) return;
+    try {
+      transformedCanvasRef.current = perspectiveTransform(workCanvasRef.current, corners);
+      setEditorState(st => ({ ...st, corners, processed: true }));
+      setTimeout(() => updateResultCanvas(), 50);
+    } catch (err) {
+      setError('Gagal meluruskan dokumen');
+    }
   };
 
   useEffect(() => {
@@ -257,19 +289,7 @@ export default function ScanToPdf() {
   };
 
   const handleProcessImage = () => {
-    if (!workCanvasRef.current) return;
-    startProcess();
-    setTimeout(() => {
-      try {
-        transformedCanvasRef.current = perspectiveTransform(workCanvasRef.current, editorState.corners);
-        setEditorState(s => ({ ...s, processed: true }));
-        updateResultCanvas();
-        setProgress(100);
-        useToolStore.setState({ isProcessing: false });
-      } catch (err) {
-        setError('Gagal meluruskan dokumen');
-      }
-    }, 100);
+    doProcess(editorState.corners);
   };
 
   const updateResultCanvas = (state = editorState) => {
@@ -368,14 +388,14 @@ export default function ScanToPdf() {
 
   if (!currentFile && scannedPages.length === 0) {
     return (
-      <ToolLayout title="Scan to PDF" description="Perbaiki foto dokumen miring jadi PDF rapi multi-halaman." accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} showFileList={false}>
+      <ToolLayout title="Scan to PDF" description="Perbaiki foto dokumen miring jadi PDF rapi multi-halaman." accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} showFileList={false} hideAction>
       </ToolLayout>
     );
   }
 
   if (!currentFile && scannedPages.length > 0) {
     return (
-      <ToolLayout title="Scan to PDF" description={`${scannedPages.length} halaman siap diekspor.`} showFileList={false} hideDropZone={true}>
+      <ToolLayout title="Scan to PDF" description={`${scannedPages.length} halaman siap diekspor.`} showFileList={false} hideDropZone={true} hideAction>
         <div className="max-w-4xl mx-auto mt-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
             {scannedPages.map((page, idx) => (
@@ -425,7 +445,7 @@ export default function ScanToPdf() {
   }
 
   return (
-    <ToolLayout title="Scan to PDF" description={`Edit Halaman ${scannedPages.length + 1} dari ${scannedPages.length + files.length}`} showFileList={false} hideDropZone={true}>
+    <ToolLayout title="Scan to PDF" description={`Halaman ${scannedPages.length + 1} dari ${scannedPages.length + files.length}`} showFileList={false} hideDropZone={true} hideAction>
       <div className="max-w-[1400px] mx-auto px-4 py-6 mt-[-30px]">
         <header className="flex flex-wrap items-center gap-3 mb-6 bg-surface p-4 rounded-lg border border-border">
           <button onClick={() => { setFiles([]); setScannedPages([]); reset(); }} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
@@ -434,10 +454,10 @@ export default function ScanToPdf() {
           {!editorState.processed && (
             <>
               <button onClick={() => handleAutoDetect(workCanvasRef.current)} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Wand2 className="w-4 h-4" /> Auto Deteksi
+                <Wand2 className="w-4 h-4" /> Deteksi Ulang
               </button>
               <button onClick={handleProcessImage} className="px-6 py-2 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center gap-2 ml-auto shadow-md shadow-red-900/20">
-                <Zap className="w-4 h-4" /> Proses Gambar
+                Pakai Potongan Ini <ArrowRight className="w-4 h-4" />
               </button>
             </>
           )}
