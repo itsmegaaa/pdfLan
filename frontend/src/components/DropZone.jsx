@@ -1,16 +1,21 @@
-﻿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Upload, X, AlertCircle } from 'lucide-react';
 import { formatFileSize, validateFiles } from '../utils/fileHelpers';
 import FileThumb from './FileThumb';
 
 /**
+ * Area upload ala iLovePDF (versi dark): tanpa kotak dashed,
+ * tombol CTA merah besar + teks "atau seret file ke sini".
+ * Seluruh area adalah drop target; highlight merah saat drag-over.
+ * File yang sudah dipilih tampil sebagai kartu thumbnail besar.
+ *
  * @param {Object} props
  * @param {function} props.onFiles - callback(File[])
  * @param {Object} [props.accept] - object mapped to extensions string e.g. {'application/pdf': ['.pdf']}
  * @param {boolean} [props.multiple]
  * @param {number} [props.maxSizeMB]
  * @param {File[]} [props.files]
- * @param {function} [props.onRemove] - callback(index)
+ * @param {function} [props.onRemove] - callback(fileId)
  * @param {'default' | 'compact'} [props.variant='default']
  */
 export default function DropZone({
@@ -23,11 +28,12 @@ export default function DropZone({
   variant = 'default',
 }) {
   const inputRef = useRef(null);
-  
+
   const [isDragActive, setIsDragActive] = useState(false);
   const [fileRejections, setFileRejections] = useState([]);
-  
+
   const acceptAttr = accept ? Object.values(accept).flat().join(',') : '';
+  const isCompact = variant === 'compact';
 
   const processFiles = (rawFiles) => {
     const { accepted, rejections } = validateFiles(rawFiles, accept, maxSizeMB, multiple);
@@ -56,7 +62,7 @@ export default function DropZone({
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       processFiles(Array.from(e.dataTransfer.files));
     }
@@ -75,23 +81,15 @@ export default function DropZone({
 
   const isError = fileRejections.length > 0;
 
-  let containerClass = "relative flex flex-col items-center justify-center border rounded-md p-4 text-center cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ";
-  if (variant === 'compact') containerClass += "min-h-[120px] ";
-  else containerClass += "min-h-[200px] ";
-
-  let iconClass = "flex items-center justify-center rounded-md border transition-colors ";
-  if (variant === 'compact') iconClass += "w-8 h-8 mb-2 ";
-  else iconClass += "w-10 h-10 mb-3 ";
+  let containerClass = 'relative flex flex-col items-center justify-center rounded-3xl text-center cursor-pointer transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ';
+  containerClass += isCompact ? 'min-h-[110px] py-5 px-4 ' : 'min-h-[320px] py-14 px-6 ';
 
   if (isError) {
-    containerClass += "border-red-500 border-solid bg-red-500/10 ";
-    iconClass += "border-red-500/50 bg-red-500/20 text-red-500 ";
+    containerClass += 'border-2 border-dashed border-red-500/60 bg-red-500/5 ';
   } else if (isDragActive) {
-    containerClass += "border-primary border-solid bg-primary/10 text-primary ";
-    iconClass += "border-primary bg-primary/20 text-primary ";
+    containerClass += 'border-2 border-dashed border-primary bg-primary/10 scale-[1.01] ';
   } else {
-    containerClass += "border-border border-dashed bg-surface hover:border-border-hover hover:bg-surface-hover text-text-main ";
-    iconClass += "border-border bg-bg text-text-muted ";
+    containerClass += 'border-2 border-dashed border-transparent hover:border-border bg-surface/40 ';
   }
 
   return (
@@ -114,46 +112,48 @@ export default function DropZone({
           }
         }}
       >
-        <input 
-          type="file" 
+        <input
+          type="file"
           ref={inputRef}
           onChange={onInputChange}
           accept={acceptAttr}
           multiple={multiple}
-          className="hidden" 
+          className="hidden"
         />
 
-        <div className={iconClass}>
-          {isError ? <AlertCircle className={variant === 'compact' ? "w-4 h-4" : "w-5 h-5"} /> : <Upload className={variant === 'compact' ? "w-4 h-4" : "w-5 h-5"} />}
-        </div>
-
-        <p className={`font-semibold mb-1 ${variant === 'compact' ? 'text-xs' : 'text-sm'}`}>
-          {isDragActive 
-            ? 'Lepas file di sini' 
-            : isError 
-              ? 'File tidak didukung' 
-              : 'Pilih atau seret dokumen ke sini'
-          }
-        </p>
-        
-        <p className={`text-text-muted ${variant === 'compact' ? 'text-[10px]' : 'text-xs'}`}>
-          Maksimal {maxSizeMB}MB per file
-          {multiple && ' • Mendukung multi-file'}
-        </p>
-
-        {!isDragActive && !isError && variant !== 'compact' && (
+        {isError ? (
+          <AlertCircle className={`${isCompact ? 'w-8 h-8' : 'w-10 h-10'} text-red-500 mb-3`} />
+        ) : (
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); onClick(); }}
-            className="mt-4 px-4 py-1.5 bg-bg border border-border hover:border-border-hover text-text-main text-xs font-semibold rounded-md transition-colors"
+            className={`inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-white font-semibold transition-all shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 ${
+              isCompact ? 'h-12 px-8 text-sm rounded-xl' : 'h-16 px-12 text-lg rounded-2xl'
+            }`}
           >
-            Pilih File
+            <Upload className={isCompact ? 'w-4 h-4' : 'w-5 h-5'} strokeWidth={2.5} />
+            {isCompact ? 'Tambah File' : 'Pilih File'}
           </button>
+        )}
+
+        <p className={`text-text-muted ${isCompact ? 'mt-3 text-xs' : 'mt-5 text-base'}`}>
+          {isDragActive
+            ? <span className="text-primary font-semibold">Lepas file di sini</span>
+            : isError
+              ? 'File tidak didukung'
+              : 'atau seret file ke sini'}
+        </p>
+
+        {!isCompact && !isError && (
+          <p className="mt-2 text-xs text-text-muted/70">
+            Maksimal {maxSizeMB}MB per file
+            {multiple && ' • Mendukung multi-file'}
+          </p>
         )}
       </div>
 
       {fileRejections.length > 0 && (
-        <div className="mt-3 space-y-1 bg-red-500/10 border border-red-500/20 rounded-md p-3">
+        <div className="mt-4 space-y-1 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
           {fileRejections.map(({ file, errors }) => (
             <p key={file.name} className="text-xs font-medium text-red-500">
               <span className="font-bold">{file.name}:</span> {errors.map((e) => {
@@ -167,26 +167,28 @@ export default function DropZone({
       )}
 
       {files.length > 0 && (
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {files.map((file, idx) => (
             <li
               key={file.id || file.name}
-              className="flex items-center gap-3 bg-bg border border-border rounded-md px-3 py-2.5 hover:border-border-hover transition-colors"
+              className="group relative bg-surface border border-border rounded-2xl overflow-hidden hover:border-border-hover hover:shadow-lg hover:shadow-black/30 transition-all"
             >
-              <FileThumb file={file} />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-text-main truncate">{file.name}</p>
-                <p className="text-[10px] text-text-muted mt-0.5">{formatFileSize(file.size)}</p>
+              <div className="aspect-[3/4] bg-bg">
+                <FileThumb file={file} className="w-full h-full" pdfScale={0.55} iconClassName="w-10 h-10" bare />
               </div>
               {onRemove && (
                 <button
                   onClick={(e) => { e.stopPropagation(); onRemove(file.id || idx); }}
-                  className="text-text-muted hover:bg-surface hover:text-red-400 rounded-md p-1.5 transition-colors"
-                  aria-label="Hapus file"
+                  aria-label={`Hapus ${file.name}`}
+                  className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-black/60 hover:bg-red-500 text-white flex items-center justify-center backdrop-blur-sm transition-colors md:opacity-0 md:group-hover:opacity-100"
                 >
                   <X className="w-4 h-4" />
                 </button>
               )}
+              <div className="p-3 border-t border-border">
+                <p className="text-sm font-medium text-text-main truncate" title={file.name}>{file.name}</p>
+                <p className="text-xs text-text-muted mt-0.5">{formatFileSize(file.size)}</p>
+              </div>
             </li>
           ))}
         </ul>

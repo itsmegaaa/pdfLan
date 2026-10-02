@@ -14,13 +14,13 @@ function SortableFile({ file, id, onRemove }) {
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 }}
-      className="flex items-center gap-3 bg-surface border border-border rounded-xl px-4 py-3"
+      className="flex items-center gap-4 bg-surface border border-border rounded-2xl px-5 py-4 hover:border-border-hover transition-colors"
     >
-      <button {...attributes} {...listeners} className="text-text-muted hover:text-text-muted cursor-grab active:cursor-grabbing">
-        <GripVertical className="w-4 h-4" />
+      <button {...attributes} {...listeners} aria-label="Seret untuk mengubah urutan" className="text-text-muted hover:text-text-main cursor-grab active:cursor-grabbing">
+        <GripVertical className="w-5 h-5" />
       </button>
-      <div className="w-12 h-16 flex-shrink-0 bg-surface-hover rounded-lg overflow-hidden">
-        <PdfThumbnail file={file} pageNumber={1} scale={0.15} className="w-full h-full" />
+      <div className="w-20 h-28 flex-shrink-0 bg-bg rounded-xl overflow-hidden border border-border">
+        <PdfThumbnail file={file} pageNumber={1} scale={0.4} className="w-full h-full [&_canvas]:w-full [&_canvas]:h-full [&_canvas]:object-cover" />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-white truncate">{file.name}</p>

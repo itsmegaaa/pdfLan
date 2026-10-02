@@ -9,12 +9,17 @@ function extOf(name) {
 const SHEET_EXTS = ['.xls', '.xlsx', '.csv', '.ods'];
 
 /**
- * Thumbnail kecil untuk satu file di daftar file.
+ * Thumbnail satu file.
  * - PDF → render halaman pertama via PdfThumbnail (gagal → ikon)
- * - Gambar → <img> dari object URL
+ * - Gambar → <img> dari object URL (gagal → ikon)
  * - Spreadsheet → ikon khusus, sisanya ikon dokumen
+ *
+ * @param {string} [props.className='w-10 h-12'] - ukuran container
+ * @param {number} [props.pdfScale=0.3] - skala render PDF (naikkan untuk tampilan besar)
+ * @param {string} [props.iconClassName='w-4 h-4'] - ukuran ikon fallback
+ * @param {boolean} [props.bare=false] - tanpa border/background sendiri (untuk dipakai di dalam kartu)
  */
-export default function FileThumb({ file, className = 'w-10 h-12' }) {
+export default function FileThumb({ file, className = 'w-10 h-12', pdfScale = 0.3, iconClassName = 'w-4 h-4', bare = false }) {
   const [imgUrl, setImgUrl] = useState(null);
   const [pdfFailed, setPdfFailed] = useState(false);
   const [imgFailed, setImgFailed] = useState(false);
@@ -41,22 +46,22 @@ export default function FileThumb({ file, className = 'w-10 h-12' }) {
 
   return (
     <div
-      className={`${className} rounded overflow-hidden bg-surface border border-border flex-shrink-0 flex items-center justify-center`}
+      className={`${className} ${bare ? '' : 'rounded overflow-hidden bg-surface border border-border'} flex-shrink-0 flex items-center justify-center overflow-hidden`}
     >
       {isPdf && !pdfFailed ? (
         <PdfThumbnail
           file={file}
           pageNumber={1}
-          scale={0.25}
+          scale={pdfScale}
           className="w-full h-full [&_canvas]:w-full [&_canvas]:h-full [&_canvas]:object-cover [&_canvas]:rounded-none"
           onError={() => setPdfFailed(true)}
         />
       ) : isImage && imgUrl && !imgFailed ? (
         <img src={imgUrl} alt={file.name} className="w-full h-full object-cover" loading="lazy" onError={() => setImgFailed(true)} />
       ) : isSheet ? (
-        <FileSpreadsheet className="w-4 h-4 text-green-400" />
+        <FileSpreadsheet className={`${iconClassName} text-green-400`} />
       ) : (
-        <FileText className="w-4 h-4 text-primary" />
+        <FileText className={`${iconClassName} text-primary`} />
       )}
     </div>
   );

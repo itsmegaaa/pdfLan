@@ -266,7 +266,7 @@ export default function ToolLayout({
     const doneCount = batchState.items.filter((i) => i.status === 'done').length;
     const errCount = batchState.items.filter((i) => i.status === 'error').length;
     return (
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-12 md:py-16">
         <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-main mb-6 transition-colors">
           <ChevronLeft className="w-3.5 h-3.5" />
           Kembali ke Semua Tools
@@ -581,7 +581,7 @@ export default function ToolLayout({
   // ── Error screen ──
   if (error && !isProcessing) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-12 md:py-16">
         <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-main mb-6 transition-colors">
           <ChevronLeft className="w-3.5 h-3.5" />
           Kembali ke Semua Tools
@@ -613,7 +613,7 @@ export default function ToolLayout({
 
   // â”€â”€ Upload screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-12 md:py-16">
       {/* Back */}
       <Link
         to="/"
@@ -624,9 +624,9 @@ export default function ToolLayout({
       </Link>
 
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-text-main mb-1 tracking-tight">{title}</h1>
-        <p className="text-xs text-text-muted">{description}</p>
+      <div className="mb-10 md:mb-12 text-center">
+        <h1 className="text-3xl md:text-[42px] leading-tight font-semibold text-text-main tracking-tight">{title}</h1>
+        {description && <p className="text-base md:text-lg text-text-muted mt-4 max-w-2xl mx-auto">{description}</p>}
       </div>
 
       {/* DropZone */}
@@ -657,32 +657,17 @@ export default function ToolLayout({
 
       {/* Action button */}
       {files.length > 0 && (
-        <button
-          onClick={handleProcess}
-          className="mt-5 w-full py-2.5 bg-primary hover:bg-primary-hover
-            text-text-main font-semibold text-xs rounded-md transition-colors"
-        >
-          {batch ? `${actionLabel} (${files.length} file)` : actionLabel}
-        </button>
+        <div className="mt-10 flex justify-center">
+          <button
+            onClick={handleProcess}
+            className="w-full sm:w-auto sm:min-w-[320px] h-14 px-10 bg-primary hover:bg-primary-hover
+              text-white font-semibold text-base rounded-2xl shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all"
+          >
+            {batch ? `${actionLabel} (${files.length} file)` : actionLabel}
+          </button>
+        </div>
       )}
 
-      {/* Cara menggunakan */}
-      <div className="mt-8 pt-6 border-t border-border">
-        <p className="text-xs font-semibold text-text-main mb-3">Cara menggunakan</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {[
-            { n: '1', t: hideDropZone ? 'Masukkan URL' : 'Pilih file', d: hideDropZone ? 'Tempel tautan halaman web yang ingin dikonversi.' : 'Klik atau seret file ke area upload di atas.' },
-            { n: '2', t: actionLabel, d: 'Atur opsi bila ada, lalu tekan tombol proses.' },
-            { n: '3', t: 'Unduh hasil', d: 'File hasil siap diunduh ke perangkat Anda.' },
-          ].map((s) => (
-            <div key={s.n} className="p-3 bg-surface border border-border rounded-md">
-              <p className="text-[11px] font-bold text-primary mb-1">Langkah {s.n}</p>
-              <p className="text-xs font-semibold text-text-main">{s.t}</p>
-              <p className="text-[11px] text-text-muted mt-0.5 leading-relaxed">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
