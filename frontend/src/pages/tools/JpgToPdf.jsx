@@ -4,11 +4,11 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PDFDocument } from 'pdf-lib';
-import { GripVertical, X, CheckCircle, Download, RefreshCw } from 'lucide-react';
+import { GripVertical, X, Plus } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
 import DropZone from '../../components/DropZone';
 import { Link } from 'react-router-dom';
-import { formatFileSize, downloadBlob } from '../../utils/fileHelpers';
+import { formatFileSize, downloadBlob, validateFiles } from '../../utils/fileHelpers';
 import ProgressBar from '../../components/ProgressBar';
 
 function SortableImage({ item, onRemove }) {
@@ -20,7 +20,7 @@ function SortableImage({ item, onRemove }) {
       <div {...attributes} {...listeners} className="absolute top-2 left-2 z-10 cursor-grab active:cursor-grabbing bg-black/40 rounded p-1">
         <GripVertical className="w-3 h-3 text-white" />
       </div>
-      <button onClick={() => onRemove(item.id)} className="absolute top-2 right-2 z-10 bg-black/40 rounded p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <button onClick={() => onRemove(item.id)} aria-label={`Hapus ${item.name}`} className="absolute top-2 right-2 z-10 bg-black/40 rounded p-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
         <X className="w-3 h-3 text-white hover:text-red-400" />
       </button>
       <img src={item.url} alt={item.name} className="w-full aspect-[3/4] object-cover" />
@@ -34,6 +34,13 @@ export default function JpgToPdf() {
   const [items, setItems] = useState([]);
   const [orientation, setOrientation] = useState('auto'); // 'auto' | 'portrait' | 'landscape'
   const [margin, setMargin] = useState(0);
+  const inputRef = useRef(null);
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const addMore = (rawFiles) => {
+    const { accepted } = validateFiles(rawFiles, { 'image/*': ['.jpg', '.jpeg', '.png'] }, 50, true);
+    if (accepted.length > 0) addImages(accepted);
+  };
 
   const addImages = (files) => {
     const newItems = files.map((f, i) => ({
@@ -124,7 +131,9 @@ export default function JpgToPdf() {
 
   return (
     <ToolLayout title="JPG to PDF" description="Upload beberapa gambar dan gabungkan menjadi satu PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true} onFilesAdded={addImages}>
-      <DropZone onFiles={addImages} accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} variant={items.length > 0 ? "compact" : "default"} />
+      {items.length === 0 && (
+        <DropZone onFiles={addImages} accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} />
+      )}
 
       {items.length > 0 && (
         <div className="mt-6 space-y-4">
@@ -139,15 +148,35 @@ export default function JpgToPdf() {
           </div>
 
           {/* Grid */}
+          <input
+            type="file" ref={inputRef} className="hidden" accept=".jpg,.jpeg,.png" multiple
+            onChange={(e) => { if (e.target.files?.length) addMore(Array.from(e.target.files)); e.target.value = null; }}
+          />
+          <div
+            className={`rounded-2xl transition-all ${isDragActive ? 'ring-2 ring-primary bg-primary/5 p-3' : ''}`}
+            onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(true); }}
+            onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); }}
+            onDrop={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); if (e.dataTransfer.files?.length) addMore(Array.from(e.dataTransfer.files)); }}
+          >
           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={items.map((x) => x.id)} strategy={rectSortingStrategy}>
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
                 {items.map((item) => (
                   <SortableImage key={item.id} item={item} onRemove={removeItem} />
                 ))}
+                <button
+                  onClick={() => inputRef.current?.click()}
+                  aria-label="Tambah gambar"
+                  className="aspect-[3/4] rounded-xl border-2 border-dashed border-border hover:border-primary flex flex-col items-center justify-center gap-1.5 text-text-muted hover:text-primary transition-colors"
+                >
+                  <Plus className="w-7 h-7" />
+                  <span className="text-xs font-medium">Tambah</span>
+                </button>
               </div>
             </SortableContext>
           </DndContext>
+          </div>
 
           <button onClick={handleProcess}
             className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-semibold rounded-md transition-colors shadow-md shadow-red-900/20">

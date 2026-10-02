@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, Crop, Wand2, RotateCw, Zap, Download, Image as ImageIcon, Check } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
-import DropZone from '../../components/DropZone';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { downloadBlob } from '../../utils/fileHelpers';

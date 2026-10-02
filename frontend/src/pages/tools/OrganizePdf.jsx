@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { GripVertical, Trash2, RotateCw } from 'lucide-react';
+import { GripVertical, Trash2, RotateCw, Plus } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
 import PdfThumbnail from '../../components/PdfThumbnail';
 import DropZone from '../../components/DropZone';
@@ -40,6 +40,8 @@ export default function OrganizePdf() {
   const { startProcess, setProgress, setResult, setError, reset, isProcessing, progress, result } = useToolStore();
   const [pages, setPages] = useState([]);
   const [file, setFile] = useState(null);
+  const inputRef = useRef(null);
+  const [isDragActive, setIsDragActive] = useState(false);
   const [pageCount, setPageCount] = useState(0);
 
   const loadPages = async (f) => {
@@ -96,10 +98,22 @@ export default function OrganizePdf() {
     <ToolLayout title="Organize PDF" description="Urutkan, hapus, atau putar halaman PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true} onFilesAdded={(f) => loadPages(f[0])}>
       {/* Pages Workspace */}
       {pages.length > 0 && (
-        <div className="space-y-4 mb-8">
+        <div
+          className={`space-y-4 mb-8 rounded-2xl transition-all ${isDragActive ? 'ring-2 ring-primary bg-primary/5 p-4' : ''}`}
+          onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(true); }}
+          onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); }}
+          onDrop={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); if (e.dataTransfer.files?.length) loadPages(e.dataTransfer.files[0]); }}
+        >
           <div className="flex items-center justify-between">
             <p className="text-sm text-text-muted"><strong className="text-text-main">{pages.length}</strong> halaman ({file?.name})</p>
             <div className="flex gap-2">
+              <button
+                onClick={() => inputRef.current?.click()}
+                className="px-3 py-1.5 bg-surface-hover text-text-muted hover:text-text-main rounded-md text-xs transition-colors inline-flex items-center gap-1.5"
+              >
+                <Plus className="w-3.5 h-3.5" /> Ganti File
+              </button>
               <button
                 onClick={() => { setPages([]); setFile(null); reset(); }}
                 className="px-3 py-1.5 bg-surface-hover text-text-muted hover:text-text-main rounded-md text-xs transition-colors"
@@ -127,15 +141,15 @@ export default function OrganizePdf() {
         </div>
       )}
 
-      {/* DropZone for uploading or replacing PDF */}
-      <div className={pages.length > 0 ? "pt-6 border-t border-border" : ""}>
-        {pages.length > 0 && (
-          <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
-            Ganti / Drag & Drop File PDF Baru:
-          </p>
-        )}
-        <DropZone onFiles={(f) => loadPages(f[0])} accept={{ 'application/pdf': ['.pdf'] }} multiple={false} variant={pages.length > 0 ? "compact" : "default"} />
-      </div>
+      {/* Upload awal */}
+      {pages.length === 0 && (
+        <DropZone onFiles={(f) => loadPages(f[0])} accept={{ 'application/pdf': ['.pdf'] }} multiple={false} />
+      )}
+      {/* Ganti file: hidden input */}
+      <input
+        type="file" ref={inputRef} className="hidden" accept=".pdf"
+        onChange={(e) => { if (e.target.files?.length) loadPages(e.target.files[0]); e.target.value = null; }}
+      />
     </ToolLayout>
   );
 }

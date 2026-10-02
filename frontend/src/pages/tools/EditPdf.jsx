@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { GripVertical, Trash2, RotateCw, CheckCircle, Download, RefreshCw } from 'lucide-react';
+import { GripVertical, Trash2, RotateCw, Plus } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
-import { downloadBlob } from '../../utils/fileHelpers';
+import { downloadBlob, validateFiles } from '../../utils/fileHelpers';
 import PdfThumbnail from '../../components/PdfThumbnail';
 import DropZone from '../../components/DropZone';
 import ProgressBar from '../../components/ProgressBar';
@@ -47,6 +47,13 @@ function SortablePage({ page, onDelete, onRotate }) {
 export default function EditPdf() {
   const { startProcess, setProgress, setResult, setError, reset, isProcessing, progress, result } = useToolStore();
   const [pages, setPages] = useState([]);
+  const inputRef = useRef(null);
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const tambahPdf = (rawFiles) => {
+    const { accepted } = validateFiles(rawFiles, { 'application/pdf': ['.pdf'] }, 50, true);
+    if (accepted.length > 0) addFiles(accepted);
+  };
 
   const addFiles = async (files) => {
     let newPages = [];
@@ -161,15 +168,29 @@ export default function EditPdf() {
         </div>
       )}
 
-      {/* DropZone for uploading initial or subsequent PDFs */}
-      <div className={pages.length > 0 ? "pt-6 border-t border-border" : ""}>
-        {pages.length > 0 && (
-          <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
-            Tambah / Drag & Drop File PDF Lainnya:
-          </p>
-        )}
-        <DropZone onFiles={addFiles} accept={{ 'application/pdf': ['.pdf'] }} multiple={true} variant={pages.length > 0 ? "compact" : "default"} />
-      </div>
+      {/* Tambah PDF: tampil hanya saat awal; sesudahnya jadi tombol subtle */}
+      {pages.length === 0 ? (
+        <DropZone onFiles={addFiles} accept={{ 'application/pdf': ['.pdf'] }} multiple={true} />
+      ) : (
+        <div
+          className={`rounded-2xl transition-all ${isDragActive ? 'ring-2 ring-primary bg-primary/5 p-3' : ''}`}
+          onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(true); }}
+          onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); }}
+          onDrop={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); if (e.dataTransfer.files?.length) tambahPdf(Array.from(e.dataTransfer.files)); }}
+        >
+          <input
+            type="file" ref={inputRef} className="hidden" accept=".pdf" multiple
+            onChange={(e) => { if (e.target.files?.length) tambahPdf(Array.from(e.target.files)); e.target.value = null; }}
+          />
+          <button
+            onClick={() => inputRef.current?.click()}
+            className="w-full py-4 border-2 border-dashed border-border hover:border-primary rounded-2xl text-text-muted hover:text-primary text-sm font-medium transition-colors inline-flex items-center justify-center gap-2"
+          >
+            <Plus className="w-4 h-4" /> Tambah PDF {isDragActive && <span className="text-primary font-semibold">— lepas di sini</span>}
+          </button>
+        </div>
+      )}
     </ToolLayout>
   );
 }
