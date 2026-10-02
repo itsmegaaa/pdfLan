@@ -1,5 +1,5 @@
 import { FileText, Shield, Trash2, Zap, ArrowUp, BookOpen, ExternalLink, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { TOOLS } from '../constants/tools';
 
 function GithubIcon({ className = 'w-3.5 h-3.5' }) {
@@ -15,6 +15,8 @@ export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
 
   const organizeTools = TOOLS.filter((t) => t.category === 'organize' || t.category === 'edit');
   const convertTools = TOOLS.filter((t) => t.category === 'convert');
@@ -24,7 +26,8 @@ export default function Footer() {
   return (
     <footer className="bg-[#0c0e15] border-t border-[#232738] mt-20 text-[#8b90b0] relative">
       
-      {/* ── Top Highlight Feature Pillars ────────────────────────────── */}
+      {/* ── Top Highlight Feature Pillars (hanya di home; halaman tool minimalis) ── */}
+      {isHome && (
       <div className="border-b border-[#232738] bg-[#10121a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -71,6 +74,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Main Footer Grid ─────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

@@ -82,14 +82,15 @@ export default function DropZone({
   const isError = fileRejections.length > 0;
 
   let containerClass = 'relative flex flex-col items-center justify-center rounded-3xl text-center cursor-pointer transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ';
-  containerClass += isCompact ? 'min-h-[110px] py-5 px-4 ' : 'min-h-[320px] py-14 px-6 ';
+  containerClass += isCompact ? 'min-h-[110px] py-5 px-4 ' : 'min-h-[400px] py-16 px-6 ';
 
   if (isError) {
     containerClass += 'border-2 border-dashed border-red-500/60 bg-red-500/5 ';
   } else if (isDragActive) {
     containerClass += 'border-2 border-dashed border-primary bg-primary/10 scale-[1.01] ';
   } else {
-    containerClass += 'border-2 border-dashed border-transparent hover:border-border bg-surface/40 ';
+    // resting: invisible seperti iLovePDF — hanya tombol + teks di whitespace
+    containerClass += isCompact ? 'border-2 border-dashed border-transparent hover:border-border bg-surface/40 ' : 'border-2 border-dashed border-transparent bg-transparent ';
   }
 
   return (
