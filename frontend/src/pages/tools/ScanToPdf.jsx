@@ -98,30 +98,10 @@ export default function ScanToPdf() {
       processed: false
     }));
 
-    setTimeout(() => autoDetectAndProcess(wc), 150);
+    setTimeout(() => handleAutoDetect(wc), 100);
   };
 
-  // Alur otomatis: deteksi sudut dokumen lalu langsung luruskan.
-  // Kalau OpenCV belum siap / deteksi gagal, pakai sudut default.
-  const autoDetectAndProcess = (wc) => {
-    let corners = null;
-    if (cvLoaded) {
-      try {
-        corners = detectCorners(wc);
-      } catch (err) {
-        corners = null;
-      }
-    }
-    if (!corners || corners.length !== 4) {
-      const w = wc.width, h = wc.height;
-      const m = Math.round(Math.min(w, h) * 0.03);
-      corners = [[m,m],[w-m,m],[w-m,h-m],[m,h-m]];
-    }
-    setEditorState(st => ({ ...st, corners }));
-    doProcess(corners);
-  };
-
-  // Luruskan gambar dengan sudut yang diberikan (dipakai otomatis & manual)
+  // Luruskan gambar dengan sudut yang diberikan (dipakai tombol manual)
   const doProcess = (corners) => {
     if (!workCanvasRef.current || !corners || corners.length !== 4) return;
     try {
