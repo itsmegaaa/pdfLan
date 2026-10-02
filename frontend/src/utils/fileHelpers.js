@@ -58,3 +58,45 @@ export function makeOutputName(originalName, newExt) {
   const base = originalName.slice(0, originalName.lastIndexOf('.')) || originalName;
   return `${base}${newExt}`;
 }
+
+/**
+ * Filter and validate raw files from Drag & Drop or Input events
+ * @param {File[]} rawFiles
+ * @param {Object} accept - e.g. {'application/pdf': ['.pdf']}
+ * @param {number} maxSizeMB
+ * @param {boolean} multiple
+ * @returns {{accepted: File[], rejections: Object[]}}
+ */
+export function validateFiles(rawFiles, accept, maxSizeMB, multiple = false) {
+  const maxSize = maxSizeMB * 1024 * 1024;
+  let accepted = [];
+  let rejections = [];
+
+  for (let file of rawFiles) {
+    const errors = [];
+    
+    if (accept) {
+      const ext = '.' + file.name.split('.').pop().toLowerCase();
+      const allowedExts = Object.values(accept).flat().map(e => e.toLowerCase());
+      if (!allowedExts.includes(ext) && !Object.keys(accept).includes(file.type)) {
+        errors.push({ code: 'file-invalid-type' });
+      }
+    }
+
+    if (file.size > maxSize) {
+      errors.push({ code: 'file-too-large' });
+    }
+
+    if (errors.length > 0) {
+      rejections.push({ file, errors });
+    } else {
+      accepted.push(file);
+    }
+  }
+
+  if (!multiple && accepted.length > 1) {
+    accepted = [accepted[0]];
+  }
+
+  return { accepted, rejections };
+}

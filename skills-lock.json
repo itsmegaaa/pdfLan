@@ -6,6 +6,18 @@
       "sourceType": "github",
       "skillPath": "skills/goey-toast/SKILL.md",
       "computedHash": "ef55e1239a77ece0bf67b641d672593fcc43172aeefe2a20ee895c12552c8c33"
+    },
+    "no-slop-ui": {
+      "source": "LeoStehlik/no-slop-ui",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "ca45325bb1353314f2c9672476249afbadb138fdb16ad78cb1f4292da8edd071"
+    },
+    "unslop": {
+      "source": "theclaymethod/unslop",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "8ca396860f862af43867a029f5f340427a685d0943f1b72e286913234d025442"
     }
   }
 }

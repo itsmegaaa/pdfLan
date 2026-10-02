@@ -74,18 +74,18 @@ export default function PdfForms() {
           <div className="space-y-3">
             {!loaded ? (
               <button onClick={loadFields}
-                className="px-4 py-2 bg-[#22263a] hover:bg-[#2d3150] text-white rounded-xl text-sm transition-colors">
+                className="px-4 py-2 bg-surface-hover hover:bg-[#2d3150] text-white rounded-xl text-sm transition-colors">
                 🔍 Deteksi Form Fields
               </button>
             ) : fields.length === 0 ? (
-              <p className="text-sm text-[#8b90b0]">Tidak ada form fields yang terdeteksi di PDF ini.</p>
+              <p className="text-sm text-text-muted">Tidak ada form fields yang terdeteksi di PDF ini.</p>
             ) : (
               <div className="space-y-3">
-                <p className="text-sm text-[#8b90b0]">{fields.length} form fields ditemukan:</p>
+                <p className="text-sm text-text-muted">{fields.length} form fields ditemukan:</p>
                 {fields.map((f, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <span className="text-xs text-[#4a5070] w-40 truncate">{f.name}</span>
-                    <span className="text-xs text-[#4a5070] bg-[#22263a] px-2 py-0.5 rounded">{f.type.replace('PDF', '')}</span>
+                    <span className="text-xs text-text-muted w-40 truncate">{f.name}</span>
+                    <span className="text-xs text-text-muted bg-surface-hover px-2 py-0.5 rounded">{f.type.replace('PDF', '')}</span>
                     {f.type.includes('CheckBox') ? (
                       <input type="checkbox"
                         onChange={(e) => setFields((p) => p.map((x, j) => j === i ? { ...x, value: String(e.target.checked) } : x))}
@@ -93,7 +93,7 @@ export default function PdfForms() {
                     ) : (
                       <input type="text" value={f.value} placeholder="Isi nilai..."
                         onChange={(e) => setFields((p) => p.map((x, j) => j === i ? { ...x, value: e.target.value } : x))}
-                        className="flex-1 px-3 py-1.5 bg-[#22263a] border border-[#2d3150] rounded-lg text-white text-sm focus:outline-none focus:border-[#e2001a]/50" />
+                        className="flex-1 px-3 py-1.5 bg-surface-hover border border-border rounded-lg text-white text-sm focus:outline-none focus:border-[#e2001a]/50" />
                     )}
                   </div>
                 ))}
@@ -105,3 +105,4 @@ export default function PdfForms() {
     />
   );
 }
+

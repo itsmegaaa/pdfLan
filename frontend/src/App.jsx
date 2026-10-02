@@ -51,10 +51,16 @@ function PageLoader() {
 function StoreResetter() {
   const location = useLocation();
   const reset = useToolStore((state) => state.reset);
+  const setFiles = useToolStore((state) => state.setFiles);
 
   useEffect(() => {
     reset();
-  }, [location.pathname, reset]);
+    if (location.state?.chainFile) {
+      setFiles([location.state.chainFile]);
+      // Remove chainFile from history state so it doesn't persist on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.pathname, location.state, reset, setFiles]);
 
   return null;
 }

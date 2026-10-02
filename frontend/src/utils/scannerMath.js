@@ -1,3 +1,4 @@
+﻿/* global cv */
 export const MAX_OUTPUT = 2400;
 
 export function detectCorners(canvas) {
@@ -449,3 +450,4 @@ export function applyCanvasEffects(srcCanvas, dstCanvas, brightness, contrast, b
 
     ctx.putImageData(imgData, 0, 0);
 }
+

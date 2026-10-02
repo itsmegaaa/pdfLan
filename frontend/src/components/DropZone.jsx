@@ -1,15 +1,16 @@
-import { useDropzone } from 'react-dropzone';
-import { Upload, X, FileText } from 'lucide-react';
-import { formatFileSize } from '../utils/fileHelpers';
+﻿import { useState, useRef } from 'react';
+import { Upload, X, FileText, AlertCircle } from 'lucide-react';
+import { formatFileSize, validateFiles } from '../utils/fileHelpers';
 
 /**
  * @param {Object} props
  * @param {function} props.onFiles - callback(File[])
- * @param {Object} [props.accept] - react-dropzone accept object
+ * @param {Object} [props.accept] - object mapped to extensions string e.g. {'application/pdf': ['.pdf']}
  * @param {boolean} [props.multiple]
  * @param {number} [props.maxSizeMB]
  * @param {File[]} [props.files]
  * @param {function} [props.onRemove] - callback(index)
+ * @param {'default' | 'compact'} [props.variant='default']
  */
 export default function DropZone({
   onFiles,
@@ -18,94 +19,160 @@ export default function DropZone({
   maxSizeMB = 50,
   files = [],
   onRemove,
+  variant = 'default',
 }) {
-  const maxSize = maxSizeMB * 1024 * 1024;
+  const inputRef = useRef(null);
+  
+  const [isDragActive, setIsDragActive] = useState(false);
+  const [fileRejections, setFileRejections] = useState([]);
+  
+  const acceptAttr = accept ? Object.values(accept).flat().join(',') : '';
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
-    onDrop: (accepted) => onFiles(accepted),
-    accept,
-    multiple,
-    maxSize,
-  });
+  const processFiles = (rawFiles) => {
+    const { accepted, rejections } = validateFiles(rawFiles, accept, maxSizeMB, multiple);
+    setFileRejections(rejections);
+    if (accepted.length > 0) onFiles(accepted);
+  };
+
+  const onDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(true);
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFiles(Array.from(e.dataTransfer.files));
+    }
+  };
+
+  const onClick = () => {
+    inputRef.current?.click();
+  };
+
+  const onInputChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      processFiles(Array.from(e.target.files));
+    }
+    e.target.value = null;
+  };
+
+  const isError = fileRejections.length > 0;
+
+  let containerClass = "relative flex flex-col items-center justify-center border rounded-md p-4 text-center cursor-pointer transition-colors duration-150 ";
+  if (variant === 'compact') containerClass += "min-h-[120px] ";
+  else containerClass += "min-h-[200px] ";
+
+  let iconClass = "flex items-center justify-center rounded-md border transition-colors ";
+  if (variant === 'compact') iconClass += "w-8 h-8 mb-2 ";
+  else iconClass += "w-10 h-10 mb-3 ";
+
+  if (isError) {
+    containerClass += "border-red-500 border-solid bg-red-500/10 ";
+    iconClass += "border-red-500/50 bg-red-500/20 text-red-500 ";
+  } else if (isDragActive) {
+    containerClass += "border-primary border-solid bg-primary/10 text-primary ";
+    iconClass += "border-primary bg-primary/20 text-primary ";
+  } else {
+    containerClass += "border-border border-dashed bg-surface hover:border-border-hover hover:bg-surface-hover text-text-main ";
+    iconClass += "border-border bg-bg text-text-muted ";
+  }
 
   return (
     <div className="w-full">
-      {/* Drop area */}
       <div
-        {...getRootProps()}
-        className={`
-          relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer
-          transition-all duration-200
-          ${isDragActive
-            ? 'border-[#e2001a] bg-red-900/10 scale-[1.01]'
-            : 'border-[#2d3150] bg-[#1a1d27] hover:border-[#e2001a]/60 hover:bg-[#1e2235]'
-          }
-        `}
+        className={containerClass}
+        onDragEnter={onDragEnter}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        onClick={onClick}
       >
-        <input {...getInputProps()} />
+        <input 
+          type="file" 
+          ref={inputRef}
+          onChange={onInputChange}
+          accept={acceptAttr}
+          multiple={multiple}
+          className="hidden" 
+        />
 
-        <div className="flex flex-col items-center gap-4">
-          <div className={`
-            w-16 h-16 rounded-2xl flex items-center justify-center
-            ${isDragActive ? 'bg-[#e2001a]/20' : 'bg-[#22263a]'}
-            transition-colors
-          `}>
-            <Upload className={`w-7 h-7 ${isDragActive ? 'text-[#e2001a]' : 'text-[#8b90b0]'}`} />
-          </div>
+        <div className={iconClass}>
+          {isError ? <AlertCircle className={variant === 'compact' ? "w-4 h-4" : "w-5 h-5"} /> : <Upload className={variant === 'compact' ? "w-4 h-4" : "w-5 h-5"} />}
+        </div>
 
-          <div>
-            <p className="text-base font-semibold text-white mb-1">
-              {isDragActive ? 'Lepas file di sini…' : 'Klik atau drag file ke sini'}
-            </p>
-            <p className="text-sm text-[#8b90b0]">
-              Ukuran maksimal {maxSizeMB}MB
-              {multiple ? ' · Bisa pilih beberapa file' : ''}
-            </p>
-          </div>
+        <p className={`font-semibold mb-1 ${variant === 'compact' ? 'text-xs' : 'text-sm'}`}>
+          {isDragActive 
+            ? 'Lepas file di sini' 
+            : isError 
+              ? 'File tidak didukung' 
+              : 'Pilih atau seret dokumen ke sini'
+          }
+        </p>
+        
+        <p className={`text-text-muted ${variant === 'compact' ? 'text-[10px]' : 'text-xs'}`}>
+          Maksimal {maxSizeMB}MB per file
+          {multiple && ' • Mendukung multi-file'}
+        </p>
 
+        {!isDragActive && !isError && variant !== 'compact' && (
           <button
             type="button"
-            className="px-5 py-2 bg-[#e2001a] hover:bg-[#b8001a] text-white text-sm font-semibold rounded-xl transition-colors shadow-lg shadow-red-900/30"
+            onClick={(e) => { e.stopPropagation(); onClick(); }}
+            className="mt-4 px-4 py-1.5 bg-bg border border-border hover:border-border-hover text-text-main text-xs font-semibold rounded-md transition-colors"
           >
             Pilih File
           </button>
-        </div>
+        )}
       </div>
 
-      {/* Error messages */}
       {fileRejections.length > 0 && (
-        <div className="mt-3 space-y-1">
+        <div className="mt-3 space-y-1 bg-red-500/10 border border-red-500/20 rounded-md p-3">
           {fileRejections.map(({ file, errors }) => (
-            <p key={file.name} className="text-sm text-red-400">
-              {file.name}: {errors.map((e) => {
-                if (e.code === 'file-too-large') return `Ukuran melebihi ${maxSizeMB}MB`;
-                if (e.code === 'file-invalid-type') return 'Tipe file tidak didukung';
-                return e.message;
+            <p key={file.name} className="text-xs font-medium text-red-500">
+              <span className="font-bold">{file.name}:</span> {errors.map((e) => {
+                if (e.code === 'file-too-large') return `Ukuran melebihi batas ${maxSizeMB}MB`;
+                if (e.code === 'file-invalid-type') return 'Format file tidak didukung';
+                return 'Gagal memuat file';
               }).join(', ')}
             </p>
           ))}
         </div>
       )}
 
-      {/* File list */}
       {files.length > 0 && (
         <ul className="mt-4 space-y-2">
           {files.map((file, idx) => (
             <li
               key={`${file.name}-${idx}`}
-              className="flex items-center gap-3 bg-[#1a1d27] border border-[#2d3150] rounded-xl px-4 py-3"
+              className="flex items-center gap-3 bg-bg border border-border rounded-md px-3 py-2.5 hover:border-border-hover transition-colors"
             >
-              <div className="w-8 h-8 bg-[#22263a] rounded-lg flex items-center justify-center flex-shrink-0">
-                <FileText className="w-4 h-4 text-[#e2001a]" />
+              <div className="w-8 h-8 bg-surface rounded flex items-center justify-center flex-shrink-0 text-primary border border-border/60">
+                <FileText className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">{file.name}</p>
-                <p className="text-xs text-[#8b90b0]">{formatFileSize(file.size)}</p>
+                <p className="text-xs font-semibold text-text-main truncate">{file.name}</p>
+                <p className="text-[10px] text-text-muted mt-0.5">{formatFileSize(file.size)}</p>
               </div>
               {onRemove && (
                 <button
                   onClick={(e) => { e.stopPropagation(); onRemove(file.id || idx); }}
-                  className="text-[#8b90b0] hover:text-red-400 transition-colors p-1"
+                  className="text-text-muted hover:bg-surface hover:text-red-400 rounded-md p-1.5 transition-colors"
                   aria-label="Hapus file"
                 >
                   <X className="w-4 h-4" />

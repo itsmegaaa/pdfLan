@@ -48,20 +48,21 @@ export default function CompressPdf() {
       actionLabel="Compress PDF"
       options={
         <div className="space-y-2">
-          <label className="block text-sm text-[#8b90b0] mb-2">Level Kompresi</label>
+          <label className="block text-sm text-text-muted mb-2">Level Kompresi</label>
           {LEVELS.map(({ v, label, desc }) => (
             <label key={v} className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-colors
-              ${level === v ? 'border-[#e2001a]/50 bg-[#e2001a]/5' : 'border-[#2d3150] hover:border-[#e2001a]/30'}`}>
+              ${level === v ? 'border-[#e2001a]/50 bg-primary/5' : 'border-border hover:border-[#e2001a]/30'}`}>
               <input type="radio" name="level" value={v} checked={level === v} onChange={() => setLevel(v)} className="mt-0.5 accent-[#e2001a]" />
               <div>
                 <p className="text-sm font-medium text-white">{label}</p>
-                <p className="text-xs text-[#8b90b0]">{desc}</p>
+                <p className="text-xs text-text-muted">{desc}</p>
               </div>
             </label>
           ))}
-          {files[0] && <p className="text-xs text-[#4a5070] mt-2">Ukuran asli: {formatFileSize(files[0].size)}</p>}
+          {files[0] && <p className="text-xs text-text-muted mt-2">Ukuran asli: {formatFileSize(files[0].size)}</p>}
         </div>
       }
     />
   );
 }
+

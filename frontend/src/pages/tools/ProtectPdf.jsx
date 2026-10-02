@@ -46,20 +46,20 @@ export default function ProtectPdf() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-1">Password User *</label>
+              <label className="block text-sm text-text-muted mb-1">Password User *</label>
               <input type="password" value={userPass} onChange={(e) => setUserPass(e.target.value)}
                 placeholder="Password untuk membuka"
-                className="w-full px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
+                className="w-full px-4 py-2.5 bg-surface-hover border border-border rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
             </div>
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-1">Password Owner (opsional)</label>
+              <label className="block text-sm text-text-muted mb-1">Password Owner (opsional)</label>
               <input type="password" value={ownerPass} onChange={(e) => setOwnerPass(e.target.value)}
                 placeholder="Password pemilik"
-                className="w-full px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
+                className="w-full px-4 py-2.5 bg-surface-hover border border-border rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
             </div>
           </div>
           <div>
-            <label className="block text-sm text-[#8b90b0] mb-2">Izinkan pengguna untuk:</label>
+            <label className="block text-sm text-text-muted mb-2">Izinkan pengguna untuk:</label>
             {[{ k: 'print', label: 'Mencetak (Print)' }, { k: 'copy', label: 'Menyalin teks (Copy)' }, { k: 'edit', label: 'Mengedit konten' }].map(({ k, label }) => (
               <label key={k} className="flex items-center gap-2 mb-2 cursor-pointer">
                 <input type="checkbox" checked={perms[k]} onChange={(e) => setPerms((p) => ({ ...p, [k]: e.target.checked }))}
@@ -73,3 +73,4 @@ export default function ProtectPdf() {
     />
   );
 }
+

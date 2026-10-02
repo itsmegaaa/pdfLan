@@ -242,6 +242,9 @@ router.post('/convert/html-to-pdf', asyncHandler(async (req, res) => {
       timeout: 30000 // Maksimal 30 detik
     });
     await page.pdf({ path: outFile, format: 'A4', printBackground: true });
+  } catch (error) {
+    await fsp.rm(outFile, { force: true }).catch(() => {});
+    throw error;
   } finally {
     await browser.close();
   }
@@ -253,32 +256,42 @@ router.post('/convert/pdf-to-jpg', uploadMiddleware, asyncHandler(async (req, re
   const tempDir = path.join(OUTPUT_DIR, uuidv4());
   await fsp.mkdir(tempDir);
   
-  const jpgFiles = await popplerPdfToJpg(req.file.path, tempDir, 85);
-  
-  // Zip the files
-  const archiverModule = await import('archiver');
-  const ZipArchive = archiverModule.ZipArchive || archiverModule.default;
+  let zipFile;
+  try {
+    const jpgFiles = await popplerPdfToJpg(req.file.path, tempDir, 85);
+    
+    // Zip the files
+    const archiverModule = await import('archiver');
+    const ZipArchive = archiverModule.ZipArchive || archiverModule.default;
 
-  const zipFile = path.join(OUTPUT_DIR, `${uuidv4()}.zip`);
-  const output = fs.createWriteStream(zipFile);
-  const archive = new ZipArchive({ zlib: { level: 9 } });
-  
-  archive.pipe(output);
-  for (const jpg of jpgFiles) {
-    archive.file(jpg, { name: path.basename(jpg) });
+    zipFile = path.join(OUTPUT_DIR, `${uuidv4()}.zip`);
+    
+    try {
+      const output = fs.createWriteStream(zipFile);
+      const archive = new ZipArchive({ zlib: { level: 9 } });
+      
+      const streamPromise = new Promise((resolve, reject) => {
+        output.on('close', resolve);
+        output.on('error', reject);
+        archive.on('error', reject);
+      });
+
+      archive.pipe(output);
+      for (const jpg of jpgFiles) {
+        archive.file(jpg, { name: path.basename(jpg) });
+      }
+      await archive.finalize();
+      await streamPromise;
+    } catch (streamErr) {
+      if (zipFile) await fsp.rm(zipFile, { force: true }).catch(() => {});
+      throw streamErr;
+    }
+    
+    const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
+    res.json({ success: true, fileId: path.basename(zipFile), filename: `${baseName}_images.zip` });
+  } finally {
+    await fsp.rm(tempDir, { recursive: true, force: true }).catch(() => {});
   }
-  await archive.finalize();
-  
-  // Tunggu stream selesai
-  await new Promise((resolve, reject) => {
-    output.on('close', resolve);
-    output.on('error', reject);
-    archive.on('error', reject);
-  });
-  await fsp.rm(tempDir, { recursive: true, force: true });
-  
-  const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
-  res.json({ success: true, fileId: path.basename(zipFile), filename: `${baseName}_images.zip` });
 }));
 
 // ── IMAGE TOOLS ───────────────────────────────────────────────────
@@ -328,7 +341,12 @@ router.post('/image/remove-background', uploadMiddleware, asyncHandler(async (re
   const buffer = Buffer.from(await blob.arrayBuffer());
 
   const outFile = path.join(OUTPUT_DIR, `${uuidv4()}.png`);
-  await fsp.writeFile(outFile, buffer);
+  try {
+    await fsp.writeFile(outFile, buffer);
+  } catch (err) {
+    await fsp.rm(outFile, { force: true }).catch(() => {});
+    throw err;
+  }
 
   const baseName = req.file.originalname.replace(/\.[^/.]+$/, "");
   res.json({ success: true, fileId: path.basename(outFile), filename: `${baseName}-no-bg.png` });

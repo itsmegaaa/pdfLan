@@ -40,10 +40,13 @@ export default function AdvancedUploader() {
   // Menyimpan referensi instance uploader agar bisa di-retry/pause secara independen
   const uploaderRefs = useRef({});
 
+  const queueRef = useRef(queue);
+  useEffect(() => { queueRef.current = queue; }, [queue]);
+
   // Membersihkan object URL saat komponen unmount untuk mencegah memory leak
   useEffect(() => {
     return () => {
-      queue.forEach(item => {
+      queueRef.current.forEach(item => {
         if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
       });
     };

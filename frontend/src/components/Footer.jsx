@@ -1,4 +1,4 @@
-import { FileText, Shield, Trash2, Zap, ArrowUp, Sparkles, BookOpen, ExternalLink, Lock } from 'lucide-react';
+import { FileText, Shield, Trash2, Zap, ArrowUp, BookOpen, ExternalLink, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TOOLS } from '../constants/tools';
 
@@ -22,47 +22,47 @@ export default function Footer() {
   const imageTools = TOOLS.filter((t) => t.category === 'image');
 
   return (
-    <footer className="bg-[#0e101a] border-t border-[#23273d] mt-24 text-[#8b90b0] relative overflow-hidden">
+    <footer className="bg-[#0c0e15] border-t border-[#232738] mt-20 text-[#8b90b0] relative">
       
       {/* ── Top Highlight Feature Pillars ────────────────────────────── */}
-      <div className="border-b border-[#23273d]/80 bg-[#131624]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="border-b border-[#232738] bg-[#10121a]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             {/* Feature 1 */}
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#181c2e]/60 border border-[#2d3150]/40">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
-                <Shield className="w-5 h-5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-md bg-[#141724] border border-[#232738]">
+              <div className="w-8 h-8 rounded-md bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
+                <Shield className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white mb-1">100% Offline & Private</h4>
-                <p className="text-xs text-[#8288a6] leading-relaxed">
+                <h4 className="text-xs font-semibold text-white mb-0.5">100% Offline & Private</h4>
+                <p className="text-[11px] text-[#8288a6] leading-relaxed">
                   Dokumen diproses di komputer lokal / LAN. Tidak ada data yang diunggah ke cloud publik.
                 </p>
               </div>
             </div>
 
             {/* Feature 2 */}
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#181c2e]/60 border border-[#2d3150]/40">
-              <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0 text-red-400">
-                <Trash2 className="w-5 h-5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-md bg-[#141724] border border-[#232738]">
+              <div className="w-8 h-8 rounded-md bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0 text-red-400">
+                <Trash2 className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white mb-1">Auto-Cleanup Otomatis</h4>
-                <p className="text-xs text-[#8288a6] leading-relaxed">
+                <h4 className="text-xs font-semibold text-white mb-0.5">Auto-Cleanup Otomatis</h4>
+                <p className="text-[11px] text-[#8288a6] leading-relaxed">
                   Semua file sementara otomatis dihapus seketika setelah unduhan selesai agar hemat disk.
                 </p>
               </div>
             </div>
 
             {/* Feature 3 */}
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#181c2e]/60 border border-[#2d3150]/40">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 text-amber-400">
-                <Zap className="w-5 h-5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-md bg-[#141724] border border-[#232738]">
+              <div className="w-8 h-8 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 text-amber-400">
+                <Zap className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white mb-1">Native Engine Berkecepatan Tinggi</h4>
-                <p className="text-xs text-[#8288a6] leading-relaxed">
+                <h4 className="text-xs font-semibold text-white mb-0.5">Native Engine Berkecepatan Tinggi</h4>
+                <p className="text-[11px] text-[#8288a6] leading-relaxed">
                   Ditenagai LibreOffice, Ghostscript, QPDF, Poppler, dan OpenCV tanpa batasan kuota.
                 </p>
               </div>
@@ -73,16 +73,16 @@ export default function Footer() {
       </div>
 
       {/* ── Main Footer Grid ─────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8">
 
           {/* Col 1 & 2: Brand Information */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#e2001a] to-[#b30015] rounded-xl flex items-center justify-center shadow-lg shadow-red-950/40">
-                <FileText className="w-4 h-4 text-white" />
+          <div className="col-span-2 md:col-span-3 lg:col-span-2 space-y-3">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-7 h-7 bg-[#e2001a] rounded-md flex items-center justify-center text-white">
+                <FileText className="w-3.5 h-3.5" />
               </div>
-              <span className="font-extrabold text-xl text-white tracking-tight">
+              <span className="font-bold text-base text-white tracking-tight">
                 PDF<span className="text-[#e2001a]">Vault</span>
               </span>
             </Link>
@@ -91,9 +91,9 @@ export default function Footer() {
               Aplikasi pemroses dokumen PDF serbaguna untuk kebutuhan kantor dan pribadi. Dirancang mandiri (*self-hosted*), bebas kuota, dan menjaga kerahasiaan dokumen tanpa koneksi internet luar.
             </p>
 
-            {/* Server Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#151826] border border-[#282d46] text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            {/* Server Status */}
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#141724] border border-[#232738] text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               <span className="text-white font-medium">Local Host Ready</span>
               <span className="text-[#596082]">•</span>
               <span className="text-[#8b90b0]">v1.0.8</span>
@@ -109,7 +109,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               {organizeTools.slice(0, 7).map((tool) => (
                 <li key={tool.id}>
-                  <Link to={tool.route} className="hover:text-white hover:translate-x-0.5 inline-block transition-transform">
+                  <Link to={tool.route} className="hover:text-white transition-colors">
                     {tool.name}
                   </Link>
                 </li>
@@ -126,7 +126,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               {convertTools.slice(0, 7).map((tool) => (
                 <li key={tool.id}>
-                  <Link to={tool.route} className="hover:text-white hover:translate-x-0.5 inline-block transition-transform">
+                  <Link to={tool.route} className="hover:text-white transition-colors">
                     {tool.name}
                   </Link>
                 </li>
@@ -143,14 +143,14 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               {securityTools.map((tool) => (
                 <li key={tool.id}>
-                  <Link to={tool.route} className="hover:text-white hover:translate-x-0.5 inline-block transition-transform">
+                  <Link to={tool.route} className="hover:text-white transition-colors">
                     {tool.name}
                   </Link>
                 </li>
               ))}
               {imageTools.map((tool) => (
                 <li key={tool.id}>
-                  <Link to={tool.route} className="hover:text-white hover:translate-x-0.5 inline-block transition-transform text-purple-300 hover:text-purple-200">
+                  <Link to={tool.route} className="hover:text-white transition-colors text-purple-300 hover:text-purple-200">
                     {tool.name}
                   </Link>
                 </li>
@@ -166,9 +166,8 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link to="/changelog" className="hover:text-white flex items-center gap-1">
-                  <span>Changelog</span>
-                  <Sparkles className="w-3 h-3 text-amber-400" />
+                <Link to="/changelog" className="hover:text-white transition-colors">
+                  Changelog & Updates
                 </Link>
               </li>
               <li>
@@ -176,7 +175,7 @@ export default function Footer() {
                   href="https://github.com/itsmegaaa/pdfLan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white flex items-center gap-1"
+                  className="hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <span>GitHub Repository</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
@@ -187,7 +186,7 @@ export default function Footer() {
                   href="https://github.com/itsmegaaa/pdfLan/blob/main/docs/DOCKER_SETUP.md"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white flex items-center gap-1"
+                  className="hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <span>Docker Guide</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
@@ -198,7 +197,7 @@ export default function Footer() {
                   href="https://github.com/itsmegaaa/pdfLan/blob/main/docs/LOCAL_LAN_SETUP.md"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white flex items-center gap-1"
+                  className="hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <span>LAN Setup Guide</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
@@ -209,7 +208,7 @@ export default function Footer() {
                   href="https://github.com/itsmegaaa/pdfLan/issues"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white flex items-center gap-1"
+                  className="hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <span>Report an Issue</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
@@ -222,7 +221,7 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom Bar ──────────────────────────────────────────────── */}
-      <div className="border-t border-[#23273d]/80 bg-[#0a0c14] py-6">
+      <div className="border-t border-[#232738] bg-[#090a10] py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           
           <div className="flex items-center gap-3">
@@ -234,7 +233,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#181c2e] hover:bg-[#252b45] text-white transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#141724] border border-[#232738] text-[#8b90b0] hover:text-white hover:border-[#383e58] transition-colors"
               title="Kembali ke atas"
             >
               <span>Back to Top</span>

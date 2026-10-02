@@ -17,7 +17,7 @@ const MAX_CACHE_SIZE = 5;
  * @param {number} [props.scale=1.0]
  * @param {string} [props.className]
  */
-export default function PdfPreview({ file, pageNumber = 1, scale = 1.0, className = '' }) {
+export default function PdfThumbnail({ file, pageNumber = 1, scale = 1.0, className = '' }) {
   const canvasRef = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

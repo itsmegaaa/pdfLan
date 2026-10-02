@@ -43,13 +43,13 @@ export default function UnlockPdf() {
       actionLabel="Buka Kunci PDF"
       options={
         <div>
-          <label className="block text-sm text-[#8b90b0] mb-2">Password PDF</label>
+          <label className="block text-sm text-text-muted mb-2">Password PDF</label>
           <div className="relative">
             <input type={show ? 'text' : 'password'} value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Masukkan password..."
-              className="w-full px-4 py-2.5 pr-10 bg-[#22263a] border border-[#2d3150] rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
-            <button onClick={() => setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8b90b0] hover:text-white">
+              className="w-full px-4 py-2.5 pr-10 bg-surface-hover border border-border rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
+            <button onClick={() => setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-white">
               {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           </div>
@@ -58,3 +58,4 @@ export default function UnlockPdf() {
     />
   );
 }
+

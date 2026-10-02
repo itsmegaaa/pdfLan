@@ -1,0 +1,2412 @@
+{
+  "ManagerApp.cs": {
+    "mtime": 1788398351.3874977,
+    "ast_hash": "dad8d9e75a83982e039bfe9654cf1a53",
+    "semantic_hash": "dad8d9e75a83982e039bfe9654cf1a53"
+  },
+  "backend/adminRoutes.js": {
+    "mtime": 1788396309.6282885,
+    "ast_hash": "9e7892982d7f1823724ace8b48c135bb",
+    "semantic_hash": "9e7892982d7f1823724ace8b48c135bb"
+  },
+  "backend/index.js": {
+    "mtime": 1788410041.6502314,
+    "ast_hash": "825061c4c37f24b437cecc2b45cd35be",
+    "semantic_hash": "825061c4c37f24b437cecc2b45cd35be"
+  },
+  "backend/package.json": {
+    "mtime": 1788444843.8339913,
+    "ast_hash": "bacd21d57d85a53700573f8690b03e35",
+    "semantic_hash": ""
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Annot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff7ab2b9a1e4e298425d33b7edbf354e",
+    "semantic_hash": "ff7ab2b9a1e4e298425d33b7edbf354e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/AnnotStampImageHelper.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b7c7a4c65465b345d6cf9795e2a0b754",
+    "semantic_hash": "b7c7a4c65465b345d6cf9795e2a0b754"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Array.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d290da5dfa707c9df8f1a1361a511261",
+    "semantic_hash": "d290da5dfa707c9df8f1a1361a511261"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/BBoxOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9806a0647fdd4cdada0317570650d670",
+    "semantic_hash": "9806a0647fdd4cdada0317570650d670"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CMap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0a134fadc0572b951f346d5469b384cf",
+    "semantic_hash": "0a134fadc0572b951f346d5469b384cf"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CachedFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "facebb70ffb0722f3c5af885f513bd33",
+    "semantic_hash": "facebb70ffb0722f3c5af885f513bd33"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CairoFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "04997f36e34d4493e3f604387fd92e9f",
+    "semantic_hash": "04997f36e34d4493e3f604387fd92e9f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CairoOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "db242c98217e365814c5338584c94a1c",
+    "semantic_hash": "db242c98217e365814c5338584c94a1c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CairoRescaleBox.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "58ad38436e38dc28f04cc2bb301bb984",
+    "semantic_hash": "58ad38436e38dc28f04cc2bb301bb984"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Catalog.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "adcfe6964ae9c0b403eb953575812270",
+    "semantic_hash": "adcfe6964ae9c0b403eb953575812270"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CertificateInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0e3c490928254601b180418368ef8308",
+    "semantic_hash": "0e3c490928254601b180418368ef8308"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CharCodeToUnicode.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "859d5adda5d3490f276d2873ab728902",
+    "semantic_hash": "859d5adda5d3490f276d2873ab728902"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CharTypes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6993b048785314ca56718596965eda06",
+    "semantic_hash": "6993b048785314ca56718596965eda06"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CurlCachedFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "76c1bd9dcc534225b96f74082efb3aa1",
+    "semantic_hash": "76c1bd9dcc534225b96f74082efb3aa1"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/CurlPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c470dcc73bd9e503e2570ca900261fe6",
+    "semantic_hash": "c470dcc73bd9e503e2570ca900261fe6"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/DateInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "18d0288fa3f47042506ba1ac0eb86b4e",
+    "semantic_hash": "18d0288fa3f47042506ba1ac0eb86b4e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Decrypt.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d8f70ecd33dd5d84d980603df8567107",
+    "semantic_hash": "d8f70ecd33dd5d84d980603df8567107"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Dict.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "90f4c0c06d50219978c9948b5bae3feb",
+    "semantic_hash": "90f4c0c06d50219978c9948b5bae3feb"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Error.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "de517c65fe0edc9f8bb830413f0a39eb",
+    "semantic_hash": "de517c65fe0edc9f8bb830413f0a39eb"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/ErrorCodes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e9eaf67537a200ef041591a19115ee59",
+    "semantic_hash": "e9eaf67537a200ef041591a19115ee59"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/FDPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff7b44561b0bd99d4fd7fcf88327fa7d",
+    "semantic_hash": "ff7b44561b0bd99d4fd7fcf88327fa7d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/FILECacheLoader.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a7b9fad5ab35df13f724e77e816b9a4",
+    "semantic_hash": "2a7b9fad5ab35df13f724e77e816b9a4"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/FileSpec.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5007e426d266352ce08d598291dbbbd4",
+    "semantic_hash": "5007e426d266352ce08d598291dbbbd4"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/FontEncodingTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4e4611f986704c0dda898934531debc9",
+    "semantic_hash": "4e4611f986704c0dda898934531debc9"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/FontInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fc6a5061d09073561d3375796acc7288",
+    "semantic_hash": "fc6a5061d09073561d3375796acc7288"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Form.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ec3b5ac37b50b2002dfa8861e4a233a9",
+    "semantic_hash": "ec3b5ac37b50b2002dfa8861e4a233a9"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Function.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d12e5b04edfc497210002a7bc4646301",
+    "semantic_hash": "d12e5b04edfc497210002a7bc4646301"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Gfx.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1a4583919a5925b40dc2f53965201879",
+    "semantic_hash": "1a4583919a5925b40dc2f53965201879"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/GfxFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9b8ba09284e265c98d0a7bf39699bf5d",
+    "semantic_hash": "9b8ba09284e265c98d0a7bf39699bf5d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/GfxState.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "55f163fe2a6b8938bddf8e09ee43baef",
+    "semantic_hash": "55f163fe2a6b8938bddf8e09ee43baef"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/GfxState_helpers.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "39cf5d4e3503e536ac790b4072ae618f",
+    "semantic_hash": "39cf5d4e3503e536ac790b4072ae618f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/GlobalParams.h": {
+    "mtime": 1707060178.0,
+    "ast_hash": "810a70349780839f4967802e3dfb4bf3",
+    "semantic_hash": "810a70349780839f4967802e3dfb4bf3"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Hints.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d8ce3028748a91601f3456e471122f32",
+    "semantic_hash": "d8ce3028748a91601f3456e471122f32"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/JArithmeticDecoder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "cb3707d6e6465314c384bb91dd20e698",
+    "semantic_hash": "cb3707d6e6465314c384bb91dd20e698"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/JBIG2Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "47cbc015234fa5108e84f4bc9c3bacce",
+    "semantic_hash": "47cbc015234fa5108e84f4bc9c3bacce"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/JPEG2000Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e5630994605343f31f9f9fc4ec4e5b62",
+    "semantic_hash": "e5630994605343f31f9f9fc4ec4e5b62"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/JSInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8ca2b555703dcebe0bd320372cdd44a9",
+    "semantic_hash": "8ca2b555703dcebe0bd320372cdd44a9"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Lexer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "343b834337cde7057a3998edb6bb2e0c",
+    "semantic_hash": "343b834337cde7057a3998edb6bb2e0c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Linearization.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c17c1c29ed7e6e9d8349bf988c7dac46",
+    "semantic_hash": "c17c1c29ed7e6e9d8349bf988c7dac46"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Link.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b554b7720b6cd9b0208a84ee834cf690",
+    "semantic_hash": "b554b7720b6cd9b0208a84ee834cf690"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/LocalPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "73a78aaf9573603154393324608f0f56",
+    "semantic_hash": "73a78aaf9573603154393324608f0f56"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/MarkedContentOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d44cd68638997761babab64e42847670",
+    "semantic_hash": "d44cd68638997761babab64e42847670"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Movie.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6fc748f3a723558b78c91771415b904f",
+    "semantic_hash": "6fc748f3a723558b78c91771415b904f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/NameToCharCode.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9867ae1f40eb3cb515afd4fec819da7d",
+    "semantic_hash": "9867ae1f40eb3cb515afd4fec819da7d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/NameToUnicodeTable.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1c7096d2030e7dc0f39a57a7ab9dd049",
+    "semantic_hash": "1c7096d2030e7dc0f39a57a7ab9dd049"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Object.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5fd55b4ab454af5d210c171357d2b508",
+    "semantic_hash": "5fd55b4ab454af5d210c171357d2b508"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/OptionalContent.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e36371df6e6be5b511018e49af0dc8d9",
+    "semantic_hash": "e36371df6e6be5b511018e49af0dc8d9"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Outline.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c9f50c2cc2d2bbc2362209d47b3b8a4c",
+    "semantic_hash": "c9f50c2cc2d2bbc2362209d47b3b8a4c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/OutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b955ccaefd9172e109d520f2a271aae0",
+    "semantic_hash": "b955ccaefd9172e109d520f2a271aae0"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PDFDoc.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "84daa4e9832ce8a5fce1a69901bb3f2b",
+    "semantic_hash": "84daa4e9832ce8a5fce1a69901bb3f2b"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9f078c9358d68a1b80b894c07fb8e71a",
+    "semantic_hash": "9f078c9358d68a1b80b894c07fb8e71a"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PDFDocEncoding.h": {
+    "mtime": 1707060178.0,
+    "ast_hash": "18ee4d8c0b7e88fd0e5baf5838cc48e7",
+    "semantic_hash": "18ee4d8c0b7e88fd0e5baf5838cc48e7"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PDFDocFactory.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c8ece8058ecb3590ffcceafa3ed2e699",
+    "semantic_hash": "c8ece8058ecb3590ffcceafa3ed2e699"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PSOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6ea0b10683e97c23b4377bd58bf2c335",
+    "semantic_hash": "6ea0b10683e97c23b4377bd58bf2c335"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PSTokenizer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8ffd51a5425ad10c9fd05cf21210399d",
+    "semantic_hash": "8ffd51a5425ad10c9fd05cf21210399d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8467dccb01a40472ad59551df4f2c0bc",
+    "semantic_hash": "8467dccb01a40472ad59551df4f2c0bc"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PageTransition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "413d7b182ad36ff1a00107f82a5367d5",
+    "semantic_hash": "413d7b182ad36ff1a00107f82a5367d5"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Parser.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9c9658170b874d7ba60ce478bfe15e5e",
+    "semantic_hash": "9c9658170b874d7ba60ce478bfe15e5e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PopplerCache.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c6d58763ad1d7cab59d16a544bfac8c5",
+    "semantic_hash": "c6d58763ad1d7cab59d16a544bfac8c5"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/PreScanOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b70dc286380813312b1c6240ee71ad86",
+    "semantic_hash": "b70dc286380813312b1c6240ee71ad86"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/ProfileData.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f04aefdf669921b49985620189c18a06",
+    "semantic_hash": "f04aefdf669921b49985620189c18a06"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Rendition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "130cb7b65c4983866ece1e8c4f021a2f",
+    "semantic_hash": "130cb7b65c4983866ece1e8c4f021a2f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/SecurityHandler.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "eae4f32a81c39e987ed8bb36fc540943",
+    "semantic_hash": "eae4f32a81c39e987ed8bb36fc540943"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Sound.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5db51c173a026ad784a3b935d51aa4ba",
+    "semantic_hash": "5db51c173a026ad784a3b935d51aa4ba"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/SplashOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a97d1a0b4a5009bf2bda7b4ad0fcaf3",
+    "semantic_hash": "2a97d1a0b4a5009bf2bda7b4ad0fcaf3"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Stream-CCITT.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "29779bd6060e90bfc4e12f76f6a57376",
+    "semantic_hash": "29779bd6060e90bfc4e12f76f6a57376"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "98cd3f1b16a8b7b1d02cd14382dfd3da",
+    "semantic_hash": "98cd3f1b16a8b7b1d02cd14382dfd3da"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/StructElement.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "78763d615edac3fd4e42e08a1ebbd70d",
+    "semantic_hash": "78763d615edac3fd4e42e08a1ebbd70d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/StructTreeRoot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ebb39b5a049c6c84e77b0d910f8b5512",
+    "semantic_hash": "ebb39b5a049c6c84e77b0d910f8b5512"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/TextOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "883a57118a6fc693bf2ce638632d795d",
+    "semantic_hash": "883a57118a6fc693bf2ce638632d795d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UTF.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b981de7177e00c42a2a52bdaaad49eb2",
+    "semantic_hash": "b981de7177e00c42a2a52bdaaad49eb2"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeCClassTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ab61c2cab66924f0a4e17d928d4c5c71",
+    "semantic_hash": "ab61c2cab66924f0a4e17d928d4c5c71"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeCompTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1c25999c912486ed7c80583d7239948e",
+    "semantic_hash": "1c25999c912486ed7c80583d7239948e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeDecompTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "73284b8962a10641ccdfcca4912ab38c",
+    "semantic_hash": "73284b8962a10641ccdfcca4912ab38c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeMap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "85088805276159f318894cebde8df207",
+    "semantic_hash": "85088805276159f318894cebde8df207"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeMapFuncs.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "26f092fc4ab9c41a9775e25663602ff6",
+    "semantic_hash": "26f092fc4ab9c41a9775e25663602ff6"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeMapTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3b531c86c416fe201599e898b9f2dc6e",
+    "semantic_hash": "3b531c86c416fe201599e898b9f2dc6e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/UnicodeTypeTable.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b3d679434ce802c36602621797569c10",
+    "semantic_hash": "b3d679434ce802c36602621797569c10"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/ViewerPreferences.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7f626ffe3b31930475d043c450a256a5",
+    "semantic_hash": "7f626ffe3b31930475d043c450a256a5"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/XRef.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7f1fadc898e46e5abfe1cb2e60c52fee",
+    "semantic_hash": "7f1fadc898e46e5abfe1cb2e60c52fee"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-destination.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "04eeccc03009df99bcee9bc8b2b42284",
+    "semantic_hash": "04eeccc03009df99bcee9bc8b2b42284"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-document.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3a6e0435ad87fc80b139891754a35bdf",
+    "semantic_hash": "3a6e0435ad87fc80b139891754a35bdf"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-embedded-file.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff0f36a46445f99510b0d182920893e6",
+    "semantic_hash": "ff0f36a46445f99510b0d182920893e6"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-font-private.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fe0d918350fa4a1608ef87ba9a6d1bec",
+    "semantic_hash": "fe0d918350fa4a1608ef87ba9a6d1bec"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-font.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3a08da8ac95c2b2a2b8b0f3b4270dbbb",
+    "semantic_hash": "3a08da8ac95c2b2a2b8b0f3b4270dbbb"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-global.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b85d34fd633c6710c9c050f2f0970e52",
+    "semantic_hash": "b85d34fd633c6710c9c050f2f0970e52"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-image.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5246c4f1f10a6ccca6472a07b4307541",
+    "semantic_hash": "5246c4f1f10a6ccca6472a07b4307541"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-page-renderer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c770af8e8bb2b24c1c0ce98b61af5677",
+    "semantic_hash": "c770af8e8bb2b24c1c0ce98b61af5677"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-page-transition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a4df454202f32d6084436130b298337f",
+    "semantic_hash": "a4df454202f32d6084436130b298337f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "66f506e76aba3bc419dba3d5c0d39830",
+    "semantic_hash": "66f506e76aba3bc419dba3d5c0d39830"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-rectangle.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "90b2b5490168d43e7be534c18e684278",
+    "semantic_hash": "90b2b5490168d43e7be534c18e684278"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-toc.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9087d289484c7a9f52c4483491a1de63",
+    "semantic_hash": "9087d289484c7a9f52c4483491a1de63"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler-version.h": {
+    "mtime": 1707060218.0,
+    "ast_hash": "a4da635714d930f1382d0da5d9f39a08",
+    "semantic_hash": "a4da635714d930f1382d0da5d9f39a08"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/cpp/poppler_cpp_export.h": {
+    "mtime": 1707060218.0,
+    "ast_hash": "44736667e817a0cd135db831a3ff20b2",
+    "semantic_hash": "44736667e817a0cd135db831a3ff20b2"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiBase.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0eebcd7e90aff12b5593a5b88257f6e4",
+    "semantic_hash": "0eebcd7e90aff12b5593a5b88257f6e4"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiEncodings.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f130a80b176ceecad233a58d96c4d95a",
+    "semantic_hash": "f130a80b176ceecad233a58d96c4d95a"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiIdentifier.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "147099749eb4c088e304dd8cdd1e615b",
+    "semantic_hash": "147099749eb4c088e304dd8cdd1e615b"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiTrueType.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a9e504e9b5048d046147628f2456cdbb",
+    "semantic_hash": "a9e504e9b5048d046147628f2456cdbb"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiType1.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "26d255f6deec160a8b9178ae394ccabb",
+    "semantic_hash": "26d255f6deec160a8b9178ae394ccabb"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/fofi/FoFiType1C.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f965ff3d8a59903f3c856d7674e32c8d",
+    "semantic_hash": "f965ff3d8a59903f3c856d7674e32c8d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-action.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ed93db3e5e1e3b53b9866cfe1b75bd06",
+    "semantic_hash": "ed93db3e5e1e3b53b9866cfe1b75bd06"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-annot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2df6f59ae0895a7aa9f4737b625c138d",
+    "semantic_hash": "2df6f59ae0895a7aa9f4737b625c138d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-attachment.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1066c7d3bee97db7a99827a091b2bc44",
+    "semantic_hash": "1066c7d3bee97db7a99827a091b2bc44"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-date.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fb10aef31d9036e7493905c42c52218d",
+    "semantic_hash": "fb10aef31d9036e7493905c42c52218d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-document.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b204cd69db0586380d928653de93d378",
+    "semantic_hash": "b204cd69db0586380d928653de93d378"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-enums.h": {
+    "mtime": 1707060552.0,
+    "ast_hash": "3c467a14de0de93361a73aca9968a8a3",
+    "semantic_hash": "3c467a14de0de93361a73aca9968a8a3"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-features.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "312155aabd6e2d95cd4e430ff15cb262",
+    "semantic_hash": "312155aabd6e2d95cd4e430ff15cb262"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-form-field.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ffd686abd1deae7bb43ba9e2b7c3cee6",
+    "semantic_hash": "ffd686abd1deae7bb43ba9e2b7c3cee6"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-layer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9892f00ad1811b81a519a241732149db",
+    "semantic_hash": "9892f00ad1811b81a519a241732149db"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-macros.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "2cbde453ed39fcee1a2eeac42e1a83b1",
+    "semantic_hash": "2cbde453ed39fcee1a2eeac42e1a83b1"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-media.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "740f3fdff8df32f4bb3ad30126a1456e",
+    "semantic_hash": "740f3fdff8df32f4bb3ad30126a1456e"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-movie.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "29e4500d76a6fe6c0b7ddda2c23dfb98",
+    "semantic_hash": "29e4500d76a6fe6c0b7ddda2c23dfb98"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "88f406b522626927362dd162c84cf8c9",
+    "semantic_hash": "88f406b522626927362dd162c84cf8c9"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler-structure-element.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "397048aa8095aa6db18513cd6c8676e1",
+    "semantic_hash": "397048aa8095aa6db18513cd6c8676e1"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/glib/poppler.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "08d33265aa2fa5b875948f561803e97a",
+    "semantic_hash": "08d33265aa2fa5b875948f561803e97a"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/GooCheckedOps.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "58cb00ac3fda7a572ad0c96f76dc4a47",
+    "semantic_hash": "58cb00ac3fda7a572ad0c96f76dc4a47"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/GooLikely.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17dbfea07af50c35c96b507f6287e0f3",
+    "semantic_hash": "17dbfea07af50c35c96b507f6287e0f3"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/GooString.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17fb8baa093b9c5c055fdf76b27643c4",
+    "semantic_hash": "17fb8baa093b9c5c055fdf76b27643c4"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/GooTimer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6f6595e8f8bbe48508a7aee6b760080c",
+    "semantic_hash": "6f6595e8f8bbe48508a7aee6b760080c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/ImgWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d0615c01fb91a53e4fd1072aab234d0b",
+    "semantic_hash": "d0615c01fb91a53e4fd1072aab234d0b"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/JpegWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a358ac30ecfbe69a30622b628ec0b8a4",
+    "semantic_hash": "a358ac30ecfbe69a30622b628ec0b8a4"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/PNGWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "47ea4106d5a2ebc08b66fd8f5ca851fc",
+    "semantic_hash": "47ea4106d5a2ebc08b66fd8f5ca851fc"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/TiffWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9f11c96cc0873558a151c9064ebe2f5c",
+    "semantic_hash": "9f11c96cc0873558a151c9064ebe2f5c"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/gdir.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17792108e43f6de91836748ea19cae37",
+    "semantic_hash": "17792108e43f6de91836748ea19cae37"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/gfile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8d931628c336c8ca9a1faf797820fa56",
+    "semantic_hash": "8d931628c336c8ca9a1faf797820fa56"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/gmem.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "66d0dde8ae005a58b435cf0fa016ca99",
+    "semantic_hash": "66d0dde8ae005a58b435cf0fa016ca99"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/grandom.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1eee1f070fb52782bd13f507af161cf1",
+    "semantic_hash": "1eee1f070fb52782bd13f507af161cf1"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/goo/gstrtod.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "60c525be5344ffdad43de551b7297633",
+    "semantic_hash": "60c525be5344ffdad43de551b7297633"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/poppler-config.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "8fdd4cd22651a75d2e793587bc117995",
+    "semantic_hash": "8fdd4cd22651a75d2e793587bc117995"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/poppler_private_export.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "af0f8a9302688ae1111d2d87b608edb7",
+    "semantic_hash": "af0f8a9302688ae1111d2d87b608edb7"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/Splash.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4e3221fcc056a2ac081b1dadf531b8ed",
+    "semantic_hash": "4e3221fcc056a2ac081b1dadf531b8ed"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashBitmap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d5be90c17479463e1d25e0162efa86e7",
+    "semantic_hash": "d5be90c17479463e1d25e0162efa86e7"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashClip.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7b47657724c9ef4569eec1f532998543",
+    "semantic_hash": "7b47657724c9ef4569eec1f532998543"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashErrorCodes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a6de636b01fd5b338a6fb7cabb92505",
+    "semantic_hash": "2a6de636b01fd5b338a6fb7cabb92505"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFTFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d75a6b5fcf3091f13e49080c91f71d16",
+    "semantic_hash": "d75a6b5fcf3091f13e49080c91f71d16"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFTFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "515f4eb900f3e38815b1bdf82f520ba6",
+    "semantic_hash": "515f4eb900f3e38815b1bdf82f520ba6"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFTFontFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3e6627b156bcd6b37ffc6443017802c8",
+    "semantic_hash": "3e6627b156bcd6b37ffc6443017802c8"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7df47d1a5c9618bbb1ab381d97219e0d",
+    "semantic_hash": "7df47d1a5c9618bbb1ab381d97219e0d"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5465617efcd668d1b923e3b731fc6123",
+    "semantic_hash": "5465617efcd668d1b923e3b731fc6123"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFontFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a07753a89b26498ee802511053d95d18",
+    "semantic_hash": "a07753a89b26498ee802511053d95d18"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashFontFileID.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "044b78e93c94f2651a69d72bb1fb504f",
+    "semantic_hash": "044b78e93c94f2651a69d72bb1fb504f"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashGlyphBitmap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f9f822e3f75d252d86f04afb600a48bf",
+    "semantic_hash": "f9f822e3f75d252d86f04afb600a48bf"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashMath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4d02ee57324aab1d195e91eb752b7786",
+    "semantic_hash": "4d02ee57324aab1d195e91eb752b7786"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashPath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "aa44ea2c6a4fe2c3f498a29cc7491ce7",
+    "semantic_hash": "aa44ea2c6a4fe2c3f498a29cc7491ce7"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashPattern.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a2ca5dc1ab633ac7b8528b62c0e29896",
+    "semantic_hash": "a2ca5dc1ab633ac7b8528b62c0e29896"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashScreen.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6faeb97fd2c519b7993d9c4c7578c64b",
+    "semantic_hash": "6faeb97fd2c519b7993d9c4c7578c64b"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashState.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "98dbd6e14d7a8ed089b17037a0d81621",
+    "semantic_hash": "98dbd6e14d7a8ed089b17037a0d81621"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashTypes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "871b920489a7fc1912d5e132630a52be",
+    "semantic_hash": "871b920489a7fc1912d5e132630a52be"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashXPath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "97e382dd8c7064d2ef986b91bfe4d208",
+    "semantic_hash": "97e382dd8c7064d2ef986b91bfe4d208"
+  },
+  "backend/poppler/poppler-24.02.0/Library/include/poppler/splash/SplashXPathScanner.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d3c10f117001d96092e8711575d30bff",
+    "semantic_hash": "d3c10f117001d96092e8711575d30bff"
+  },
+  "backend/routes.js": {
+    "mtime": 1788444023.0896883,
+    "ast_hash": "7edc234130598fddcaeb41de30d138e8",
+    "semantic_hash": ""
+  },
+  "backend/tests/admin.test.js": {
+    "mtime": 1788370394.7521582,
+    "ast_hash": "8d4b2f4f0b8221d846c1f073b2a5dc56",
+    "semantic_hash": "8d4b2f4f0b8221d846c1f073b2a5dc56"
+  },
+  "backend/tests/api.test.js": {
+    "mtime": 1788368859.3958771,
+    "ast_hash": "6086c6f5cdb261e0b2410aa86e4cf837",
+    "semantic_hash": "6086c6f5cdb261e0b2410aa86e4cf837"
+  },
+  "backend/tests/security.test.js": {
+    "mtime": 1788368855.2762187,
+    "ast_hash": "06ba09e85bc74db7b04dc4e25594ade0",
+    "semantic_hash": "06ba09e85bc74db7b04dc4e25594ade0"
+  },
+  "backend/tests/ssrfGuard.test.js": {
+    "mtime": 1788368740.2382746,
+    "ast_hash": "752d47b3f1eca2998225a84b6b35304f",
+    "semantic_hash": "752d47b3f1eca2998225a84b6b35304f"
+  },
+  "backend/utils/binaries.js": {
+    "mtime": 1788445058.106202,
+    "ast_hash": "d7f698d0a10dad952120b6d6ee25dd67",
+    "semantic_hash": ""
+  },
+  "backend/utils/diagnostics.js": {
+    "mtime": 1788398556.3697867,
+    "ast_hash": "037323bc8030e1aa38796f9dc96555cb",
+    "semantic_hash": "037323bc8030e1aa38796f9dc96555cb"
+  },
+  "backend/utils/ssrfGuard.js": {
+    "mtime": 1788339136.2726188,
+    "ast_hash": "e8a53ae3e52416b051efe1d01cac044b",
+    "semantic_hash": "e8a53ae3e52416b051efe1d01cac044b"
+  },
+  "frontend/eslint.config.js": {
+    "mtime": 1780423836.2851655,
+    "ast_hash": "3aa4b57d7f08181d86bde52a4dcb7f22",
+    "semantic_hash": "3aa4b57d7f08181d86bde52a4dcb7f22"
+  },
+  "frontend/package.json": {
+    "mtime": 1788444836.8544893,
+    "ast_hash": "e00a1f7f7b43ea3a55869fded291a3c6",
+    "semantic_hash": ""
+  },
+  "frontend/postcss.config.js": {
+    "mtime": 1781489933.74925,
+    "ast_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0",
+    "semantic_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
+  },
+  "frontend/src/App.jsx": {
+    "mtime": 1788396334.147716,
+    "ast_hash": "a2b3f7572c0539d49f3d43192ca398ef",
+    "semantic_hash": "a2b3f7572c0539d49f3d43192ca398ef"
+  },
+  "frontend/src/components/AdvancedUploader/AdvancedUploader.jsx": {
+    "mtime": 1788443929.7377918,
+    "ast_hash": "7c997d9808d1019c7c75d1a6566a9fa3",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/DropZone.jsx": {
+    "mtime": 1788445086.7714322,
+    "ast_hash": "b1cfc64e9766cab115fe8609375c14f6",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ErrorBoundary.jsx": {
+    "mtime": 1782105035.822394,
+    "ast_hash": "a6ac7b4fd1ac6b9d5d436c1063c7296f",
+    "semantic_hash": "a6ac7b4fd1ac6b9d5d436c1063c7296f"
+  },
+  "frontend/src/components/Footer.jsx": {
+    "mtime": 1788419813.8476079,
+    "ast_hash": "c929f169d21a16ac91c804372cc0e2cf",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/Navbar.jsx": {
+    "mtime": 1788419755.2823362,
+    "ast_hash": "e517ebae940b73639f8a7afe134a1f1f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProgressBar.jsx": {
+    "mtime": 1788420417.221761,
+    "ast_hash": "d92e0af3de6fb7391a887b054b97e8fd",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ToolCard.jsx": {
+    "mtime": 1788420480.9061623,
+    "ast_hash": "af85fd4de94bb0eaa0c7a2d97cfef705",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ToolLayout.jsx": {
+    "mtime": 1788444077.778696,
+    "ast_hash": "b1d62a22a8007d151602514946f64d50",
+    "semantic_hash": ""
+  },
+  "frontend/src/constants/tools.js": {
+    "mtime": 1788368352.3429432,
+    "ast_hash": "529efd630a9310fc4b9e313383f6a81d",
+    "semantic_hash": "529efd630a9310fc4b9e313383f6a81d"
+  },
+  "frontend/src/main.jsx": {
+    "mtime": 1780423836.3871822,
+    "ast_hash": "e13723e2574429d9a6d849727e3ff695",
+    "semantic_hash": "e13723e2574429d9a6d849727e3ff695"
+  },
+  "frontend/src/pages/Changelog.jsx": {
+    "mtime": 1788445097.1702614,
+    "ast_hash": "5d480a2d5cc6d617fc202efd09d32a0d",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/Home.jsx": {
+    "mtime": 1788428071.451856,
+    "ast_hash": "267ead054de52a07c16b2f05523352dd",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/TestUpload.jsx": {
+    "mtime": 1783431565.6252968,
+    "ast_hash": "5af95df1fac6b22d6448675ee487c3d4",
+    "semantic_hash": "5af95df1fac6b22d6448675ee487c3d4"
+  },
+  "frontend/src/pages/tools/CompressPdf.jsx": {
+    "mtime": 1788428480.458448,
+    "ast_hash": "327f6a60a5806b82b371babc39b05f10",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/CropPdf.jsx": {
+    "mtime": 1788428480.5487168,
+    "ast_hash": "b1c5eba2130d3047ab9b38f01e26ce70",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/EditPdf.jsx": {
+    "mtime": 1788444064.016182,
+    "ast_hash": "116a358b92978dd3aa4533f4a1ddb041",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/ExcelToPdf.jsx": {
+    "mtime": 1781490576.0129735,
+    "ast_hash": "deeb30af49a9effc02f4a29e937e97b0",
+    "semantic_hash": "deeb30af49a9effc02f4a29e937e97b0"
+  },
+  "frontend/src/pages/tools/HtmlToPdf.jsx": {
+    "mtime": 1788429051.1513405,
+    "ast_hash": "eb905659be8a9792e087ff4180c2d316",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/JpgToPdf.jsx": {
+    "mtime": 1788443287.8118274,
+    "ast_hash": "c711908fad6ff1f861c18729f031f88c",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/MergePdf.jsx": {
+    "mtime": 1788428480.5625083,
+    "ast_hash": "d766887073e17cf7f44b1224f507aa27",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/OrganizePdf.jsx": {
+    "mtime": 1788444064.044102,
+    "ast_hash": "275d99ecb74f85fb3b227f54003f139d",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/PageNumbers.jsx": {
+    "mtime": 1788428480.572489,
+    "ast_hash": "2858a7ad51199e2d7b62f4a634abb63e",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/PdfForms.jsx": {
+    "mtime": 1788428480.579193,
+    "ast_hash": "403d9b98d50e5ec307ded353023b29e2",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/PdfToJpg.jsx": {
+    "mtime": 1781490576.0152147,
+    "ast_hash": "ffcec413ce71222a28c58977c83f45bf",
+    "semantic_hash": "ffcec413ce71222a28c58977c83f45bf"
+  },
+  "frontend/src/pages/tools/PdfToPdfa.jsx": {
+    "mtime": 1781490576.0152147,
+    "ast_hash": "bb7a2c81422100d98a8079fc0e9824f9",
+    "semantic_hash": "bb7a2c81422100d98a8079fc0e9824f9"
+  },
+  "frontend/src/pages/tools/PdfToPowerPoint.jsx": {
+    "mtime": 1781490575.987222,
+    "ast_hash": "af1f2f5c28c31def04aad91141932a36",
+    "semantic_hash": "af1f2f5c28c31def04aad91141932a36"
+  },
+  "frontend/src/pages/tools/PdfToWord.jsx": {
+    "mtime": 1781490575.9845698,
+    "ast_hash": "6ce5286fccc42aba877f4cd4df4292b6",
+    "semantic_hash": "6ce5286fccc42aba877f4cd4df4292b6"
+  },
+  "frontend/src/pages/tools/PowerPointToPdf.jsx": {
+    "mtime": 1781490576.009979,
+    "ast_hash": "3eca8b8143446efb086810826debf50e",
+    "semantic_hash": "3eca8b8143446efb086810826debf50e"
+  },
+  "frontend/src/pages/tools/ProtectPdf.jsx": {
+    "mtime": 1788428480.6058667,
+    "ast_hash": "3c96c7d16f8925ae1ebf19e640c4bfdc",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/RedactPdf.jsx": {
+    "mtime": 1788428480.6127107,
+    "ast_hash": "d161f868937e6bfc8dd5580d6de76938",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/RemoveBackground.jsx": {
+    "mtime": 1788368674.7347915,
+    "ast_hash": "109746e9ebaf4712a8839364aaabfc31",
+    "semantic_hash": "109746e9ebaf4712a8839364aaabfc31"
+  },
+  "frontend/src/pages/tools/RotatePdf.jsx": {
+    "mtime": 1788428480.6410336,
+    "ast_hash": "d6eeed2bb7ece0b9190d64f430c72c59",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/ScanToPdf.jsx": {
+    "mtime": 1788444114.9113574,
+    "ast_hash": "7294a5321a150bb1d833505730b2d18e",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/SignPdf.jsx": {
+    "mtime": 1788443939.655663,
+    "ast_hash": "f7216d25ac64f7f32843ae9350712092",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/SplitPdf.jsx": {
+    "mtime": 1788428480.6583521,
+    "ast_hash": "b1b682a6cca36e27e3edb7775cae3e71",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/UnlockPdf.jsx": {
+    "mtime": 1788428480.6862695,
+    "ast_hash": "6394fb30a2c4b8bd82392a3ea4f2cd55",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/WatermarkPdf.jsx": {
+    "mtime": 1788428480.6998444,
+    "ast_hash": "13161c9562dd766888fde1d324bbcb7b",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/tools/WordToPdf.jsx": {
+    "mtime": 1781490576.0078182,
+    "ast_hash": "e6c8db89b3703eb9cc96bcf4b68fd01d",
+    "semantic_hash": "e6c8db89b3703eb9cc96bcf4b68fd01d"
+  },
+  "frontend/src/pages/tools/_convertPages.jsx": {
+    "mtime": 1788368642.6507068,
+    "ast_hash": "4fc1f5b734c76bda510b9d17d6f295b9",
+    "semantic_hash": "4fc1f5b734c76bda510b9d17d6f295b9"
+  },
+  "frontend/src/store/useToolStore.js": {
+    "mtime": 1788368618.0550578,
+    "ast_hash": "93bd18a41810716ffb0d08a475ae2076",
+    "semantic_hash": "93bd18a41810716ffb0d08a475ae2076"
+  },
+  "frontend/src/utils/api.js": {
+    "mtime": 1788445028.1233578,
+    "ast_hash": "d74cfeb05f7d16aa7bd72cd07e2e58f9",
+    "semantic_hash": ""
+  },
+  "frontend/src/utils/clientPdf.js": {
+    "mtime": 1782105100.6449678,
+    "ast_hash": "0e3079892a4ba550b074b517767a4c05",
+    "semantic_hash": "0e3079892a4ba550b074b517767a4c05"
+  },
+  "frontend/src/utils/fileHelpers.js": {
+    "mtime": 1788371065.1123123,
+    "ast_hash": "efa9be9f9fda4e444bbf260e05a27b85",
+    "semantic_hash": "efa9be9f9fda4e444bbf260e05a27b85"
+  },
+  "frontend/src/utils/scannerMath.js": {
+    "mtime": 1788443254.8738358,
+    "ast_hash": "5267ab304997b5716bae16fea07207da",
+    "semantic_hash": ""
+  },
+  "frontend/src/utils/uploadServices.js": {
+    "mtime": 1783431475.9995852,
+    "ast_hash": "431bb1b859a337eb6be0f1a01aa59ba0",
+    "semantic_hash": "431bb1b859a337eb6be0f1a01aa59ba0"
+  },
+  "frontend/tailwind.config.js": {
+    "mtime": 1788428055.923939,
+    "ast_hash": "45851743d5a7fc0f5d0a58f6381d881e",
+    "semantic_hash": ""
+  },
+  "frontend/vite.config.js": {
+    "mtime": 1781512321.6822567,
+    "ast_hash": "5151fd4ce09ce80ab8992a5db4d972f0",
+    "semantic_hash": "5151fd4ce09ce80ab8992a5db4d972f0"
+  },
+  "manager-app/main.js": {
+    "mtime": 1782696480.8362153,
+    "ast_hash": "86ab7c416bb16e31e8933ee0ecafcdaf",
+    "semantic_hash": "86ab7c416bb16e31e8933ee0ecafcdaf"
+  },
+  "manager-app/package.json": {
+    "mtime": 1782446033.746563,
+    "ast_hash": "be1073744299fe6e41b7fc24b908b284",
+    "semantic_hash": "be1073744299fe6e41b7fc24b908b284"
+  },
+  "manager-app/preload.js": {
+    "mtime": 1782442396.5863707,
+    "ast_hash": "b696ceece852b6bdec0c844cad1b1f88",
+    "semantic_hash": "b696ceece852b6bdec0c844cad1b1f88"
+  },
+  "manager-app/renderer.js": {
+    "mtime": 1782445489.3402572,
+    "ast_hash": "662f79bcefbd5bb5013c50fdad79e26e",
+    "semantic_hash": "662f79bcefbd5bb5013c50fdad79e26e"
+  },
+  "package.json": {
+    "mtime": 1788404503.932887,
+    "ast_hash": "d8140a562ca38eb384ffa4e040fc5604",
+    "semantic_hash": "d8140a562ca38eb384ffa4e040fc5604"
+  },
+  "rename_script.js": {
+    "mtime": 1781497703.075579,
+    "ast_hash": "6d76d0e9884256e7fa29aab3c90e4ad0",
+    "semantic_hash": "6d76d0e9884256e7fa29aab3c90e4ad0"
+  },
+  "skills-lock.json": {
+    "mtime": 1788419503.3250177,
+    "ast_hash": "5bf0ebbae3c839163b21c054cef31dbd",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1788404512.8866646,
+    "ast_hash": "da91ca15c091844a6b20569588c95468",
+    "semantic_hash": "da91ca15c091844a6b20569588c95468"
+  },
+  "backend/poppler/poppler-24.02.0/share/poppler/CMakeLists.txt": {
+    "mtime": 1675252950.0,
+    "ast_hash": "4b88731818986c408c2166e971b281eb",
+    "semantic_hash": "4b88731818986c408c2166e971b281eb"
+  },
+  "docker-compose.yml": {
+    "mtime": 1788368414.3002355,
+    "ast_hash": "6d7c09a4e6ac34dac3543341bdf8b536",
+    "semantic_hash": "6d7c09a4e6ac34dac3543341bdf8b536"
+  },
+  "docs/DOCKER_SETUP.md": {
+    "mtime": 1788404917.7282321,
+    "ast_hash": "5731fa437d823d46106dce8f0e03e5f4",
+    "semantic_hash": "5731fa437d823d46106dce8f0e03e5f4"
+  },
+  "docs/LOCAL_LAN_SETUP.md": {
+    "mtime": 1788404910.2518232,
+    "ast_hash": "4c9d3debf9927f476461bc55237461e6",
+    "semantic_hash": "4c9d3debf9927f476461bc55237461e6"
+  },
+  "frontend/README.md": {
+    "mtime": 1780423836.3937757,
+    "ast_hash": "a28dc4cb878325f3e9e5649f3e1469ac",
+    "semantic_hash": "a28dc4cb878325f3e9e5649f3e1469ac"
+  },
+  "frontend/index.html": {
+    "mtime": 1781529620.377655,
+    "ast_hash": "95fdbe0596689da1cf8b674cdff77da8",
+    "semantic_hash": "95fdbe0596689da1cf8b674cdff77da8"
+  },
+  "manager-app/index.html": {
+    "mtime": 1782445479.8646047,
+    "ast_hash": "c9bebdd7f80b9764672dc1ca52c76e1d",
+    "semantic_hash": "c9bebdd7f80b9764672dc1ca52c76e1d"
+  },
+  "docs/tako_qr.png": {
+    "mtime": 1781533789.6957614,
+    "ast_hash": "e67e39dfaba330284b8935659b412779",
+    "semantic_hash": "e67e39dfaba330284b8935659b412779"
+  },
+  "frontend/public/favicon.svg": {
+    "mtime": 1781513338.8163857,
+    "ast_hash": "c6e8b9f8b5470c5046d0818f78ec8f8f",
+    "semantic_hash": "c6e8b9f8b5470c5046d0818f78ec8f8f"
+  },
+  "frontend/public/icons.svg": {
+    "mtime": 1780423836.502251,
+    "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
+    "semantic_hash": "3b4fcfcf393eca4d264dca4a4663bc37"
+  },
+  "frontend/src/assets/hero.png": {
+    "mtime": 1780423836.424042,
+    "ast_hash": "aead493361b27e7510691c5d7072dfc1",
+    "semantic_hash": "aead493361b27e7510691c5d7072dfc1"
+  },
+  "frontend/src/assets/react.svg": {
+    "mtime": 1780423836.5359206,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": "f0402b67b6ce880f65666bb49e841696"
+  },
+  "frontend/src/assets/vite.svg": {
+    "mtime": 1780423836.5615191,
+    "ast_hash": "9960a24288958394ac50e57ff638b036",
+    "semantic_hash": "9960a24288958394ac50e57ff638b036"
+  },
+  "DESIGN_SYSTEM.md": {
+    "mtime": 1788428580.224225,
+    "ast_hash": "5887ec05cbde008debd4a0c57459c5f3",
+    "semantic_hash": ""
+  },
+  "docs/BACKEND_ARCHITECTURE.md": {
+    "mtime": 1788442733.260562,
+    "ast_hash": "09d6de25e9b086a53eacfeaa58eade6b",
+    "semantic_hash": ""
+  },
+  "docs/FRONTEND_ARCHITECTURE.md": {
+    "mtime": 1788442825.4954154,
+    "ast_hash": "7480c9295eee5a203cc438f13a867df1",
+    "semantic_hash": ""
+  },
+  "docs/INDEX.md": {
+    "mtime": 1788442803.1388457,
+    "ast_hash": "826cf53ad05c68e283fb8b4a7eec5789",
+    "semantic_hash": ""
+  },
+  "docs/MANAGER_APP_ARCHITECTURE.md": {
+    "mtime": 1788442752.6250124,
+    "ast_hash": "8474f0cf48918bc5308e332c14fce421",
+    "semantic_hash": ""
+  },
+  "C:\\Project\\pdfLan\\ManagerApp.cs": {
+    "mtime": 1788398351.3874977,
+    "ast_hash": "dad8d9e75a83982e039bfe9654cf1a53",
+    "semantic_hash": "dad8d9e75a83982e039bfe9654cf1a53"
+  },
+  "C:\\Project\\pdfLan\\backend\\adminRoutes.js": {
+    "mtime": 1788396309.6282885,
+    "ast_hash": "9e7892982d7f1823724ace8b48c135bb",
+    "semantic_hash": "9e7892982d7f1823724ace8b48c135bb"
+  },
+  "C:\\Project\\pdfLan\\backend\\index.js": {
+    "mtime": 1788410041.6502314,
+    "ast_hash": "825061c4c37f24b437cecc2b45cd35be",
+    "semantic_hash": "825061c4c37f24b437cecc2b45cd35be"
+  },
+  "C:\\Project\\pdfLan\\backend\\package.json": {
+    "mtime": 1788444843.8339913,
+    "ast_hash": "bacd21d57d85a53700573f8690b03e35",
+    "semantic_hash": "bacd21d57d85a53700573f8690b03e35"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Annot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff7ab2b9a1e4e298425d33b7edbf354e",
+    "semantic_hash": "ff7ab2b9a1e4e298425d33b7edbf354e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\AnnotStampImageHelper.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b7c7a4c65465b345d6cf9795e2a0b754",
+    "semantic_hash": "b7c7a4c65465b345d6cf9795e2a0b754"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Array.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d290da5dfa707c9df8f1a1361a511261",
+    "semantic_hash": "d290da5dfa707c9df8f1a1361a511261"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\BBoxOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9806a0647fdd4cdada0317570650d670",
+    "semantic_hash": "9806a0647fdd4cdada0317570650d670"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CMap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0a134fadc0572b951f346d5469b384cf",
+    "semantic_hash": "0a134fadc0572b951f346d5469b384cf"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CachedFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "facebb70ffb0722f3c5af885f513bd33",
+    "semantic_hash": "facebb70ffb0722f3c5af885f513bd33"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CairoFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "04997f36e34d4493e3f604387fd92e9f",
+    "semantic_hash": "04997f36e34d4493e3f604387fd92e9f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CairoOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "db242c98217e365814c5338584c94a1c",
+    "semantic_hash": "db242c98217e365814c5338584c94a1c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CairoRescaleBox.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "58ad38436e38dc28f04cc2bb301bb984",
+    "semantic_hash": "58ad38436e38dc28f04cc2bb301bb984"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Catalog.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "adcfe6964ae9c0b403eb953575812270",
+    "semantic_hash": "adcfe6964ae9c0b403eb953575812270"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CertificateInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0e3c490928254601b180418368ef8308",
+    "semantic_hash": "0e3c490928254601b180418368ef8308"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CharCodeToUnicode.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "859d5adda5d3490f276d2873ab728902",
+    "semantic_hash": "859d5adda5d3490f276d2873ab728902"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CharTypes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6993b048785314ca56718596965eda06",
+    "semantic_hash": "6993b048785314ca56718596965eda06"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CurlCachedFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "76c1bd9dcc534225b96f74082efb3aa1",
+    "semantic_hash": "76c1bd9dcc534225b96f74082efb3aa1"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\CurlPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c470dcc73bd9e503e2570ca900261fe6",
+    "semantic_hash": "c470dcc73bd9e503e2570ca900261fe6"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\DateInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "18d0288fa3f47042506ba1ac0eb86b4e",
+    "semantic_hash": "18d0288fa3f47042506ba1ac0eb86b4e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Decrypt.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d8f70ecd33dd5d84d980603df8567107",
+    "semantic_hash": "d8f70ecd33dd5d84d980603df8567107"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Dict.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "90f4c0c06d50219978c9948b5bae3feb",
+    "semantic_hash": "90f4c0c06d50219978c9948b5bae3feb"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Error.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "de517c65fe0edc9f8bb830413f0a39eb",
+    "semantic_hash": "de517c65fe0edc9f8bb830413f0a39eb"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\ErrorCodes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e9eaf67537a200ef041591a19115ee59",
+    "semantic_hash": "e9eaf67537a200ef041591a19115ee59"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\FDPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff7b44561b0bd99d4fd7fcf88327fa7d",
+    "semantic_hash": "ff7b44561b0bd99d4fd7fcf88327fa7d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\FILECacheLoader.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a7b9fad5ab35df13f724e77e816b9a4",
+    "semantic_hash": "2a7b9fad5ab35df13f724e77e816b9a4"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\FileSpec.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5007e426d266352ce08d598291dbbbd4",
+    "semantic_hash": "5007e426d266352ce08d598291dbbbd4"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\FontEncodingTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4e4611f986704c0dda898934531debc9",
+    "semantic_hash": "4e4611f986704c0dda898934531debc9"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\FontInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fc6a5061d09073561d3375796acc7288",
+    "semantic_hash": "fc6a5061d09073561d3375796acc7288"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Form.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ec3b5ac37b50b2002dfa8861e4a233a9",
+    "semantic_hash": "ec3b5ac37b50b2002dfa8861e4a233a9"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Function.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d12e5b04edfc497210002a7bc4646301",
+    "semantic_hash": "d12e5b04edfc497210002a7bc4646301"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Gfx.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1a4583919a5925b40dc2f53965201879",
+    "semantic_hash": "1a4583919a5925b40dc2f53965201879"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\GfxFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9b8ba09284e265c98d0a7bf39699bf5d",
+    "semantic_hash": "9b8ba09284e265c98d0a7bf39699bf5d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\GfxState.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "55f163fe2a6b8938bddf8e09ee43baef",
+    "semantic_hash": "55f163fe2a6b8938bddf8e09ee43baef"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\GfxState_helpers.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "39cf5d4e3503e536ac790b4072ae618f",
+    "semantic_hash": "39cf5d4e3503e536ac790b4072ae618f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\GlobalParams.h": {
+    "mtime": 1707060178.0,
+    "ast_hash": "810a70349780839f4967802e3dfb4bf3",
+    "semantic_hash": "810a70349780839f4967802e3dfb4bf3"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Hints.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d8ce3028748a91601f3456e471122f32",
+    "semantic_hash": "d8ce3028748a91601f3456e471122f32"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\JArithmeticDecoder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "cb3707d6e6465314c384bb91dd20e698",
+    "semantic_hash": "cb3707d6e6465314c384bb91dd20e698"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\JBIG2Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "47cbc015234fa5108e84f4bc9c3bacce",
+    "semantic_hash": "47cbc015234fa5108e84f4bc9c3bacce"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\JPEG2000Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e5630994605343f31f9f9fc4ec4e5b62",
+    "semantic_hash": "e5630994605343f31f9f9fc4ec4e5b62"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\JSInfo.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8ca2b555703dcebe0bd320372cdd44a9",
+    "semantic_hash": "8ca2b555703dcebe0bd320372cdd44a9"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Lexer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "343b834337cde7057a3998edb6bb2e0c",
+    "semantic_hash": "343b834337cde7057a3998edb6bb2e0c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Linearization.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c17c1c29ed7e6e9d8349bf988c7dac46",
+    "semantic_hash": "c17c1c29ed7e6e9d8349bf988c7dac46"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Link.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b554b7720b6cd9b0208a84ee834cf690",
+    "semantic_hash": "b554b7720b6cd9b0208a84ee834cf690"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\LocalPDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "73a78aaf9573603154393324608f0f56",
+    "semantic_hash": "73a78aaf9573603154393324608f0f56"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\MarkedContentOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d44cd68638997761babab64e42847670",
+    "semantic_hash": "d44cd68638997761babab64e42847670"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Movie.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6fc748f3a723558b78c91771415b904f",
+    "semantic_hash": "6fc748f3a723558b78c91771415b904f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\NameToCharCode.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9867ae1f40eb3cb515afd4fec819da7d",
+    "semantic_hash": "9867ae1f40eb3cb515afd4fec819da7d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\NameToUnicodeTable.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1c7096d2030e7dc0f39a57a7ab9dd049",
+    "semantic_hash": "1c7096d2030e7dc0f39a57a7ab9dd049"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Object.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5fd55b4ab454af5d210c171357d2b508",
+    "semantic_hash": "5fd55b4ab454af5d210c171357d2b508"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\OptionalContent.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "e36371df6e6be5b511018e49af0dc8d9",
+    "semantic_hash": "e36371df6e6be5b511018e49af0dc8d9"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Outline.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c9f50c2cc2d2bbc2362209d47b3b8a4c",
+    "semantic_hash": "c9f50c2cc2d2bbc2362209d47b3b8a4c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\OutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b955ccaefd9172e109d520f2a271aae0",
+    "semantic_hash": "b955ccaefd9172e109d520f2a271aae0"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PDFDoc.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "84daa4e9832ce8a5fce1a69901bb3f2b",
+    "semantic_hash": "84daa4e9832ce8a5fce1a69901bb3f2b"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PDFDocBuilder.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9f078c9358d68a1b80b894c07fb8e71a",
+    "semantic_hash": "9f078c9358d68a1b80b894c07fb8e71a"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PDFDocEncoding.h": {
+    "mtime": 1707060178.0,
+    "ast_hash": "18ee4d8c0b7e88fd0e5baf5838cc48e7",
+    "semantic_hash": "18ee4d8c0b7e88fd0e5baf5838cc48e7"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PDFDocFactory.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c8ece8058ecb3590ffcceafa3ed2e699",
+    "semantic_hash": "c8ece8058ecb3590ffcceafa3ed2e699"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PSOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6ea0b10683e97c23b4377bd58bf2c335",
+    "semantic_hash": "6ea0b10683e97c23b4377bd58bf2c335"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PSTokenizer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8ffd51a5425ad10c9fd05cf21210399d",
+    "semantic_hash": "8ffd51a5425ad10c9fd05cf21210399d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8467dccb01a40472ad59551df4f2c0bc",
+    "semantic_hash": "8467dccb01a40472ad59551df4f2c0bc"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PageTransition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "413d7b182ad36ff1a00107f82a5367d5",
+    "semantic_hash": "413d7b182ad36ff1a00107f82a5367d5"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Parser.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9c9658170b874d7ba60ce478bfe15e5e",
+    "semantic_hash": "9c9658170b874d7ba60ce478bfe15e5e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PopplerCache.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c6d58763ad1d7cab59d16a544bfac8c5",
+    "semantic_hash": "c6d58763ad1d7cab59d16a544bfac8c5"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\PreScanOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b70dc286380813312b1c6240ee71ad86",
+    "semantic_hash": "b70dc286380813312b1c6240ee71ad86"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\ProfileData.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f04aefdf669921b49985620189c18a06",
+    "semantic_hash": "f04aefdf669921b49985620189c18a06"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Rendition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "130cb7b65c4983866ece1e8c4f021a2f",
+    "semantic_hash": "130cb7b65c4983866ece1e8c4f021a2f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\SecurityHandler.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "eae4f32a81c39e987ed8bb36fc540943",
+    "semantic_hash": "eae4f32a81c39e987ed8bb36fc540943"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Sound.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5db51c173a026ad784a3b935d51aa4ba",
+    "semantic_hash": "5db51c173a026ad784a3b935d51aa4ba"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\SplashOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a97d1a0b4a5009bf2bda7b4ad0fcaf3",
+    "semantic_hash": "2a97d1a0b4a5009bf2bda7b4ad0fcaf3"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Stream-CCITT.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "29779bd6060e90bfc4e12f76f6a57376",
+    "semantic_hash": "29779bd6060e90bfc4e12f76f6a57376"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\Stream.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "98cd3f1b16a8b7b1d02cd14382dfd3da",
+    "semantic_hash": "98cd3f1b16a8b7b1d02cd14382dfd3da"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\StructElement.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "78763d615edac3fd4e42e08a1ebbd70d",
+    "semantic_hash": "78763d615edac3fd4e42e08a1ebbd70d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\StructTreeRoot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ebb39b5a049c6c84e77b0d910f8b5512",
+    "semantic_hash": "ebb39b5a049c6c84e77b0d910f8b5512"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\TextOutputDev.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "883a57118a6fc693bf2ce638632d795d",
+    "semantic_hash": "883a57118a6fc693bf2ce638632d795d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UTF.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b981de7177e00c42a2a52bdaaad49eb2",
+    "semantic_hash": "b981de7177e00c42a2a52bdaaad49eb2"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeCClassTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ab61c2cab66924f0a4e17d928d4c5c71",
+    "semantic_hash": "ab61c2cab66924f0a4e17d928d4c5c71"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeCompTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1c25999c912486ed7c80583d7239948e",
+    "semantic_hash": "1c25999c912486ed7c80583d7239948e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeDecompTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "73284b8962a10641ccdfcca4912ab38c",
+    "semantic_hash": "73284b8962a10641ccdfcca4912ab38c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeMap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "85088805276159f318894cebde8df207",
+    "semantic_hash": "85088805276159f318894cebde8df207"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeMapFuncs.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "26f092fc4ab9c41a9775e25663602ff6",
+    "semantic_hash": "26f092fc4ab9c41a9775e25663602ff6"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeMapTables.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3b531c86c416fe201599e898b9f2dc6e",
+    "semantic_hash": "3b531c86c416fe201599e898b9f2dc6e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\UnicodeTypeTable.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b3d679434ce802c36602621797569c10",
+    "semantic_hash": "b3d679434ce802c36602621797569c10"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\ViewerPreferences.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7f626ffe3b31930475d043c450a256a5",
+    "semantic_hash": "7f626ffe3b31930475d043c450a256a5"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\XRef.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7f1fadc898e46e5abfe1cb2e60c52fee",
+    "semantic_hash": "7f1fadc898e46e5abfe1cb2e60c52fee"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-destination.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "04eeccc03009df99bcee9bc8b2b42284",
+    "semantic_hash": "04eeccc03009df99bcee9bc8b2b42284"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-document.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3a6e0435ad87fc80b139891754a35bdf",
+    "semantic_hash": "3a6e0435ad87fc80b139891754a35bdf"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-embedded-file.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ff0f36a46445f99510b0d182920893e6",
+    "semantic_hash": "ff0f36a46445f99510b0d182920893e6"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-font-private.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fe0d918350fa4a1608ef87ba9a6d1bec",
+    "semantic_hash": "fe0d918350fa4a1608ef87ba9a6d1bec"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-font.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3a08da8ac95c2b2a2b8b0f3b4270dbbb",
+    "semantic_hash": "3a08da8ac95c2b2a2b8b0f3b4270dbbb"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-global.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b85d34fd633c6710c9c050f2f0970e52",
+    "semantic_hash": "b85d34fd633c6710c9c050f2f0970e52"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-image.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5246c4f1f10a6ccca6472a07b4307541",
+    "semantic_hash": "5246c4f1f10a6ccca6472a07b4307541"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-page-renderer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "c770af8e8bb2b24c1c0ce98b61af5677",
+    "semantic_hash": "c770af8e8bb2b24c1c0ce98b61af5677"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-page-transition.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a4df454202f32d6084436130b298337f",
+    "semantic_hash": "a4df454202f32d6084436130b298337f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "66f506e76aba3bc419dba3d5c0d39830",
+    "semantic_hash": "66f506e76aba3bc419dba3d5c0d39830"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-rectangle.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "90b2b5490168d43e7be534c18e684278",
+    "semantic_hash": "90b2b5490168d43e7be534c18e684278"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-toc.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9087d289484c7a9f52c4483491a1de63",
+    "semantic_hash": "9087d289484c7a9f52c4483491a1de63"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler-version.h": {
+    "mtime": 1707060218.0,
+    "ast_hash": "a4da635714d930f1382d0da5d9f39a08",
+    "semantic_hash": "a4da635714d930f1382d0da5d9f39a08"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\cpp\\poppler_cpp_export.h": {
+    "mtime": 1707060218.0,
+    "ast_hash": "44736667e817a0cd135db831a3ff20b2",
+    "semantic_hash": "44736667e817a0cd135db831a3ff20b2"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiBase.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "0eebcd7e90aff12b5593a5b88257f6e4",
+    "semantic_hash": "0eebcd7e90aff12b5593a5b88257f6e4"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiEncodings.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f130a80b176ceecad233a58d96c4d95a",
+    "semantic_hash": "f130a80b176ceecad233a58d96c4d95a"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiIdentifier.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "147099749eb4c088e304dd8cdd1e615b",
+    "semantic_hash": "147099749eb4c088e304dd8cdd1e615b"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiTrueType.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a9e504e9b5048d046147628f2456cdbb",
+    "semantic_hash": "a9e504e9b5048d046147628f2456cdbb"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiType1.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "26d255f6deec160a8b9178ae394ccabb",
+    "semantic_hash": "26d255f6deec160a8b9178ae394ccabb"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\fofi\\FoFiType1C.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f965ff3d8a59903f3c856d7674e32c8d",
+    "semantic_hash": "f965ff3d8a59903f3c856d7674e32c8d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-action.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ed93db3e5e1e3b53b9866cfe1b75bd06",
+    "semantic_hash": "ed93db3e5e1e3b53b9866cfe1b75bd06"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-annot.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2df6f59ae0895a7aa9f4737b625c138d",
+    "semantic_hash": "2df6f59ae0895a7aa9f4737b625c138d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-attachment.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1066c7d3bee97db7a99827a091b2bc44",
+    "semantic_hash": "1066c7d3bee97db7a99827a091b2bc44"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-date.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "fb10aef31d9036e7493905c42c52218d",
+    "semantic_hash": "fb10aef31d9036e7493905c42c52218d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-document.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "b204cd69db0586380d928653de93d378",
+    "semantic_hash": "b204cd69db0586380d928653de93d378"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-enums.h": {
+    "mtime": 1707060552.0,
+    "ast_hash": "3c467a14de0de93361a73aca9968a8a3",
+    "semantic_hash": "3c467a14de0de93361a73aca9968a8a3"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-features.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "312155aabd6e2d95cd4e430ff15cb262",
+    "semantic_hash": "312155aabd6e2d95cd4e430ff15cb262"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-form-field.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "ffd686abd1deae7bb43ba9e2b7c3cee6",
+    "semantic_hash": "ffd686abd1deae7bb43ba9e2b7c3cee6"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-layer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9892f00ad1811b81a519a241732149db",
+    "semantic_hash": "9892f00ad1811b81a519a241732149db"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-macros.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "2cbde453ed39fcee1a2eeac42e1a83b1",
+    "semantic_hash": "2cbde453ed39fcee1a2eeac42e1a83b1"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-media.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "740f3fdff8df32f4bb3ad30126a1456e",
+    "semantic_hash": "740f3fdff8df32f4bb3ad30126a1456e"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-movie.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "29e4500d76a6fe6c0b7ddda2c23dfb98",
+    "semantic_hash": "29e4500d76a6fe6c0b7ddda2c23dfb98"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-page.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "88f406b522626927362dd162c84cf8c9",
+    "semantic_hash": "88f406b522626927362dd162c84cf8c9"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler-structure-element.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "397048aa8095aa6db18513cd6c8676e1",
+    "semantic_hash": "397048aa8095aa6db18513cd6c8676e1"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\glib\\poppler.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "08d33265aa2fa5b875948f561803e97a",
+    "semantic_hash": "08d33265aa2fa5b875948f561803e97a"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\GooCheckedOps.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "58cb00ac3fda7a572ad0c96f76dc4a47",
+    "semantic_hash": "58cb00ac3fda7a572ad0c96f76dc4a47"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\GooLikely.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17dbfea07af50c35c96b507f6287e0f3",
+    "semantic_hash": "17dbfea07af50c35c96b507f6287e0f3"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\GooString.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17fb8baa093b9c5c055fdf76b27643c4",
+    "semantic_hash": "17fb8baa093b9c5c055fdf76b27643c4"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\GooTimer.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6f6595e8f8bbe48508a7aee6b760080c",
+    "semantic_hash": "6f6595e8f8bbe48508a7aee6b760080c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\ImgWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d0615c01fb91a53e4fd1072aab234d0b",
+    "semantic_hash": "d0615c01fb91a53e4fd1072aab234d0b"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\JpegWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a358ac30ecfbe69a30622b628ec0b8a4",
+    "semantic_hash": "a358ac30ecfbe69a30622b628ec0b8a4"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\PNGWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "47ea4106d5a2ebc08b66fd8f5ca851fc",
+    "semantic_hash": "47ea4106d5a2ebc08b66fd8f5ca851fc"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\TiffWriter.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "9f11c96cc0873558a151c9064ebe2f5c",
+    "semantic_hash": "9f11c96cc0873558a151c9064ebe2f5c"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\gdir.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "17792108e43f6de91836748ea19cae37",
+    "semantic_hash": "17792108e43f6de91836748ea19cae37"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\gfile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "8d931628c336c8ca9a1faf797820fa56",
+    "semantic_hash": "8d931628c336c8ca9a1faf797820fa56"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\gmem.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "66d0dde8ae005a58b435cf0fa016ca99",
+    "semantic_hash": "66d0dde8ae005a58b435cf0fa016ca99"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\grandom.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "1eee1f070fb52782bd13f507af161cf1",
+    "semantic_hash": "1eee1f070fb52782bd13f507af161cf1"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\goo\\gstrtod.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "60c525be5344ffdad43de551b7297633",
+    "semantic_hash": "60c525be5344ffdad43de551b7297633"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\poppler-config.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "8fdd4cd22651a75d2e793587bc117995",
+    "semantic_hash": "8fdd4cd22651a75d2e793587bc117995"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\poppler_private_export.h": {
+    "mtime": 1707060216.0,
+    "ast_hash": "af0f8a9302688ae1111d2d87b608edb7",
+    "semantic_hash": "af0f8a9302688ae1111d2d87b608edb7"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\Splash.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4e3221fcc056a2ac081b1dadf531b8ed",
+    "semantic_hash": "4e3221fcc056a2ac081b1dadf531b8ed"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashBitmap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d5be90c17479463e1d25e0162efa86e7",
+    "semantic_hash": "d5be90c17479463e1d25e0162efa86e7"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashClip.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7b47657724c9ef4569eec1f532998543",
+    "semantic_hash": "7b47657724c9ef4569eec1f532998543"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashErrorCodes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "2a6de636b01fd5b338a6fb7cabb92505",
+    "semantic_hash": "2a6de636b01fd5b338a6fb7cabb92505"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFTFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d75a6b5fcf3091f13e49080c91f71d16",
+    "semantic_hash": "d75a6b5fcf3091f13e49080c91f71d16"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFTFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "515f4eb900f3e38815b1bdf82f520ba6",
+    "semantic_hash": "515f4eb900f3e38815b1bdf82f520ba6"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFTFontFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "3e6627b156bcd6b37ffc6443017802c8",
+    "semantic_hash": "3e6627b156bcd6b37ffc6443017802c8"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFont.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "7df47d1a5c9618bbb1ab381d97219e0d",
+    "semantic_hash": "7df47d1a5c9618bbb1ab381d97219e0d"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFontEngine.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "5465617efcd668d1b923e3b731fc6123",
+    "semantic_hash": "5465617efcd668d1b923e3b731fc6123"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFontFile.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a07753a89b26498ee802511053d95d18",
+    "semantic_hash": "a07753a89b26498ee802511053d95d18"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashFontFileID.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "044b78e93c94f2651a69d72bb1fb504f",
+    "semantic_hash": "044b78e93c94f2651a69d72bb1fb504f"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashGlyphBitmap.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "f9f822e3f75d252d86f04afb600a48bf",
+    "semantic_hash": "f9f822e3f75d252d86f04afb600a48bf"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashMath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "4d02ee57324aab1d195e91eb752b7786",
+    "semantic_hash": "4d02ee57324aab1d195e91eb752b7786"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashPath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "aa44ea2c6a4fe2c3f498a29cc7491ce7",
+    "semantic_hash": "aa44ea2c6a4fe2c3f498a29cc7491ce7"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashPattern.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "a2ca5dc1ab633ac7b8528b62c0e29896",
+    "semantic_hash": "a2ca5dc1ab633ac7b8528b62c0e29896"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashScreen.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "6faeb97fd2c519b7993d9c4c7578c64b",
+    "semantic_hash": "6faeb97fd2c519b7993d9c4c7578c64b"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashState.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "98dbd6e14d7a8ed089b17037a0d81621",
+    "semantic_hash": "98dbd6e14d7a8ed089b17037a0d81621"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashTypes.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "871b920489a7fc1912d5e132630a52be",
+    "semantic_hash": "871b920489a7fc1912d5e132630a52be"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashXPath.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "97e382dd8c7064d2ef986b91bfe4d208",
+    "semantic_hash": "97e382dd8c7064d2ef986b91bfe4d208"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\Library\\include\\poppler\\splash\\SplashXPathScanner.h": {
+    "mtime": 1706802266.0,
+    "ast_hash": "d3c10f117001d96092e8711575d30bff",
+    "semantic_hash": "d3c10f117001d96092e8711575d30bff"
+  },
+  "C:\\Project\\pdfLan\\backend\\routes.js": {
+    "mtime": 1788444023.0896883,
+    "ast_hash": "7edc234130598fddcaeb41de30d138e8",
+    "semantic_hash": "7edc234130598fddcaeb41de30d138e8"
+  },
+  "C:\\Project\\pdfLan\\backend\\tests\\admin.test.js": {
+    "mtime": 1788370394.7521582,
+    "ast_hash": "8d4b2f4f0b8221d846c1f073b2a5dc56",
+    "semantic_hash": "8d4b2f4f0b8221d846c1f073b2a5dc56"
+  },
+  "C:\\Project\\pdfLan\\backend\\tests\\api.test.js": {
+    "mtime": 1788368859.3958771,
+    "ast_hash": "6086c6f5cdb261e0b2410aa86e4cf837",
+    "semantic_hash": "6086c6f5cdb261e0b2410aa86e4cf837"
+  },
+  "C:\\Project\\pdfLan\\backend\\tests\\security.test.js": {
+    "mtime": 1788368855.2762187,
+    "ast_hash": "06ba09e85bc74db7b04dc4e25594ade0",
+    "semantic_hash": "06ba09e85bc74db7b04dc4e25594ade0"
+  },
+  "C:\\Project\\pdfLan\\backend\\tests\\ssrfGuard.test.js": {
+    "mtime": 1788368740.2382746,
+    "ast_hash": "752d47b3f1eca2998225a84b6b35304f",
+    "semantic_hash": "752d47b3f1eca2998225a84b6b35304f"
+  },
+  "C:\\Project\\pdfLan\\backend\\utils\\binaries.js": {
+    "mtime": 1788445058.106202,
+    "ast_hash": "d7f698d0a10dad952120b6d6ee25dd67",
+    "semantic_hash": "d7f698d0a10dad952120b6d6ee25dd67"
+  },
+  "C:\\Project\\pdfLan\\backend\\utils\\diagnostics.js": {
+    "mtime": 1788398556.3697867,
+    "ast_hash": "037323bc8030e1aa38796f9dc96555cb",
+    "semantic_hash": "037323bc8030e1aa38796f9dc96555cb"
+  },
+  "C:\\Project\\pdfLan\\backend\\utils\\ssrfGuard.js": {
+    "mtime": 1788339136.2726188,
+    "ast_hash": "e8a53ae3e52416b051efe1d01cac044b",
+    "semantic_hash": "e8a53ae3e52416b051efe1d01cac044b"
+  },
+  "C:\\Project\\pdfLan\\frontend\\eslint.config.js": {
+    "mtime": 1780423836.2851655,
+    "ast_hash": "3aa4b57d7f08181d86bde52a4dcb7f22",
+    "semantic_hash": "3aa4b57d7f08181d86bde52a4dcb7f22"
+  },
+  "C:\\Project\\pdfLan\\frontend\\package.json": {
+    "mtime": 1788444836.8544893,
+    "ast_hash": "e00a1f7f7b43ea3a55869fded291a3c6",
+    "semantic_hash": "e00a1f7f7b43ea3a55869fded291a3c6"
+  },
+  "C:\\Project\\pdfLan\\frontend\\postcss.config.js": {
+    "mtime": 1781489933.74925,
+    "ast_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0",
+    "semantic_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\App.jsx": {
+    "mtime": 1788485009.9745626,
+    "ast_hash": "450c22419318cf72153f31f85d505c10",
+    "semantic_hash": "450c22419318cf72153f31f85d505c10"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\AdvancedUploader\\AdvancedUploader.jsx": {
+    "mtime": 1788443929.7377918,
+    "ast_hash": "7c997d9808d1019c7c75d1a6566a9fa3",
+    "semantic_hash": "7c997d9808d1019c7c75d1a6566a9fa3"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\DropZone.jsx": {
+    "mtime": 1788481619.5396717,
+    "ast_hash": "f6246a72bcd23e796a0a89e35ff7deb1",
+    "semantic_hash": "f6246a72bcd23e796a0a89e35ff7deb1"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\ErrorBoundary.jsx": {
+    "mtime": 1782105035.822394,
+    "ast_hash": "a6ac7b4fd1ac6b9d5d436c1063c7296f",
+    "semantic_hash": "a6ac7b4fd1ac6b9d5d436c1063c7296f"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\Footer.jsx": {
+    "mtime": 1788419813.8476079,
+    "ast_hash": "c929f169d21a16ac91c804372cc0e2cf",
+    "semantic_hash": "c929f169d21a16ac91c804372cc0e2cf"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\Navbar.jsx": {
+    "mtime": 1788419755.2823362,
+    "ast_hash": "e517ebae940b73639f8a7afe134a1f1f",
+    "semantic_hash": "e517ebae940b73639f8a7afe134a1f1f"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\PdfThumbnail.jsx": {
+    "mtime": 1788481627.1228085,
+    "ast_hash": "8e277f5b1bcbb9f90e8d3cb3a1bc67cd",
+    "semantic_hash": "8e277f5b1bcbb9f90e8d3cb3a1bc67cd"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\ProgressBar.jsx": {
+    "mtime": 1788420417.221761,
+    "ast_hash": "d92e0af3de6fb7391a887b054b97e8fd",
+    "semantic_hash": "d92e0af3de6fb7391a887b054b97e8fd"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\ToolCard.jsx": {
+    "mtime": 1788420480.9061623,
+    "ast_hash": "af85fd4de94bb0eaa0c7a2d97cfef705",
+    "semantic_hash": "af85fd4de94bb0eaa0c7a2d97cfef705"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\components\\ToolLayout.jsx": {
+    "mtime": 1788485005.1795852,
+    "ast_hash": "c0d1b52afebd24c2d3aa64dcdcaea68b",
+    "semantic_hash": "c0d1b52afebd24c2d3aa64dcdcaea68b"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\constants\\tools.js": {
+    "mtime": 1788368352.3429432,
+    "ast_hash": "529efd630a9310fc4b9e313383f6a81d",
+    "semantic_hash": "529efd630a9310fc4b9e313383f6a81d"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\main.jsx": {
+    "mtime": 1780423836.3871822,
+    "ast_hash": "e13723e2574429d9a6d849727e3ff695",
+    "semantic_hash": "e13723e2574429d9a6d849727e3ff695"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\Changelog.jsx": {
+    "mtime": 1788445097.1702614,
+    "ast_hash": "5d480a2d5cc6d617fc202efd09d32a0d",
+    "semantic_hash": "5d480a2d5cc6d617fc202efd09d32a0d"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\Home.jsx": {
+    "mtime": 1788428071.451856,
+    "ast_hash": "267ead054de52a07c16b2f05523352dd",
+    "semantic_hash": "267ead054de52a07c16b2f05523352dd"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\TestUpload.jsx": {
+    "mtime": 1783431565.6252968,
+    "ast_hash": "5af95df1fac6b22d6448675ee487c3d4",
+    "semantic_hash": "5af95df1fac6b22d6448675ee487c3d4"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\CompressPdf.jsx": {
+    "mtime": 1788481631.839567,
+    "ast_hash": "9914ff1dba4343d54b97d3685aba9706",
+    "semantic_hash": "9914ff1dba4343d54b97d3685aba9706"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\CropPdf.jsx": {
+    "mtime": 1788481631.8427448,
+    "ast_hash": "1fe18d89dbbecff36b0d6ff1e0d2f4d6",
+    "semantic_hash": "1fe18d89dbbecff36b0d6ff1e0d2f4d6"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\EditPdf.jsx": {
+    "mtime": 1788481631.847743,
+    "ast_hash": "0cae8ec6d01019881003ef70594dc349",
+    "semantic_hash": "0cae8ec6d01019881003ef70594dc349"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\ExcelToPdf.jsx": {
+    "mtime": 1788481631.8507426,
+    "ast_hash": "deeb30af49a9effc02f4a29e937e97b0",
+    "semantic_hash": "deeb30af49a9effc02f4a29e937e97b0"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\HtmlToPdf.jsx": {
+    "mtime": 1788481631.8567383,
+    "ast_hash": "91e1b0804f2bb898191233792bec1d37",
+    "semantic_hash": "91e1b0804f2bb898191233792bec1d37"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\JpgToPdf.jsx": {
+    "mtime": 1788481631.8789728,
+    "ast_hash": "12ed7f7a00d1efcdf6d797a2d028a1ab",
+    "semantic_hash": "12ed7f7a00d1efcdf6d797a2d028a1ab"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\MergePdf.jsx": {
+    "mtime": 1788481631.882971,
+    "ast_hash": "e147aa5c8948e69be1848e1f7e52e9fd",
+    "semantic_hash": "e147aa5c8948e69be1848e1f7e52e9fd"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\OrganizePdf.jsx": {
+    "mtime": 1788481631.8869684,
+    "ast_hash": "35333eaaf2cb5e0968c9f07e0108dd3d",
+    "semantic_hash": "35333eaaf2cb5e0968c9f07e0108dd3d"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PageNumbers.jsx": {
+    "mtime": 1788481631.889966,
+    "ast_hash": "ee872fa72f4a0c645fa998738c56a494",
+    "semantic_hash": "ee872fa72f4a0c645fa998738c56a494"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PdfForms.jsx": {
+    "mtime": 1788481631.894964,
+    "ast_hash": "3ebc4ff2cc520a9b13ed29b03bd4915b",
+    "semantic_hash": "3ebc4ff2cc520a9b13ed29b03bd4915b"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PdfToJpg.jsx": {
+    "mtime": 1788481631.8969626,
+    "ast_hash": "ffcec413ce71222a28c58977c83f45bf",
+    "semantic_hash": "ffcec413ce71222a28c58977c83f45bf"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PdfToPdfa.jsx": {
+    "mtime": 1788481631.8989608,
+    "ast_hash": "bb7a2c81422100d98a8079fc0e9824f9",
+    "semantic_hash": "bb7a2c81422100d98a8079fc0e9824f9"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PdfToPowerPoint.jsx": {
+    "mtime": 1788481631.9019597,
+    "ast_hash": "af1f2f5c28c31def04aad91141932a36",
+    "semantic_hash": "af1f2f5c28c31def04aad91141932a36"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PdfToWord.jsx": {
+    "mtime": 1788481631.9049582,
+    "ast_hash": "6ce5286fccc42aba877f4cd4df4292b6",
+    "semantic_hash": "6ce5286fccc42aba877f4cd4df4292b6"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\PowerPointToPdf.jsx": {
+    "mtime": 1788481631.9069571,
+    "ast_hash": "3eca8b8143446efb086810826debf50e",
+    "semantic_hash": "3eca8b8143446efb086810826debf50e"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\ProtectPdf.jsx": {
+    "mtime": 1788481631.9279447,
+    "ast_hash": "7d586c8d151c7327d49a5e7e98d5c60f",
+    "semantic_hash": "7d586c8d151c7327d49a5e7e98d5c60f"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\RedactPdf.jsx": {
+    "mtime": 1788481631.9329417,
+    "ast_hash": "eaa71ffb85391b5e9536789cf7ae9eaf",
+    "semantic_hash": "eaa71ffb85391b5e9536789cf7ae9eaf"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\RemoveBackground.jsx": {
+    "mtime": 1788481631.9359405,
+    "ast_hash": "344423e5e43d54dd6c3db2022b2f77cb",
+    "semantic_hash": "344423e5e43d54dd6c3db2022b2f77cb"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\RotatePdf.jsx": {
+    "mtime": 1788481631.949932,
+    "ast_hash": "31caad519f5f7a36f950346301a133eb",
+    "semantic_hash": "31caad519f5f7a36f950346301a133eb"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\ScanToPdf.jsx": {
+    "mtime": 1788486162.751264,
+    "ast_hash": "ce44109170ac02aa261fb9341f6cdf2b",
+    "semantic_hash": "ce44109170ac02aa261fb9341f6cdf2b"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\SignPdf.jsx": {
+    "mtime": 1788481631.9649231,
+    "ast_hash": "07a5cf4f1189f46f89b41cf289bcfad6",
+    "semantic_hash": "07a5cf4f1189f46f89b41cf289bcfad6"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\SplitPdf.jsx": {
+    "mtime": 1788481631.973325,
+    "ast_hash": "9db9512df2f6941983985b8dbf2cefd7",
+    "semantic_hash": "9db9512df2f6941983985b8dbf2cefd7"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\UnlockPdf.jsx": {
+    "mtime": 1788481631.9763234,
+    "ast_hash": "716a9ebb4e65b31aeb1195ce324d9693",
+    "semantic_hash": "716a9ebb4e65b31aeb1195ce324d9693"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\WatermarkPdf.jsx": {
+    "mtime": 1788481631.9813204,
+    "ast_hash": "3bc8672e4e0767f0d46dc70a894dc853",
+    "semantic_hash": "3bc8672e4e0767f0d46dc70a894dc853"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\WordToPdf.jsx": {
+    "mtime": 1788481631.98332,
+    "ast_hash": "e6c8db89b3703eb9cc96bcf4b68fd01d",
+    "semantic_hash": "e6c8db89b3703eb9cc96bcf4b68fd01d"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\pages\\tools\\_convertPages.jsx": {
+    "mtime": 1788481631.987317,
+    "ast_hash": "5782f891f381271c7aa95b01e76ab339",
+    "semantic_hash": "5782f891f381271c7aa95b01e76ab339"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\store\\useToolStore.js": {
+    "mtime": 1788368618.0550578,
+    "ast_hash": "93bd18a41810716ffb0d08a475ae2076",
+    "semantic_hash": "93bd18a41810716ffb0d08a475ae2076"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\utils\\api.js": {
+    "mtime": 1788445028.1233578,
+    "ast_hash": "d74cfeb05f7d16aa7bd72cd07e2e58f9",
+    "semantic_hash": "d74cfeb05f7d16aa7bd72cd07e2e58f9"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\utils\\clientPdf.js": {
+    "mtime": 1782105100.6449678,
+    "ast_hash": "0e3079892a4ba550b074b517767a4c05",
+    "semantic_hash": "0e3079892a4ba550b074b517767a4c05"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\utils\\fileHelpers.js": {
+    "mtime": 1788481604.508897,
+    "ast_hash": "8c6cec3d0e408c8dcd657d1d62afd1e2",
+    "semantic_hash": "8c6cec3d0e408c8dcd657d1d62afd1e2"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\utils\\scannerMath.js": {
+    "mtime": 1788443254.8738358,
+    "ast_hash": "5267ab304997b5716bae16fea07207da",
+    "semantic_hash": "5267ab304997b5716bae16fea07207da"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\utils\\uploadServices.js": {
+    "mtime": 1783431475.9995852,
+    "ast_hash": "431bb1b859a337eb6be0f1a01aa59ba0",
+    "semantic_hash": "431bb1b859a337eb6be0f1a01aa59ba0"
+  },
+  "C:\\Project\\pdfLan\\frontend\\tailwind.config.js": {
+    "mtime": 1788428055.923939,
+    "ast_hash": "45851743d5a7fc0f5d0a58f6381d881e",
+    "semantic_hash": "45851743d5a7fc0f5d0a58f6381d881e"
+  },
+  "C:\\Project\\pdfLan\\frontend\\vite.config.js": {
+    "mtime": 1781512321.6822567,
+    "ast_hash": "5151fd4ce09ce80ab8992a5db4d972f0",
+    "semantic_hash": "5151fd4ce09ce80ab8992a5db4d972f0"
+  },
+  "C:\\Project\\pdfLan\\manager-app\\main.js": {
+    "mtime": 1782696480.8362153,
+    "ast_hash": "86ab7c416bb16e31e8933ee0ecafcdaf",
+    "semantic_hash": "86ab7c416bb16e31e8933ee0ecafcdaf"
+  },
+  "C:\\Project\\pdfLan\\manager-app\\package.json": {
+    "mtime": 1782446033.746563,
+    "ast_hash": "be1073744299fe6e41b7fc24b908b284",
+    "semantic_hash": "be1073744299fe6e41b7fc24b908b284"
+  },
+  "C:\\Project\\pdfLan\\manager-app\\preload.js": {
+    "mtime": 1782442396.5863707,
+    "ast_hash": "b696ceece852b6bdec0c844cad1b1f88",
+    "semantic_hash": "b696ceece852b6bdec0c844cad1b1f88"
+  },
+  "C:\\Project\\pdfLan\\manager-app\\renderer.js": {
+    "mtime": 1782445489.3402572,
+    "ast_hash": "662f79bcefbd5bb5013c50fdad79e26e",
+    "semantic_hash": "662f79bcefbd5bb5013c50fdad79e26e"
+  },
+  "C:\\Project\\pdfLan\\package.json": {
+    "mtime": 1788404503.932887,
+    "ast_hash": "d8140a562ca38eb384ffa4e040fc5604",
+    "semantic_hash": "d8140a562ca38eb384ffa4e040fc5604"
+  },
+  "C:\\Project\\pdfLan\\rename_script.js": {
+    "mtime": 1781497703.075579,
+    "ast_hash": "6d76d0e9884256e7fa29aab3c90e4ad0",
+    "semantic_hash": "6d76d0e9884256e7fa29aab3c90e4ad0"
+  },
+  "C:\\Project\\pdfLan\\skills-lock.json": {
+    "mtime": 1788419503.3250177,
+    "ast_hash": "5bf0ebbae3c839163b21c054cef31dbd",
+    "semantic_hash": "5bf0ebbae3c839163b21c054cef31dbd"
+  },
+  "C:\\Project\\pdfLan\\AGENTS.md": {
+    "mtime": 1788482176.3279188,
+    "ast_hash": "72605ebac5a333e382659002a6a6dc10",
+    "semantic_hash": "72605ebac5a333e382659002a6a6dc10"
+  },
+  "C:\\Project\\pdfLan\\DESIGN_SYSTEM.md": {
+    "mtime": 1788428580.224225,
+    "ast_hash": "5887ec05cbde008debd4a0c57459c5f3",
+    "semantic_hash": "5887ec05cbde008debd4a0c57459c5f3"
+  },
+  "C:\\Project\\pdfLan\\README.md": {
+    "mtime": 1788404512.8866646,
+    "ast_hash": "da91ca15c091844a6b20569588c95468",
+    "semantic_hash": "da91ca15c091844a6b20569588c95468"
+  },
+  "C:\\Project\\pdfLan\\agent.md": {
+    "mtime": 1788482176.3279188,
+    "ast_hash": "72605ebac5a333e382659002a6a6dc10",
+    "semantic_hash": "72605ebac5a333e382659002a6a6dc10"
+  },
+  "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\share\\poppler\\CMakeLists.txt": {
+    "mtime": 1675252950.0,
+    "ast_hash": "4b88731818986c408c2166e971b281eb",
+    "semantic_hash": "4b88731818986c408c2166e971b281eb"
+  },
+  "C:\\Project\\pdfLan\\docker-compose.yml": {
+    "mtime": 1788368414.3002355,
+    "ast_hash": "6d7c09a4e6ac34dac3543341bdf8b536",
+    "semantic_hash": "6d7c09a4e6ac34dac3543341bdf8b536"
+  },
+  "C:\\Project\\pdfLan\\docs\\BACKEND_ARCHITECTURE.md": {
+    "mtime": 1788442733.260562,
+    "ast_hash": "09d6de25e9b086a53eacfeaa58eade6b",
+    "semantic_hash": "09d6de25e9b086a53eacfeaa58eade6b"
+  },
+  "C:\\Project\\pdfLan\\docs\\DOCKER_SETUP.md": {
+    "mtime": 1788404917.7282321,
+    "ast_hash": "5731fa437d823d46106dce8f0e03e5f4",
+    "semantic_hash": "5731fa437d823d46106dce8f0e03e5f4"
+  },
+  "C:\\Project\\pdfLan\\docs\\FRONTEND_ARCHITECTURE.md": {
+    "mtime": 1788442825.4954154,
+    "ast_hash": "7480c9295eee5a203cc438f13a867df1",
+    "semantic_hash": "7480c9295eee5a203cc438f13a867df1"
+  },
+  "C:\\Project\\pdfLan\\docs\\INDEX.md": {
+    "mtime": 1788442803.1388457,
+    "ast_hash": "826cf53ad05c68e283fb8b4a7eec5789",
+    "semantic_hash": "826cf53ad05c68e283fb8b4a7eec5789"
+  },
+  "C:\\Project\\pdfLan\\docs\\LOCAL_LAN_SETUP.md": {
+    "mtime": 1788404910.2518232,
+    "ast_hash": "4c9d3debf9927f476461bc55237461e6",
+    "semantic_hash": "4c9d3debf9927f476461bc55237461e6"
+  },
+  "C:\\Project\\pdfLan\\docs\\MANAGER_APP_ARCHITECTURE.md": {
+    "mtime": 1788442752.6250124,
+    "ast_hash": "8474f0cf48918bc5308e332c14fce421",
+    "semantic_hash": "8474f0cf48918bc5308e332c14fce421"
+  },
+  "C:\\Project\\pdfLan\\frontend\\README.md": {
+    "mtime": 1780423836.3937757,
+    "ast_hash": "a28dc4cb878325f3e9e5649f3e1469ac",
+    "semantic_hash": "a28dc4cb878325f3e9e5649f3e1469ac"
+  },
+  "C:\\Project\\pdfLan\\frontend\\index.html": {
+    "mtime": 1781529620.377655,
+    "ast_hash": "95fdbe0596689da1cf8b674cdff77da8",
+    "semantic_hash": "95fdbe0596689da1cf8b674cdff77da8"
+  },
+  "C:\\Project\\pdfLan\\graphify_answers.txt": {
+    "mtime": 1788451077.4624016,
+    "ast_hash": "9a13a83183926046855466857c5c8678",
+    "semantic_hash": "9a13a83183926046855466857c5c8678"
+  },
+  "C:\\Project\\pdfLan\\manager-app\\index.html": {
+    "mtime": 1782445479.8646047,
+    "ast_hash": "c9bebdd7f80b9764672dc1ca52c76e1d",
+    "semantic_hash": "c9bebdd7f80b9764672dc1ca52c76e1d"
+  },
+  "C:\\Project\\pdfLan\\docs\\tako_qr.png": {
+    "mtime": 1781533789.6957614,
+    "ast_hash": "e67e39dfaba330284b8935659b412779",
+    "semantic_hash": "e67e39dfaba330284b8935659b412779"
+  },
+  "C:\\Project\\pdfLan\\frontend\\public\\favicon.svg": {
+    "mtime": 1781513338.8163857,
+    "ast_hash": "c6e8b9f8b5470c5046d0818f78ec8f8f",
+    "semantic_hash": "c6e8b9f8b5470c5046d0818f78ec8f8f"
+  },
+  "C:\\Project\\pdfLan\\frontend\\public\\icons.svg": {
+    "mtime": 1780423836.502251,
+    "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
+    "semantic_hash": "3b4fcfcf393eca4d264dca4a4663bc37"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\assets\\hero.png": {
+    "mtime": 1780423836.424042,
+    "ast_hash": "aead493361b27e7510691c5d7072dfc1",
+    "semantic_hash": "aead493361b27e7510691c5d7072dfc1"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\assets\\react.svg": {
+    "mtime": 1780423836.5359206,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": "f0402b67b6ce880f65666bb49e841696"
+  },
+  "C:\\Project\\pdfLan\\frontend\\src\\assets\\vite.svg": {
+    "mtime": 1780423836.5615191,
+    "ast_hash": "9960a24288958394ac50e57ff638b036",
+    "semantic_hash": "9960a24288958394ac50e57ff638b036"
+  }
+}

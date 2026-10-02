@@ -1,0 +1,29 @@
+{
+  "docs": [
+    "C:\\Project\\pdfLan\\AGENTS.md",
+    "C:\\Project\\pdfLan\\DESIGN_SYSTEM.md",
+    "C:\\Project\\pdfLan\\README.md",
+    "C:\\Project\\pdfLan\\agent.md",
+    "C:\\Project\\pdfLan\\backend\\poppler\\poppler-24.02.0\\share\\poppler\\CMakeLists.txt",
+    "C:\\Project\\pdfLan\\docker-compose.yml",
+    "C:\\Project\\pdfLan\\docs\\BACKEND_ARCHITECTURE.md",
+    "C:\\Project\\pdfLan\\docs\\DOCKER_SETUP.md",
+    "C:\\Project\\pdfLan\\docs\\FRONTEND_ARCHITECTURE.md",
+    "C:\\Project\\pdfLan\\docs\\INDEX.md",
+    "C:\\Project\\pdfLan\\docs\\LOCAL_LAN_SETUP.md",
+    "C:\\Project\\pdfLan\\docs\\MANAGER_APP_ARCHITECTURE.md",
+    "C:\\Project\\pdfLan\\frontend\\README.md",
+    "C:\\Project\\pdfLan\\frontend\\index.html",
+    "C:\\Project\\pdfLan\\graphify_answers.txt",
+    "C:\\Project\\pdfLan\\manager-app\\index.html"
+  ],
+  "papers": [],
+  "images": [
+    "C:\\Project\\pdfLan\\docs\\tako_qr.png",
+    "C:\\Project\\pdfLan\\frontend\\public\\favicon.svg",
+    "C:\\Project\\pdfLan\\frontend\\public\\icons.svg",
+    "C:\\Project\\pdfLan\\frontend\\src\\assets\\hero.png",
+    "C:\\Project\\pdfLan\\frontend\\src\\assets\\react.svg",
+    "C:\\Project\\pdfLan\\frontend\\src\\assets\\vite.svg"
+  ]
+}

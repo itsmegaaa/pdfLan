@@ -2,24 +2,24 @@ import { useState, useEffect } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { RotateCw, RotateCcw } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
-import PdfPreview from '../../components/PdfPreview';
+import PdfThumbnail from '../../components/PdfThumbnail';
 import ToolLayout from '../../components/ToolLayout';
 
 function PageItem({ page, onRotateRight, onRotateLeft }) {
   return (
-    <div className="relative group bg-[#1a1d27] border border-[#2d3150] rounded-xl overflow-hidden flex flex-col h-full">
+    <div className="relative group bg-surface border border-border rounded-xl overflow-hidden flex flex-col h-full">
       <div className="p-4 flex-1 flex items-center justify-center bg-white/5 min-h-[200px]">
         <div style={{ transform: `rotate(${page.rotation}deg)`, transition: 'transform 0.3s ease' }}>
-          <PdfPreview file={page.file} pageNumber={page.originalIndex + 1} scale={0.3} />
+          <PdfThumbnail file={page.file} pageNumber={page.originalIndex + 1} scale={0.3} />
         </div>
       </div>
-      <div className="flex items-center justify-between px-3 py-2 border-t border-[#2d3150] bg-[#12141e]">
-        <span className="text-xs text-[#8b90b0] font-medium">Hal. {page.originalIndex + 1}</span>
+      <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-[#12141e]">
+        <span className="text-xs text-text-muted font-medium">Hal. {page.originalIndex + 1}</span>
         <div className="flex gap-2">
-          <button onClick={() => onRotateLeft(page.id)} className="p-1.5 text-[#8b90b0] hover:text-white bg-[#22263a] rounded hover:bg-[#2d3150] transition-colors" title="Putar Kiri">
+          <button onClick={() => onRotateLeft(page.id)} className="p-1.5 text-text-muted hover:text-white bg-surface-hover rounded hover:bg-[#2d3150] transition-colors" title="Putar Kiri">
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
-          <button onClick={() => onRotateRight(page.id)} className="p-1.5 text-[#8b90b0] hover:text-white bg-[#22263a] rounded hover:bg-[#2d3150] transition-colors" title="Putar Kanan">
+          <button onClick={() => onRotateRight(page.id)} className="p-1.5 text-text-muted hover:text-white bg-surface-hover rounded hover:bg-[#2d3150] transition-colors" title="Putar Kanan">
             <RotateCw className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -106,13 +106,13 @@ export default function RotatePdf() {
     >
       {files.length > 0 && pages.length > 0 && (
         <div className="mt-6 space-y-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-[#1a1d27] border border-[#2d3150] rounded-xl gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-surface border border-border rounded-xl gap-4">
             <span className="text-sm font-medium text-white">{pages.length} Halaman</span>
             <div className="flex gap-2 w-full sm:w-auto">
-              <button onClick={rotateAllLeft} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-[#22263a] hover:bg-[#2d3150] text-[#8b90b0] hover:text-white rounded-lg text-sm transition-colors">
+              <button onClick={rotateAllLeft} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-surface-hover hover:bg-[#2d3150] text-text-muted hover:text-white rounded-lg text-sm transition-colors">
                 <RotateCcw className="w-4 h-4" /> Semua Kiri
               </button>
-              <button onClick={rotateAllRight} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-[#22263a] hover:bg-[#2d3150] text-[#8b90b0] hover:text-white rounded-lg text-sm transition-colors">
+              <button onClick={rotateAllRight} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-surface-hover hover:bg-[#2d3150] text-text-muted hover:text-white rounded-lg text-sm transition-colors">
                 <RotateCw className="w-4 h-4" /> Semua Kanan
               </button>
             </div>
@@ -133,3 +133,4 @@ export default function RotatePdf() {
     </ToolLayout>
   );
 }
+

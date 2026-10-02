@@ -4,7 +4,7 @@ import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { splitPdfByRange, splitPdfEveryN } from '../../utils/clientPdf';
-import PdfPreview from '../../components/PdfPreview';
+import PdfThumbnail from '../../components/PdfThumbnail';
 
 export default function SplitPdf() {
   const { files, startProcess, setProgress, setResult, setError } = useToolStore();
@@ -130,7 +130,7 @@ export default function SplitPdf() {
                 key={v}
                 onClick={() => setMode(v)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors
-                  ${mode === v ? 'bg-[#e2001a] text-white' : 'bg-[#22263a] text-[#8b90b0] hover:text-white'}`}
+                  ${mode === v ? 'bg-primary text-white' : 'bg-surface-hover text-text-muted hover:text-white'}`}
               >
                 {label}
               </button>
@@ -139,34 +139,34 @@ export default function SplitPdf() {
 
           {mode === 'range' ? (
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-2">Range halaman (contoh: 1-3, 5, 7-9)</label>
+              <label className="block text-sm text-text-muted mb-2">Range halaman (contoh: 1-3, 5, 7-9)</label>
               <input
                 type="text"
                 value={rangeInput}
                 onChange={handleRangeInputChange}
                 placeholder="1-3, 5, 7-9"
-                className="w-full px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white placeholder-[#4a5070]
+                className="w-full px-4 py-2.5 bg-surface-hover border border-border rounded-xl text-white placeholder-[#4a5070]
                   focus:outline-none focus:border-[#e2001a]/50 text-sm"
               />
             </div>
           ) : (
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-2">Pisahkan setiap {everyN} halaman</label>
+              <label className="block text-sm text-text-muted mb-2">Pisahkan setiap {everyN} halaman</label>
               <input
                 type="number"
                 min={1}
                 value={everyN}
                 onChange={(e) => setEveryN(Math.max(1, Number(e.target.value)))}
-                className="w-32 px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white
+                className="w-32 px-4 py-2.5 bg-surface-hover border border-border rounded-xl text-white
                   focus:outline-none focus:border-[#e2001a]/50 text-sm"
               />
             </div>
           )}
 
           {files[0] && pageCount > 0 && (
-            <div className="mt-6 pt-4 border-t border-[#2d3150]">
+            <div className="mt-6 pt-4 border-t border-border">
               <p className="text-sm font-medium text-white mb-1">Pratinjau Halaman</p>
-              <p className="text-xs text-[#8b90b0] mb-4">
+              <p className="text-xs text-text-muted mb-4">
                 {mode === 'range' ? 'Klik halaman untuk memilih/menghapus dari range' : `Visualisasi pemisahan setiap ${everyN} halaman`}
               </p>
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
@@ -187,13 +187,13 @@ export default function SplitPdf() {
                       key={pageNum}
                       onClick={() => togglePage(pageNum)}
                       className={`relative rounded-xl overflow-hidden border-2 transition-all ${mode === 'range' ? 'cursor-pointer hover:border-[#e2001a]/50' : ''}
-                        ${isSelected ? 'border-[#e2001a]' : 'border-[#2d3150]'}`}
+                        ${isSelected ? 'border-[#e2001a]' : 'border-border'}`}
                     >
-                      <div className={`p-1 ${isSelected ? 'bg-[#e2001a]/10' : 'bg-[#22263a]'}`}>
-                        <PdfPreview file={files[0]} pageNumber={pageNum} scale={0.2} className="w-full h-auto" />
+                      <div className={`p-1 ${isSelected ? 'bg-primary/10' : 'bg-surface-hover'}`}>
+                        <PdfThumbnail file={files[0]} pageNumber={pageNum} scale={0.2} className="w-full h-auto" />
                       </div>
                       <div className={`absolute bottom-0 left-0 right-0 text-center text-[10px] py-0.5 font-bold
-                        ${isSelected ? 'bg-[#e2001a] text-white' : 'bg-black/60 text-[#8b90b0]'}`}>
+                        ${isSelected ? 'bg-primary text-white' : 'bg-black/60 text-text-muted'}`}>
                         {pageNum}
                       </div>
                     </div>
@@ -207,3 +207,4 @@ export default function SplitPdf() {
     />
   );
 }
+

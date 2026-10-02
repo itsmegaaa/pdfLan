@@ -1,33 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { ChevronLeft, Crop, Wand2, RotateCw, Zap, Download, Image as ImageIcon, Check } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import DropZone from '../../components/DropZone';
+import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { downloadBlob } from '../../utils/fileHelpers';
 import { detectCorners, perspectiveTransform, applyCanvasEffects } from '../../utils/scannerMath';
 import { toast } from 'sonner';
-import JSZip from 'jszip';
 
 const CORNER_COLORS = ['#e05555','#5cb870','#4a9ede','#daa04e'];
 const GRAB_RADIUS = 18;
 
-const ToolLayout = ({ title, description, children }) => (
-  <div className="max-w-7xl mx-auto px-4 py-10">
-    <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-[#8b90b0] hover:text-white mb-6 transition-colors">
-      <ChevronLeft className="w-4 h-4" /> Semua Tools
-    </Link>
-    <div className="mb-8">
-      <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">{title}</h1>
-      <p className="text-[#8b90b0]">{description}</p>
-    </div>
-    {children}
-  </div>
-);
-
 export default function ScanToPdf() {
-  const { isProcessing, startProcess, setProgress, setError, reset } = useToolStore();
-  const [pendingFiles, setPendingFiles] = useState([]);
+  const { files, setFiles, isProcessing, startProcess, setProgress, setError, reset, setResult } = useToolStore();
   const [scannedPages, setScannedPages] = useState([]);
   
   const [editorState, setEditorState] = useState({
@@ -76,7 +61,7 @@ export default function ScanToPdf() {
     document.body.appendChild(script);
   }, []);
 
-  const currentFile = pendingFiles[0];
+  const currentFile = files[0];
 
   useEffect(() => {
     if (!currentFile) return;
@@ -87,34 +72,12 @@ export default function ScanToPdf() {
       initCanvas(img);
       URL.revokeObjectURL(url);
     };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+    };
     img.src = url;
+    return () => URL.revokeObjectURL(url);
   }, [currentFile]);
-
-  const handleFileUpload = (uploadedFiles) => {
-    const validFiles = Array.isArray(uploadedFiles) ? uploadedFiles : [uploadedFiles];
-    setPendingFiles(validFiles);
-    setScannedPages([]);
-    setEditorState({
-      corners: [], displayScale: 1, processed: false,
-      brightness: 0, contrast: 0, bwMode: false, grayMode: false, threshold: 128,
-      enhanceMode: true, rotation: 0
-    });
-    setProgress(0);
-    setError(null);
-  };
-
-  const handleAppendFiles = (uploadedFiles) => {
-    const validFiles = Array.isArray(uploadedFiles) ? uploadedFiles : [uploadedFiles];
-    // Tambahkan file ke antrean yang sudah ada
-    setPendingFiles(prev => [...prev, ...validFiles]);
-    setEditorState({
-      corners: [], displayScale: 1, processed: false,
-      brightness: 0, contrast: 0, bwMode: false, grayMode: false, threshold: 128,
-      enhanceMode: true, rotation: 0
-    });
-    setProgress(0);
-    setError(null);
-  };
 
   const initCanvas = (img) => {
     const maxWork = 2000;
@@ -145,9 +108,16 @@ export default function ScanToPdf() {
     const sc = sourceCanvasRef.current;
     
     const wrapW = wrapRef.current.clientWidth;
+    const maxH = window.innerHeight * 0.65; // Max height to fit on screen
     const imgAspect = wc.height / wc.width;
-    const dispW = wrapW;
-    const dispH = Math.round(wrapW * imgAspect);
+    
+    let dispW = wrapW;
+    let dispH = Math.round(wrapW * imgAspect);
+    
+    if (dispH > maxH) {
+      dispH = maxH;
+      dispW = Math.round(maxH / imgAspect);
+    }
     
     sc.width = dispW;
     sc.height = dispH;
@@ -212,7 +182,9 @@ export default function ScanToPdf() {
     }
     draggingCorner.current = grabbed;
     if (grabbed >= 0) {
-      setMagnifierPos({ x: pos[0], y: pos[1] });
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      setMagnifierPos({ x: clientX, y: clientY });
       updateMagnifier(pos, scale);
     }
   };
@@ -256,7 +228,9 @@ export default function ScanToPdf() {
       ];
       return { ...s, corners: newCorners };
     });
-    setMagnifierPos({ x: pos[0], y: pos[1] });
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    setMagnifierPos({ x: clientX, y: clientY });
     updateMagnifier(pos, scale);
   };
 
@@ -320,7 +294,6 @@ export default function ScanToPdf() {
 
   const handleSavePage = () => {
     if (!resultCanvasRef.current) return;
-    // Simpan gambar dengan background putih
     const canvas = document.createElement('canvas');
     canvas.width = resultCanvasRef.current.width;
     canvas.height = resultCanvasRef.current.height;
@@ -332,7 +305,7 @@ export default function ScanToPdf() {
     const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
     const newPage = { dataUrl, width: canvas.width, height: canvas.height };
     setScannedPages(prev => [...prev, newPage]);
-    setPendingFiles(prev => prev.slice(1));
+    setFiles(files.slice(1));
     setEditorState({
       corners: [], displayScale: 1, processed: false,
       brightness: 0, contrast: 0, bwMode: false, grayMode: false, threshold: 128,
@@ -356,8 +329,7 @@ export default function ScanToPdf() {
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const filename = `scanned_docs_${Date.now()}.pdf`;
-        downloadBlob(blob, filename);
-        toast.success(`${filename} berhasil diunduh!`);
+        setResult({ blob, filename }); // This triggers the ToolLayout Result Screen with Chaining!
       } else {
         // JPEG format - export individually
         for (let idx = 0; idx < scannedPages.length; idx++) {
@@ -385,78 +357,67 @@ export default function ScanToPdf() {
           });
         }
         toast.success(`${scannedPages.length} halaman JPEG berhasil diunduh!`);
+        useToolStore.setState({ isProcessing: false });
       }
       setScannedPages([]);
     } catch (err) {
       console.error(err);
       setError('Gagal membuat file ekspor');
-    } finally {
       useToolStore.setState({ isProcessing: false });
     }
   };
 
   if (!currentFile && scannedPages.length === 0) {
     return (
-      <ToolLayout title="Scan to PDF" description="Perbaiki foto dokumen miring jadi PDF rapi multi-halaman.">
-        <div className="max-w-2xl mx-auto">
-          <DropZone onFileSelect={(f) => handleFileUpload([f])} onFiles={handleFileUpload} accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} />
-        </div>
+      <ToolLayout title="Scan to PDF" description="Perbaiki foto dokumen miring jadi PDF rapi multi-halaman." accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} showFileList={false}>
       </ToolLayout>
     );
   }
 
   if (!currentFile && scannedPages.length > 0) {
     return (
-      <ToolLayout title="Scan to PDF" description={`${scannedPages.length} halaman siap diekspor.`}>
+      <ToolLayout title="Scan to PDF" description={`${scannedPages.length} halaman siap diekspor.`} showFileList={false} hideDropZone={true}>
         <div className="max-w-4xl mx-auto mt-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
             {scannedPages.map((page, idx) => (
-              <div key={idx} className="relative rounded-xl overflow-hidden border-2 border-[#2d3150] shadow-lg aspect-[3/4] bg-[#0f1117] flex items-center justify-center">
+              <div key={idx} className="relative rounded-md overflow-hidden border-2 border-border shadow-lg aspect-[3/4] bg-bg flex items-center justify-center">
                 <img src={page.dataUrl} alt={`Page ${idx + 1}`} className="w-full h-full object-contain" />
-                <div className="absolute top-2 left-2 bg-[#e2001a] text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">Hal {idx + 1}</div>
+                <div className="absolute top-2 left-2 bg-primary text-text-main text-xs font-bold px-2 py-1 rounded-md shadow-md">Hal {idx + 1}</div>
               </div>
             ))}
             <div 
-              className="relative rounded-xl border-2 border-dashed border-[#2d3150] hover:border-[#e2001a] bg-[#1a1c29] flex flex-col items-center justify-center cursor-pointer aspect-[3/4] transition-colors"
+              className="relative rounded-md border-2 border-dashed border-border hover:border-[#e2001a] bg-surface flex flex-col items-center justify-center cursor-pointer aspect-[3/4] transition-colors"
               onClick={() => {
                 const input = document.createElement('input');
                 input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
-                input.onchange = e => handleAppendFiles(Array.from(e.target.files));
+                input.onchange = e => {
+                  const newFiles = Array.from(e.target.files);
+                  setFiles([...files, ...newFiles]);
+                };
                 input.click();
-              }}
-              onDragOver={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                  handleAppendFiles(Array.from(e.dataTransfer.files));
-                }
               }}
             >
               <span className="text-4xl text-[#2d3150] mb-1">+</span>
-              <span className="text-xs sm:text-sm text-[#8b90b0] text-center px-2">Klik / Drop Foto Tambahan</span>
+              <span className="text-xs sm:text-sm text-text-muted text-center px-2">Klik / Drop Foto Tambahan</span>
             </div>
           </div>
-          <div className="bg-[#1a1c29] rounded-2xl p-6 border border-[#2d3150]">
-            <h3 className="text-lg font-semibold text-white mb-4">Export Dokumen</h3>
+          <div className="bg-surface rounded-lg p-6 border border-border">
+            <h3 className="text-lg font-semibold text-text-main mb-4">Export Dokumen</h3>
             <div className="flex flex-col sm:flex-row gap-3">
-              <select value={exportFormat} onChange={e => setExportFormat(e.target.value)} className="bg-[#22263a] text-white rounded-xl px-4 py-3 border border-[#2d3150]">
+              <select value={exportFormat} onChange={e => setExportFormat(e.target.value)} className="bg-surface-hover text-text-main rounded-md px-4 py-3 border border-border">
                 <option value="pdf">Format PDF (Gabung 1 File)</option>
                 <option value="jpeg">Format JPEG (Pisah File)</option>
               </select>
               
               {exportFormat === 'jpeg' && (
-                  <select value={jpegQuality} onChange={e => setJpegQuality(parseFloat(e.target.value))} className="bg-[#22263a] text-white text-sm rounded-xl px-4 py-3 border border-[#2d3150] outline-none">
+                  <select value={jpegQuality} onChange={e => setJpegQuality(parseFloat(e.target.value))} className="bg-surface-hover text-text-main text-sm rounded-md px-4 py-3 border border-border outline-none">
                     <option value={0.92}>Kualitas Tinggi (92%)</option>
                     <option value={0.80}>Kualitas Sedang (80%)</option>
                     <option value={0.60}>Kualitas Rendah (60%)</option>
                   </select>
               )}
 
-              <button onClick={handleExport} className="flex-1 py-3 bg-[#e2001a] hover:bg-[#b8001a] transition-colors text-white rounded-xl font-semibold">Export {scannedPages.length} Halaman</button>
+              <button onClick={handleExport} className="flex-1 py-3 bg-primary hover:bg-primary-hover transition-colors text-text-main rounded-md font-semibold">Export {scannedPages.length} Halaman</button>
             </div>
           </div>
         </div>
@@ -465,29 +426,36 @@ export default function ScanToPdf() {
   }
 
   return (
-    <ToolLayout title="Scan to PDF" description={`Edit Halaman ${scannedPages.length + 1} dari ${scannedPages.length + pendingFiles.length}`}>
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <header className="flex flex-wrap items-center gap-3 mb-6 bg-[#1a1d27] p-4 rounded-2xl border border-[#2d3150]">
-          <button onClick={() => { setPendingFiles([]); setScannedPages([]); reset(); }} className="px-4 py-2 bg-[#22263a] hover:bg-[#2d3150] text-white rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+    <ToolLayout title="Scan to PDF" description={`Edit Halaman ${scannedPages.length + 1} dari ${scannedPages.length + files.length}`} showFileList={false} hideDropZone={true}>
+      <div className="max-w-[1400px] mx-auto px-4 py-6 mt-[-30px]">
+        <header className="flex flex-wrap items-center gap-3 mb-6 bg-surface p-4 rounded-lg border border-border">
+          <button onClick={() => { setFiles([]); setScannedPages([]); reset(); }} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
             <ChevronLeft className="w-4 h-4" /> Batal
           </button>
-          <button onClick={() => handleAutoDetect(workCanvasRef.current)} className="px-4 py-2 bg-[#22263a] hover:bg-[#2d3150] text-white rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
-            <Wand2 className="w-4 h-4" /> Auto Deteksi
-          </button>
-          <button onClick={handleProcessImage} className="px-6 py-2 bg-[#e2001a] hover:bg-[#b8001a] text-white rounded-xl text-sm font-semibold transition-colors flex items-center gap-2 ml-auto shadow-lg shadow-red-900/20">
-            <Zap className="w-4 h-4" /> Proses Gambar
-          </button>
+          {!editorState.processed && (
+            <>
+              <button onClick={() => handleAutoDetect(workCanvasRef.current)} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+                <Wand2 className="w-4 h-4" /> Auto Deteksi
+              </button>
+              <button onClick={handleProcessImage} className="px-6 py-2 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center gap-2 ml-auto shadow-md shadow-red-900/20">
+                <Zap className="w-4 h-4" /> Proses Gambar
+              </button>
+            </>
+          )}
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#1a1d27] border border-[#2d3150] rounded-2xl p-4 flex flex-col items-center">
-            <div className="flex items-center gap-2 mb-3 w-full text-[#8b90b0] text-sm">
-              <ImageIcon className="w-4 h-4" /> <span>Gambar Asli</span>
+        <div className="w-full">
+          {/* CROP MODE */}
+          <div className={`bg-surface border border-border rounded-lg p-4 flex-col items-center ${editorState.processed ? 'hidden' : 'flex'}`}>
+            <div className="flex items-center justify-between gap-2 mb-3 w-full text-text-muted text-sm">
+              <div className="flex items-center gap-2">
+                <ImageIcon className="w-4 h-4" /> <span>Gambar Asli (Sesuaikan Potongan)</span>
+              </div>
             </div>
-            <div ref={wrapRef} className="w-full relative overflow-hidden rounded-xl border border-[#2d3150] touch-none bg-[#0f1117]">
+            <div ref={wrapRef} className="w-full relative overflow-hidden rounded-md border border-border touch-none bg-bg flex justify-center items-center min-h-[50vh]">
               <canvas
                 ref={sourceCanvasRef}
-                className="w-full block"
+                className="block shadow-md"
                 onMouseDown={onPointerDown}
                 onMouseMove={onPointerMove}
                 onMouseUp={onPointerUp}
@@ -499,12 +467,12 @@ export default function ScanToPdf() {
               
               {magnifierPos && (
                 <div 
-                  className="absolute pointer-events-none rounded-full overflow-hidden border-2 border-[#e2001a] shadow-[0_0_20px_rgba(0,0,0,0.8)] bg-[#0f1117]"
+                  className="fixed pointer-events-none rounded-full overflow-hidden border-2 border-[#e2001a] shadow-[0_0_20px_rgba(0,0,0,0.8)] bg-bg"
                   style={{
                     width: 100, height: 100,
-                    left: magnifierPos.x > wrapRef.current?.clientWidth / 2 ? magnifierPos.x - 120 : magnifierPos.x + 20,
+                    left: magnifierPos.x > (window.innerWidth / 2) ? magnifierPos.x - 120 : magnifierPos.x + 20,
                     top: magnifierPos.y - 120 > 0 ? magnifierPos.y - 120 : magnifierPos.y + 20,
-                    zIndex: 50
+                    zIndex: 9999
                   }}
                 >
                   <canvas ref={magnifierCanvasRef} width={100} height={100} className="w-full h-full block" />
@@ -513,69 +481,72 @@ export default function ScanToPdf() {
             </div>
           </div>
 
-          <div className="bg-[#1a1d27] border border-[#2d3150] rounded-2xl p-4 flex flex-col items-center">
-            <div className="flex items-center gap-2 mb-3 w-full text-[#8b90b0] text-sm">
-              <Check className="w-4 h-4" /> <span>Hasil Scan</span>
+          {/* RESULT & FILTERS MODE */}
+          <div className={`bg-surface border border-border rounded-lg p-4 flex-col items-center max-w-4xl mx-auto ${!editorState.processed ? 'hidden' : 'flex'}`}>
+            <div className="flex justify-between items-center w-full mb-4 text-text-muted text-sm">
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4" /> <span>Hasil Scan & Filter</span>
+              </div>
+              <button 
+                onClick={() => setEditorState(s => ({ ...s, processed: false }))}
+                className="text-primary hover:text-primary-hover flex items-center gap-1 text-xs font-semibold px-3 py-1.5 border border-primary/30 rounded-md bg-primary/10 transition-colors"
+              >
+                <Crop className="w-3 h-3" /> Edit Potongan
+              </button>
             </div>
             
-            <div className="w-full relative rounded-xl border border-[#2d3150] flex flex-col items-center justify-center bg-[#0f1117] overflow-hidden min-h-[300px]">
-              {!editorState.processed && (
-                <div className="flex flex-col items-center justify-center text-[#4a5070] gap-3 p-8 text-center">
-                  <Crop className="w-10 h-10" />
-                  <p className="text-sm">Atur sudut lalu klik <strong>Proses Gambar</strong></p>
-                </div>
-              )}
-              <canvas ref={resultCanvasRef} className="max-w-full max-h-[60vh] object-contain" style={{ display: editorState.processed ? 'block' : 'none' }} />
+            <div className="w-full relative rounded-md border border-border flex flex-col items-center justify-center bg-bg overflow-hidden p-6 shadow-inner">
+              <canvas ref={resultCanvasRef} className="max-w-full max-h-[70vh] object-contain shadow-lg" />
             </div>
 
-            {editorState.processed && (
-              <div className="w-full mt-6 space-y-4">
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <label className="flex items-center gap-2 text-sm text-white cursor-pointer p-3 rounded-xl border border-[#2d3150] bg-[#1a1c29] hover:bg-[#22263a] transition-colors">
-                    <input type="checkbox" checked={editorState.bwMode} onChange={e => setEditorState(s => ({ ...s, bwMode: e.target.checked, grayMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                    Black & White
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-white cursor-pointer p-3 rounded-xl border border-[#2d3150] bg-[#1a1c29] hover:bg-[#22263a] transition-colors">
-                    <input type="checkbox" checked={editorState.grayMode} onChange={e => setEditorState(s => ({ ...s, grayMode: e.target.checked, bwMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                    Grayscale
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-white cursor-pointer p-3 rounded-xl border border-[#2d3150] bg-[#1a1c29] hover:bg-[#22263a] transition-colors col-span-2">
-                    <input type="checkbox" checked={editorState.enhanceMode} onChange={e => setEditorState(s => ({ ...s, enhanceMode: e.target.checked }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                    Auto Enhance (Sharpening)
-                  </label>
-                </div>
+            <div className="w-full mt-6 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
+                  <input type="checkbox" checked={editorState.bwMode} onChange={e => setEditorState(s => ({ ...s, bwMode: e.target.checked, grayMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
+                  Black & White
+                </label>
+                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
+                  <input type="checkbox" checked={editorState.grayMode} onChange={e => setEditorState(s => ({ ...s, grayMode: e.target.checked, bwMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
+                  Grayscale
+                </label>
+                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
+                  <input type="checkbox" checked={editorState.enhanceMode} onChange={e => setEditorState(s => ({ ...s, enhanceMode: e.target.checked }))} className="accent-[#e2001a] w-4 h-4 rounded" />
+                  Auto Enhance
+                </label>
+              </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs text-[#8b90b0] flex justify-between">Kecerahan <span>{editorState.brightness}</span></label>
-                    <input type="range" min="-100" max="100" value={editorState.brightness} onChange={e => setEditorState(s => ({ ...s, brightness: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
-                  </div>
-                  <div>
-                    <label className="text-xs text-[#8b90b0] flex justify-between">Kontras <span>{editorState.contrast}</span></label>
-                    <input type="range" min="-100" max="100" value={editorState.contrast} onChange={e => setEditorState(s => ({ ...s, contrast: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 border border-border rounded-md bg-bg/50">
+                <div>
+                  <label className="text-xs text-text-muted flex justify-between mb-2">Kecerahan <span>{editorState.brightness}</span></label>
+                  <input type="range" min="-100" max="100" value={editorState.brightness} onChange={e => setEditorState(s => ({ ...s, brightness: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
                 </div>
-                
+                <div>
+                  <label className="text-xs text-text-muted flex justify-between mb-2">Kontras <span>{editorState.contrast}</span></label>
+                  <input type="range" min="-100" max="100" value={editorState.contrast} onChange={e => setEditorState(s => ({ ...s, contrast: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
+                </div>
                 {editorState.bwMode && (
-                  <div>
-                    <label className="text-xs text-[#8b90b0] flex justify-between">Ambang Batas B&W <span>{editorState.threshold}</span></label>
+                  <div className="sm:col-span-2">
+                    <label className="text-xs text-text-muted flex justify-between mb-2">Ambang Batas B&W (Threshold) <span>{editorState.threshold}</span></label>
                     <input type="range" min="0" max="255" value={editorState.threshold} onChange={e => setEditorState(s => ({ ...s, threshold: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
                   </div>
                 )}
-
-                <div className="flex gap-2 mt-6 pt-4 border-t border-[#2d3150]">
-                  <button onClick={rotateManual} className="px-4 py-3 bg-[#2d3150] hover:bg-[#3f4469] text-white rounded-xl text-sm font-semibold transition-colors flex items-center justify-center shadow-md">
-                    <RotateCw className="w-5 h-5" />
-                  </button>
-                  <button onClick={handleSavePage} className="flex-1 py-3 bg-[#e2001a] hover:bg-[#b8001a] text-white rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-red-900/20">
-                    {pendingFiles.length > 1 ? 'Simpan & Lanjut' : 'Simpan Halaman'}
-                  </button>
-                </div>
               </div>
-            )}
+
+              <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t border-border">
+                <button onClick={rotateManual} className="px-5 py-3 bg-border-hover hover:bg-[#3f4469] text-text-main rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-md">
+                  <RotateCw className="w-5 h-5" /> Putar Kanan
+                </button>
+                <button onClick={handleSavePage} className="flex-1 py-3 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-md shadow-red-900/20">
+                  <Download className="w-5 h-5" />
+                  {files.length > 1 ? 'Simpan & Lanjut ke Foto Berikutnya' : 'Simpan Halaman & Selesai'}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </ToolLayout>
   );
 }
+
+

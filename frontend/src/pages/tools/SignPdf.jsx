@@ -15,6 +15,12 @@ export default function SignPdf() {
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
+    return () => {
+      if (uploadedImg) URL.revokeObjectURL(uploadedImg);
+    };
+  }, [uploadedImg]);
+
+  useEffect(() => {
     if (mode === 'draw' && canvasRef.current) {
       padRef.current = new SignaturePad(canvasRef.current, {
         backgroundColor: 'rgba(0,0,0,0)',
@@ -93,10 +99,10 @@ export default function SignPdf() {
         <div className="space-y-4">
           {/* Mode tabs */}
           <div className="flex gap-2">
-            {[{ v: 'draw', label: '✏️ Gambar' }, { v: 'type', label: '⌨️ Ketik' }, { v: 'upload', label: '📁 Upload' }].map(({ v, label }) => (
+            {[{ v: 'draw', label: 'âœï¸ Gambar' }, { v: 'type', label: 'âŒ¨ï¸ Ketik' }, { v: 'upload', label: 'ðŸ“ Upload' }].map(({ v, label }) => (
               <button key={v} onClick={() => setMode(v)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors
-                  ${mode === v ? 'bg-[#e2001a] text-white' : 'bg-[#22263a] text-[#8b90b0] hover:text-white'}`}>
+                  ${mode === v ? 'bg-primary text-white' : 'bg-surface-hover text-text-muted hover:text-white'}`}>
                 {label}
               </button>
             ))}
@@ -105,41 +111,44 @@ export default function SignPdf() {
           {mode === 'draw' && (
             <div className="space-y-2">
               <canvas ref={canvasRef} width={500} height={150}
-                className="w-full bg-[#22263a] rounded-xl border border-[#2d3150] touch-none cursor-crosshair" />
-              <button onClick={clearPad} className="text-xs text-[#8b90b0] hover:text-white">Hapus</button>
+                className="w-full bg-surface-hover rounded-xl border border-border touch-none cursor-crosshair" />
+              <button onClick={clearPad} className="text-xs text-text-muted hover:text-white">Hapus</button>
             </div>
           )}
 
           {mode === 'type' && (
             <input type="text" value={typedName} onChange={(e) => setTypedName(e.target.value)}
               placeholder="Ketik nama kamu..."
-              className="w-full px-4 py-3 bg-[#22263a] border border-[#2d3150] rounded-xl text-white italic text-xl font-serif focus:outline-none focus:border-[#e2001a]/50" />
+              className="w-full px-4 py-3 bg-surface-hover border border-border rounded-xl text-white italic text-xl font-serif focus:outline-none focus:border-[#e2001a]/50" />
           )}
 
           {mode === 'upload' && (
             <input type="file" accept="image/*"
               onChange={(e) => {
                 const f = e.target.files[0];
-                if (f) setUploadedImg(URL.createObjectURL(f));
+                if (f) {
+                  if (uploadedImg) URL.revokeObjectURL(uploadedImg);
+                  setUploadedImg(URL.createObjectURL(f));
+                }
               }}
-              className="w-full text-sm text-[#8b90b0]" />
+              className="w-full text-sm text-text-muted" />
           )}
 
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-1">Halaman</label>
+              <label className="block text-sm text-text-muted mb-1">Halaman</label>
               <input type="number" min={1} value={pageNumber}
                 onChange={(e) => setPageNumber(Number(e.target.value))}
-                className="w-full px-4 py-2.5 bg-[#22263a] border border-[#2d3150] rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
+                className="w-full px-4 py-2.5 bg-surface-hover border border-border rounded-xl text-white focus:outline-none focus:border-[#e2001a]/50 text-sm" />
             </div>
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-1">Posisi X ({position.x}%)</label>
+              <label className="block text-sm text-text-muted mb-1">Posisi X ({position.x}%)</label>
               <input type="range" min={0} max={80} value={position.x}
                 onChange={(e) => setPosition((p) => ({ ...p, x: Number(e.target.value) }))}
                 className="w-full accent-[#e2001a]" />
             </div>
             <div>
-              <label className="block text-sm text-[#8b90b0] mb-1">Posisi Y ({position.y}%)</label>
+              <label className="block text-sm text-text-muted mb-1">Posisi Y ({position.y}%)</label>
               <input type="range" min={0} max={80} value={position.y}
                 onChange={(e) => setPosition((p) => ({ ...p, y: Number(e.target.value) }))}
                 className="w-full accent-[#e2001a]" />
@@ -150,3 +159,4 @@ export default function SignPdf() {
     />
   );
 }
+

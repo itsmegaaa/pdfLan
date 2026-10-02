@@ -7,7 +7,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } 
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, X, FileText } from 'lucide-react';
 import { formatFileSize } from '../../utils/fileHelpers';
-import PdfPreview from '../../components/PdfPreview';
+import PdfThumbnail from '../../components/PdfThumbnail';
 
 function SortableFile({ file, id, index, onRemove }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
@@ -15,19 +15,19 @@ function SortableFile({ file, id, index, onRemove }) {
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 }}
-      className="flex items-center gap-3 bg-[#1a1d27] border border-[#2d3150] rounded-xl px-4 py-3"
+      className="flex items-center gap-3 bg-surface border border-border rounded-xl px-4 py-3"
     >
-      <button {...attributes} {...listeners} className="text-[#4a5070] hover:text-[#8b90b0] cursor-grab active:cursor-grabbing">
+      <button {...attributes} {...listeners} className="text-text-muted hover:text-text-muted cursor-grab active:cursor-grabbing">
         <GripVertical className="w-4 h-4" />
       </button>
-      <div className="w-12 h-16 flex-shrink-0 bg-[#22263a] rounded-lg overflow-hidden">
-        <PdfPreview file={file} pageNumber={1} scale={0.15} className="w-full h-full" />
+      <div className="w-12 h-16 flex-shrink-0 bg-surface-hover rounded-lg overflow-hidden">
+        <PdfThumbnail file={file} pageNumber={1} scale={0.15} className="w-full h-full" />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-white truncate">{file.name}</p>
-        <p className="text-xs text-[#8b90b0]">{formatFileSize(file.size)}</p>
+        <p className="text-xs text-text-muted">{formatFileSize(file.size)}</p>
       </div>
-      <button onClick={() => onRemove(index)} className="text-[#8b90b0] hover:text-red-400 transition-colors p-1">
+      <button onClick={() => onRemove(index)} className="text-text-muted hover:text-red-400 transition-colors p-1">
         <X className="w-4 h-4" />
       </button>
     </div>
@@ -92,3 +92,4 @@ export default function MergePdf() {
     </ToolLayout>
   );
 }
+

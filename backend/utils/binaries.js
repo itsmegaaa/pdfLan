@@ -1,12 +1,29 @@
-const { execa } = require('execa');
-const fs = require('fs-extra');
+﻿const { execa } = require('execa');
+const fs = require('fs').promises;
 const path = require('path');
-const pLimitReq = require('p-limit');
-const pLimit = pLimitReq.default || pLimitReq;
 const os = require('os');
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
-// Batasan konkurensi: maksimal 2 proses biner eksternal jalan bersamaan
+// Simple native semaphore to replace p-limit
+const pLimit = (concurrency) => {
+  let active = 0;
+  const queue = [];
+  const next = () => {
+    if (queue.length > 0 && active < concurrency) {
+      active++;
+      const { fn, resolve, reject } = queue.shift();
+      fn().then(resolve).catch(reject).finally(() => {
+        active--;
+        next();
+      });
+    }
+  };
+  return (fn) => new Promise((resolve, reject) => {
+    queue.push({ fn, resolve, reject });
+    next();
+  });
+};
+
 const limit = pLimit(2);
 
 // Helpers paths dari .env
@@ -29,16 +46,21 @@ exports.libreOfficeConvert = (inputPath, outputDir, outFilter) => limit(async ()
     } else if (outFilter.includes('pptx')) {
       args.push('--infilter=impress_pdf_import');
     }
-    // Note: LibreOffice does not have a native calc_pdf_import for Excel
   }
 
   args.push('--convert-to', outFilter, '--outdir', outputDir, inputPath);
 
-  await execa(LIBREOFFICE_PATH, args, { stdio: 'ignore' });
-  // LibreOffice membuat file output di outdir dengan basename dari input
   const ext = outFilter.split(':')[0]; // e.g., 'pdf' or 'docx'
   const baseName = path.basename(inputPath, path.extname(inputPath));
-  return path.join(outputDir, `${baseName}.${ext}`);
+  const expectedOutPath = path.join(outputDir, `${baseName}.${ext}`);
+
+  try {
+    await execa(LIBREOFFICE_PATH, args, { stdio: 'ignore' });
+    return expectedOutPath;
+  } catch (err) {
+    await fs.rm(expectedOutPath, { force: true, recursive: true }).catch(() => {});
+    throw err;
+  }
 });
 
 /**
@@ -47,9 +69,9 @@ exports.libreOfficeConvert = (inputPath, outputDir, outFilter) => limit(async ()
  */
 exports.ghostscriptCompress = (inputPath, outputPath, level = 'medium') => limit(async () => {
   const settings = {
-    low: '/prepress', // High quality, low compression
-    medium: '/ebook', // Medium quality, medium compression
-    high: '/screen'   // Low quality, high compression
+    low: '/prepress',
+    medium: '/ebook',
+    high: '/screen'
   };
   const pdfSettings = settings[level] || '/ebook';
 
@@ -63,8 +85,13 @@ exports.ghostscriptCompress = (inputPath, outputPath, level = 'medium') => limit
     `-sOutputFile=${outputPath}`,
     inputPath
   ];
-  await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
-  return outputPath;
+  try {
+    await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
+    return outputPath;
+  } catch (err) {
+    await fs.rm(outputPath, { force: true, recursive: true }).catch(() => {});
+    throw err;
+  }
 });
 
 /**
@@ -78,7 +105,6 @@ exports.qpdfProtect = (inputPath, outputPath, userPass, ownerPass, permissions =
     '256',
   ];
   
-  // QPDF permissions syntax
   if (permissions.includes('print')) args.push('--print=full');
   else args.push('--print=none');
   
@@ -89,8 +115,13 @@ exports.qpdfProtect = (inputPath, outputPath, userPass, ownerPass, permissions =
   else args.push('--extract=n');
 
   args.push('--', inputPath, outputPath);
-  await execa(QPDF_PATH, args, { stdio: 'ignore' });
-  return outputPath;
+  try {
+    await execa(QPDF_PATH, args, { stdio: 'ignore' });
+    return outputPath;
+  } catch (err) {
+    await fs.rm(outputPath, { force: true, recursive: true }).catch(() => {});
+    throw err;
+  }
 });
 
 /**
@@ -103,8 +134,13 @@ exports.qpdfUnlock = (inputPath, outputPath, password) => limit(async () => {
     inputPath,
     outputPath
   ];
-  await execa(QPDF_PATH, args, { stdio: 'ignore' });
-  return outputPath;
+  try {
+    await execa(QPDF_PATH, args, { stdio: 'ignore' });
+    return outputPath;
+  } catch (err) {
+    await fs.rm(outputPath, { force: true, recursive: true }).catch(() => {});
+    throw err;
+  }
 });
 
 /**
@@ -121,8 +157,13 @@ exports.ghostscriptPdfA = (inputPath, outputPath) => limit(async () => {
     `-sOutputFile=${outputPath}`,
     inputPath
   ];
-  await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
-  return outputPath;
+  try {
+    await execa(GHOSTSCRIPT_PATH, args, { stdio: 'ignore' });
+    return outputPath;
+  } catch (err) {
+    await fs.rm(outputPath, { force: true, recursive: true }).catch(() => {});
+    throw err;
+  }
 });
 
 /**
@@ -135,7 +176,7 @@ exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async ()
   
   const args = [
     '-jpeg',
-    '-r', '150', // DPI
+    '-r', '150',
     inputPath,
     prefix
   ];
@@ -145,7 +186,6 @@ exports.popplerPdfToJpg = (inputPath, outputDir, quality = 85) => limit(async ()
   } catch (error) {
     throw new Error(`Gagal memproses PDF dengan pdftoppm. Pastikan PDF tidak dienkripsi/password dan tidak rusak. (Details: ${error.stderr || error.message})`);
   }
-  // pdftoppm otomatis menambahkan -01.jpg, -02.jpg dst. Ambil file-file tersebut.
   const files = await fs.readdir(outputDir);
   return files
     .filter(f => f.endsWith('.jpg'))

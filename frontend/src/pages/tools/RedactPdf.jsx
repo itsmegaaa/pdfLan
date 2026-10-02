@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { redactPdf } from '../../utils/clientPdf';
-import PdfPreview from '../../components/PdfPreview';
+import PdfThumbnail from '../../components/PdfThumbnail';
 
 export default function RedactPdf() {
   const { startProcess, setProgress, setResult, setError } = useToolStore();
@@ -73,21 +73,21 @@ export default function RedactPdf() {
         files[0] && (
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-[#8b90b0]">Halaman {currentPage} — Klik dan drag untuk memilih area redaksi</p>
+              <p className="text-sm text-text-muted">Halaman {currentPage} — Klik dan drag untuk memilih area redaksi</p>
               <div className="flex gap-2">
                 <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className="px-3 py-1 bg-[#22263a] text-white rounded-lg text-xs hover:bg-[#2d3150]">← Prev</button>
+                  className="px-3 py-1 bg-surface-hover text-white rounded-lg text-xs hover:bg-[#2d3150]">← Prev</button>
                 <button onClick={() => setCurrentPage((p) => p + 1)}
-                  className="px-3 py-1 bg-[#22263a] text-white rounded-lg text-xs hover:bg-[#2d3150]">Next →</button>
+                  className="px-3 py-1 bg-surface-hover text-white rounded-lg text-xs hover:bg-[#2d3150]">Next →</button>
               </div>
             </div>
 
-            <div className="relative overflow-auto border border-[#2d3150] rounded-xl cursor-crosshair select-none"
+            <div className="relative overflow-auto border border-border rounded-xl cursor-crosshair select-none"
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
             >
-              <PdfPreview file={files[0]} pageNumber={currentPage} scale={1.0} />
+              <PdfThumbnail file={files[0]} pageNumber={currentPage} scale={1.0} />
 
               {/* Existing redactions for current page */}
               {areas.filter((a) => a.page === currentPage).map((a, i) => (
@@ -104,7 +104,7 @@ export default function RedactPdf() {
 
             {areas.length > 0 && (
               <div className="flex items-center justify-between">
-                <p className="text-sm text-[#8b90b0]">{areas.length} area dipilih</p>
+                <p className="text-sm text-text-muted">{areas.length} area dipilih</p>
                 <button onClick={() => setAreas([])} className="text-xs text-red-400 hover:text-red-300">Hapus semua</button>
               </div>
             )}
@@ -114,3 +114,4 @@ export default function RedactPdf() {
     />
   );
 }
+

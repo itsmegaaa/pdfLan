@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FileText, Menu, X, ChevronDown, Sparkles, ShieldCheck } from 'lucide-react';
+import { FileText, Menu, X, ChevronDown, History, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
@@ -47,59 +47,59 @@ export default function Navbar() {
   const imageTools = TOOLS.filter((t) => t.category === 'image');
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#2d3150]/80 bg-[#121522]/90 backdrop-blur-md transition-all">
+    <nav className="sticky top-0 z-50 border-b border-[#232738] bg-[#10121a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
+        <div className="flex items-center justify-between h-14 gap-4">
 
           {/* Left: Brand + Status Badges */}
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#e2001a] to-[#b30015] rounded-xl flex items-center justify-center shadow-lg shadow-red-950/40 group-hover:scale-105 transition-transform">
-                <FileText className="w-4 h-4 text-white" />
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-7 h-7 bg-[#e2001a] rounded-md flex items-center justify-center text-white">
+                <FileText className="w-3.5 h-3.5" />
               </div>
-              <span className="font-extrabold text-lg text-white tracking-tight">
+              <span className="font-bold text-base text-white tracking-tight">
                 PDF<span className="text-[#e2001a]">Vault</span>
               </span>
             </Link>
 
-            {/* Version Pill */}
+            {/* Version Badge */}
             <Link
               to="/changelog"
-              className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors"
+              className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-[#8b90b0] bg-[#161925] border border-[#232738] hover:text-white hover:border-[#383e58]"
               title="View Release Notes"
             >
               v1.0.8
             </Link>
 
-            {/* LAN / Security Status Pill */}
-            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#1e2338] text-[#9ba3c7] border border-[#2d3150]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            {/* LAN / Security Status */}
+            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-[#161925] text-[#8b90b0] border border-[#232738]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               <span>{isHttps ? 'HTTPS Secured' : 'LAN Active'}</span>
             </div>
           </div>
 
           {/* Center / Right: Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-1">
 
             {/* All Tools Mega Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setToolsOpen(!toolsOpen)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                   toolsOpen
-                    ? 'bg-[#1e2338] text-white'
-                    : 'text-[#8b90b0] hover:text-white hover:bg-[#1e2338]/60'
+                    ? 'bg-[#181c2b] text-white border border-[#232738]'
+                    : 'text-[#8b90b0] hover:text-white hover:bg-[#181c2b]'
                 }`}
                 aria-expanded={toolsOpen}
               >
                 <span>Tools</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${toolsOpen ? 'rotate-180 text-red-400' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${toolsOpen ? 'rotate-180 text-white' : ''}`} />
               </button>
 
               {/* Mega Dropdown Menu */}
               {toolsOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[760px] p-5 bg-[#171a29] border border-[#2d3150] rounded-2xl shadow-2xl shadow-black/60 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                  <div className="grid grid-cols-4 gap-6">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 w-[740px] p-4 bg-[#141724] border border-[#232738] rounded-lg shadow-xl shadow-black/40 z-50">
+                  <div className="grid grid-cols-4 gap-4">
 
                     {/* Column 1: Organize & Edit */}
                     <div>
@@ -112,10 +112,10 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
                             <span className="text-sm">{tool.icon}</span>
-                            <span className="truncate group-hover:translate-x-0.5 transition-transform">{tool.name}</span>
+                            <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -132,10 +132,10 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
                             <span className="text-sm">{tool.icon}</span>
-                            <span className="truncate group-hover:translate-x-0.5 transition-transform">{tool.name}</span>
+                            <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -152,10 +152,10 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
                             <span className="text-sm">{tool.icon}</span>
-                            <span className="truncate group-hover:translate-x-0.5 transition-transform">{tool.name}</span>
+                            <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -173,18 +173,18 @@ export default function Navbar() {
                               key={tool.id}
                               to={tool.route}
                               onClick={() => setToolsOpen(false)}
-                              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#a5abbf] hover:text-white hover:bg-[#232840] transition-colors group"
+                              className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                             >
                               <span className="text-sm">{tool.icon}</span>
-                              <span className="truncate group-hover:translate-x-0.5 transition-transform">{tool.name}</span>
+                              <span className="truncate">{tool.name}</span>
                             </Link>
                           ))}
                         </div>
                       </div>
 
                       {/* Offline Guarantee Promo Box */}
-                      <div className="mt-4 p-3 rounded-xl bg-[#1e2338]/80 border border-[#2d3150]/60">
-                        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-white mb-1">
+                      <div className="mt-3 p-2.5 rounded-md bg-[#181c2b] border border-[#232738]">
+                        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-white mb-0.5">
                           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                           <span>100% Offline</span>
                         </div>
@@ -202,9 +202,9 @@ export default function Navbar() {
             {/* Changelog Link */}
             <Link
               to="/changelog"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-[#8b90b0] hover:text-white hover:bg-[#1e2338]/60 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#181c2b] transition-colors"
             >
-              <Sparkles className="w-4 h-4 text-amber-400" />
+              <History className="w-3.5 h-3.5 text-[#8b90b0]" />
               <span>Changelog</span>
             </Link>
 
@@ -213,26 +213,26 @@ export default function Navbar() {
               href="https://github.com/itsmegaaa/pdfLan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-[#8b90b0] hover:text-white hover:bg-[#1e2338]/60 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#181c2b] transition-colors"
               title="GitHub Repository"
             >
-              <GithubIcon className="w-4 h-4" />
+              <GithubIcon className="w-3.5 h-3.5" />
               <span>GitHub</span>
             </a>
 
           </div>
 
           {/* Mobile hamburger button */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-1.5 md:hidden">
             <Link
               to="/changelog"
-              className="p-2 text-[#8b90b0] hover:text-white"
+              className="p-1.5 text-[#8b90b0] hover:text-white"
               title="Changelog"
             >
-              <Sparkles className="w-4 h-4 text-amber-400" />
+              <History className="w-4 h-4" />
             </Link>
             <button
-              className="text-[#8b90b0] hover:text-white p-2 rounded-lg hover:bg-[#1e2338]"
+              className="text-[#8b90b0] hover:text-white p-1.5 rounded-md hover:bg-[#181c2b]"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -245,13 +245,13 @@ export default function Navbar() {
 
       {/* Mobile menu drawer */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#151824] border-t border-[#2d3150] px-4 py-4 space-y-4 max-h-[85vh] overflow-y-auto">
+        <div className="md:hidden bg-[#10121a] border-t border-[#232738] px-4 py-4 space-y-4 max-h-[85vh] overflow-y-auto">
 
           {/* Mobile Status */}
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#1e2338] border border-[#2d3150]">
+          <div className="flex items-center justify-between p-2.5 rounded-md bg-[#161925] border border-[#232738]">
             <span className="text-xs text-[#8b90b0]">Mode Server:</span>
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               {isHttps ? 'HTTPS Secured' : 'Local LAN Active'}
             </span>
           </div>
@@ -264,7 +264,7 @@ export default function Navbar() {
                 <Link
                   key={tool.id}
                   to={tool.route}
-                  className="flex items-center gap-2 p-2 rounded-lg bg-[#1a1d2d] border border-[#2d3150]/60 text-xs font-medium text-white hover:border-red-500/40"
+                  className="flex items-center gap-2 p-2 rounded-md bg-[#161925] border border-[#232738] text-xs font-medium text-[#8b90b0] hover:text-white hover:border-[#383e58]"
                   onClick={() => setMobileOpen(false)}
                 >
                   <span>{tool.icon}</span>
@@ -274,7 +274,7 @@ export default function Navbar() {
             </div>
             <Link
               to="/"
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-colors"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-md text-xs font-medium text-white bg-[#181c2b] border border-[#232738] hover:bg-[#202538] transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               <span>Lihat Semua {TOOLS.length} Alat PDF</span>
@@ -283,22 +283,22 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Quick Links */}
-          <div className="pt-2 border-t border-[#2d3150] space-y-2">
+          <div className="pt-2 border-t border-[#232738] space-y-1">
             <Link
               to="/changelog"
-              className="flex items-center gap-2 py-2 text-sm font-medium text-[#8b90b0] hover:text-white"
+              className="flex items-center gap-2 py-1.5 text-xs font-medium text-[#8b90b0] hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
-              <Sparkles className="w-4 h-4 text-amber-400" />
+              <History className="w-3.5 h-3.5" />
               <span>Changelog & Update</span>
             </Link>
             <a
               href="https://github.com/itsmegaaa/pdfLan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 py-2 text-sm font-medium text-[#8b90b0] hover:text-white"
+              className="flex items-center gap-2 py-1.5 text-xs font-medium text-[#8b90b0] hover:text-white"
             >
-              <GithubIcon className="w-4 h-4" />
+              <GithubIcon className="w-3.5 h-3.5" />
               <span>GitHub Repository</span>
             </a>
           </div>
