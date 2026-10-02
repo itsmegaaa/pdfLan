@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Crop, Wand2, RotateCw, Download, Image as ImageIcon, Check, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Wand2, Image as ImageIcon, Check } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
@@ -17,14 +17,6 @@ export default function ScanToPdf() {
   const [editorState, setEditorState] = useState({
     corners: [],
     displayScale: 1,
-    processed: false,
-    brightness: 0,
-    contrast: 0,
-    bwMode: false,
-    grayMode: false,
-    threshold: 128,
-    enhanceMode: true,
-    rotation: 0
   });
 
   const [cvLoaded, setCvLoaded] = useState(false);
@@ -34,9 +26,7 @@ export default function ScanToPdf() {
 
   const imgRef = useRef(null);
   const workCanvasRef = useRef(null);
-  const transformedCanvasRef = useRef(null);
   const sourceCanvasRef = useRef(null);
-  const resultCanvasRef = useRef(null);
   const wrapRef = useRef(null);
   const magnifierCanvasRef = useRef(null);
   const draggingCorner = useRef(-1);
@@ -95,21 +85,32 @@ export default function ScanToPdf() {
     setEditorState(s => ({
       ...s,
       corners: [[m,m],[w-m,m],[w-m,h-m],[m,h-m]],
-      processed: false
     }));
 
     setTimeout(() => handleAutoDetect(wc), 100);
   };
 
-  // Luruskan gambar dengan sudut yang diberikan (dipakai tombol manual)
-  const doProcess = (corners) => {
-    if (!workCanvasRef.current || !corners || corners.length !== 4) return;
+  // Crop -> auto-enhance -> langsung simpan sebagai halaman (tanpa layar filter)
+  const handleCropConfirm = () => {
+    if (!workCanvasRef.current || editorState.corners.length !== 4) return;
     try {
-      transformedCanvasRef.current = perspectiveTransform(workCanvasRef.current, corners);
-      setEditorState(st => ({ ...st, corners, processed: true }));
-      setTimeout(() => updateResultCanvas(), 50);
-    } catch (err) {
-      setError('Gagal meluruskan dokumen');
+      const transformed = perspectiveTransform(workCanvasRef.current, editorState.corners);
+      const enhanced = document.createElement('canvas');
+      applyCanvasEffects(transformed, enhanced, 0, 0, false, false, 128, true, 0);
+      const canvas = document.createElement('canvas');
+      canvas.width = enhanced.width;
+      canvas.height = enhanced.height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(enhanced, 0, 0);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+      setScannedPages(prev => [...prev, { dataUrl, width: canvas.width, height: canvas.height }]);
+      setFiles(files.slice(1));
+      setEditorState({ corners: [], displayScale: 1 });
+      setProgress(0);
+    } catch {
+      setError('Gagal memproses gambar');
     }
   };
 
@@ -268,51 +269,6 @@ export default function ScanToPdf() {
     }, 100);
   };
 
-  const handleProcessImage = () => {
-    doProcess(editorState.corners);
-  };
-
-  const updateResultCanvas = (state = editorState) => {
-    if (!transformedCanvasRef.current || !resultCanvasRef.current) return;
-    applyCanvasEffects(
-      transformedCanvasRef.current,
-      resultCanvasRef.current,
-      state.brightness, state.contrast, 
-      state.bwMode, state.grayMode, state.threshold, 
-      state.enhanceMode, state.rotation
-    );
-  };
-
-  useEffect(() => {
-    if (editorState.processed) updateResultCanvas(editorState);
-  }, [editorState.brightness, editorState.contrast, editorState.bwMode, editorState.grayMode, editorState.threshold, editorState.enhanceMode, editorState.rotation, editorState.processed]);
-
-  const rotateManual = () => {
-    setEditorState(s => ({ ...s, rotation: (s.rotation + 90) % 360 }));
-  };
-
-  const handleSavePage = () => {
-    if (!resultCanvasRef.current) return;
-    const canvas = document.createElement('canvas');
-    canvas.width = resultCanvasRef.current.width;
-    canvas.height = resultCanvasRef.current.height;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(resultCanvasRef.current, 0, 0);
-
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
-    const newPage = { dataUrl, width: canvas.width, height: canvas.height };
-    setScannedPages(prev => [...prev, newPage]);
-    setFiles(files.slice(1));
-    setEditorState({
-      corners: [], displayScale: 1, processed: false,
-      brightness: 0, contrast: 0, bwMode: false, grayMode: false, threshold: 128,
-      enhanceMode: true, rotation: 0
-    });
-    setProgress(0);
-  };
-
   const handleExport = async () => {
     if (scannedPages.length === 0) return;
     startProcess();
@@ -431,21 +387,17 @@ export default function ScanToPdf() {
           <button onClick={() => { setFiles([]); setScannedPages([]); reset(); }} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
             <ChevronLeft className="w-4 h-4" /> Batal
           </button>
-          {!editorState.processed && (
-            <>
-              <button onClick={() => handleAutoDetect(workCanvasRef.current)} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Wand2 className="w-4 h-4" /> Deteksi Ulang
-              </button>
-              <button onClick={handleProcessImage} className="px-6 py-2 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center gap-2 ml-auto shadow-md shadow-red-900/20">
-                Pakai Potongan Ini <ArrowRight className="w-4 h-4" />
-              </button>
-            </>
-          )}
+          <button onClick={() => handleAutoDetect(workCanvasRef.current)} className="px-4 py-2 bg-surface-hover hover:bg-border-hover text-text-main rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+            <Wand2 className="w-4 h-4" /> Deteksi Ulang
+          </button>
+          <button onClick={handleCropConfirm} className="px-6 py-2 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center gap-2 ml-auto shadow-md shadow-red-900/20">
+            <Check className="w-4 h-4" /> Simpan Halaman
+          </button>
         </header>
 
         <div className="w-full">
           {/* CROP MODE */}
-          <div className={`bg-surface border border-border rounded-lg p-4 flex-col items-center ${editorState.processed ? 'hidden' : 'flex'}`}>
+          <div className="bg-surface border border-border rounded-lg p-4 flex flex-col items-center">
             <div className="flex items-center justify-between gap-2 mb-3 w-full text-text-muted text-sm">
               <div className="flex items-center gap-2">
                 <ImageIcon className="w-4 h-4" /> <span>Gambar Asli (Sesuaikan Potongan)</span>
@@ -480,68 +432,7 @@ export default function ScanToPdf() {
             </div>
           </div>
 
-          {/* RESULT & FILTERS MODE */}
-          <div className={`bg-surface border border-border rounded-lg p-4 flex-col items-center max-w-4xl mx-auto ${!editorState.processed ? 'hidden' : 'flex'}`}>
-            <div className="flex justify-between items-center w-full mb-4 text-text-muted text-sm">
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4" /> <span>Hasil Scan & Filter</span>
-              </div>
-              <button 
-                onClick={() => setEditorState(s => ({ ...s, processed: false }))}
-                className="text-primary hover:text-primary-hover flex items-center gap-1 text-xs font-semibold px-3 py-1.5 border border-primary/30 rounded-md bg-primary/10 transition-colors"
-              >
-                <Crop className="w-3 h-3" /> Edit Potongan
-              </button>
-            </div>
-            
-            <div className="w-full relative rounded-md border border-border flex flex-col items-center justify-center bg-bg overflow-hidden p-6 shadow-inner">
-              <canvas ref={resultCanvasRef} className="max-w-full max-h-[70vh] object-contain shadow-lg" />
-            </div>
 
-            <div className="w-full mt-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
-                  <input type="checkbox" checked={editorState.bwMode} onChange={e => setEditorState(s => ({ ...s, bwMode: e.target.checked, grayMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                  Black & White
-                </label>
-                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
-                  <input type="checkbox" checked={editorState.grayMode} onChange={e => setEditorState(s => ({ ...s, grayMode: e.target.checked, bwMode: false }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                  Grayscale
-                </label>
-                <label className="flex items-center gap-2 text-sm text-text-main cursor-pointer p-3 rounded-md border border-border bg-surface hover:bg-surface-hover transition-colors">
-                  <input type="checkbox" checked={editorState.enhanceMode} onChange={e => setEditorState(s => ({ ...s, enhanceMode: e.target.checked }))} className="accent-[#e2001a] w-4 h-4 rounded" />
-                  Auto Enhance
-                </label>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 border border-border rounded-md bg-bg/50">
-                <div>
-                  <label className="text-xs text-text-muted flex justify-between mb-2">Kecerahan <span>{editorState.brightness}</span></label>
-                  <input type="range" min="-100" max="100" value={editorState.brightness} onChange={e => setEditorState(s => ({ ...s, brightness: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
-                </div>
-                <div>
-                  <label className="text-xs text-text-muted flex justify-between mb-2">Kontras <span>{editorState.contrast}</span></label>
-                  <input type="range" min="-100" max="100" value={editorState.contrast} onChange={e => setEditorState(s => ({ ...s, contrast: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
-                </div>
-                {editorState.bwMode && (
-                  <div className="sm:col-span-2">
-                    <label className="text-xs text-text-muted flex justify-between mb-2">Ambang Batas B&W (Threshold) <span>{editorState.threshold}</span></label>
-                    <input type="range" min="0" max="255" value={editorState.threshold} onChange={e => setEditorState(s => ({ ...s, threshold: parseInt(e.target.value) }))} className="w-full accent-[#e2001a]" />
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t border-border">
-                <button onClick={rotateManual} className="px-5 py-3 bg-border-hover hover:bg-[#3f4469] text-text-main rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-md">
-                  <RotateCw className="w-5 h-5" /> Putar Kanan
-                </button>
-                <button onClick={handleSavePage} className="flex-1 py-3 bg-primary hover:bg-primary-hover text-text-main rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-md shadow-red-900/20">
-                  <Download className="w-5 h-5" />
-                  {files.length > 1 ? 'Simpan & Lanjut ke Foto Berikutnya' : 'Simpan Halaman & Selesai'}
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </ToolLayout>
