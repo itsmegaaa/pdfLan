@@ -3,7 +3,7 @@ import { ChevronLeft, Wand2, Image as ImageIcon, Check } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
-import { downloadBlob } from '../../utils/fileHelpers';
+import { downloadBlob, validateFiles } from '../../utils/fileHelpers';
 import { detectCorners, perspectiveTransform, applyCanvasEffects } from '../../utils/scannerMath';
 import { toast } from 'sonner';
 
@@ -13,6 +13,7 @@ const GRAB_RADIUS = 18;
 export default function ScanToPdf() {
   const { files, setFiles, isProcessing, startProcess, setProgress, setError, reset, setResult } = useToolStore();
   const [scannedPages, setScannedPages] = useState([]);
+  const [isDragActive, setIsDragActive] = useState(false);
   
   const [editorState, setEditorState] = useState({
     corners: [],
@@ -21,6 +22,11 @@ export default function ScanToPdf() {
 
   const [cvLoaded, setCvLoaded] = useState(false);
   const [magnifierPos, setMagnifierPos] = useState(null);
+  const tambahFoto = (rawFiles) => {
+    const { accepted } = validateFiles(rawFiles, { 'image/*': ['.jpg', '.jpeg', '.png'] }, 50, true);
+    if (accepted.length > 0) setFiles([...files, ...accepted]);
+  };
+
   const [exportFormat, setExportFormat] = useState('pdf');
   const [jpegQuality, setJpegQuality] = useState(0.92);
 
@@ -340,20 +346,23 @@ export default function ScanToPdf() {
                 <div className="absolute top-2 left-2 bg-primary text-text-main text-xs font-bold px-2 py-1 rounded-md shadow-md">Hal {idx + 1}</div>
               </div>
             ))}
-            <div 
-              className="relative rounded-md border-2 border-dashed border-border hover:border-[#e2001a] bg-surface flex flex-col items-center justify-center cursor-pointer aspect-[3/4] transition-colors"
+            <div
+              className={`relative rounded-md border-2 border-dashed flex flex-col items-center justify-center cursor-pointer aspect-[3/4] transition-colors ${isDragActive ? 'border-primary bg-primary/10 scale-[1.02]' : 'border-border hover:border-[#e2001a] bg-surface'}`}
               onClick={() => {
                 const input = document.createElement('input');
                 input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
                 input.onchange = e => {
-                  const newFiles = Array.from(e.target.files);
-                  setFiles([...files, ...newFiles]);
+                  if (e.target.files?.length) tambahFoto(Array.from(e.target.files));
                 };
                 input.click();
               }}
+              onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(true); }}
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); }}
+              onDrop={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragActive(false); if (e.dataTransfer.files?.length) tambahFoto(Array.from(e.dataTransfer.files)); }}
             >
-              <span className="text-4xl text-[#2d3150] mb-1">+</span>
-              <span className="text-xs sm:text-sm text-text-muted text-center px-2">Klik / Drop Foto Tambahan</span>
+              <span className={`text-4xl mb-1 ${isDragActive ? 'text-primary' : 'text-[#2d3150]'}`}>+</span>
+              <span className="text-xs sm:text-sm text-text-muted text-center px-2">{isDragActive ? 'Lepas foto di sini' : 'Klik / Drop Foto Tambahan'}</span>
             </div>
           </div>
           <div className="bg-surface rounded-lg p-6 border border-border">
