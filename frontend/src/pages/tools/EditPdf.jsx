@@ -127,7 +127,7 @@ export default function EditPdf() {
   if (result) { return <ToolLayout title="Page Builder (Edit PDF)" description="File siap diunduh." showFileList={false} hideDropZone={true} />; }
 
   return (
-    <ToolLayout title="Page Builder (Edit PDF)" description="Unggah banyak PDF sekaligus. Hapus, putar, atau geser halaman antar dokumen sesuka Anda." showFileList={false} hideDropZone={true}>
+    <ToolLayout title="Page Builder (Edit PDF)" description="Unggah banyak PDF sekaligus. Hapus, putar, atau geser halaman antar dokumen sesuka Anda." showFileList={false} hideDropZone={true} onFilesAdded={addFiles}>
       {/* Pages Workspace */}
       {pages.length > 0 && (
         <div className="space-y-4 mb-8">

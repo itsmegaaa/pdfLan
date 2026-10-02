@@ -108,7 +108,7 @@ export default function OrganizePdf() {
   if (result) { return <ToolLayout title="Organize PDF" description="File siap diunduh." showFileList={false} hideDropZone={true} />; }
 
   return (
-    <ToolLayout title="Organize PDF" description="Urutkan, hapus, atau putar halaman PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true}>
+    <ToolLayout title="Organize PDF" description="Urutkan, hapus, atau putar halaman PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true} onFilesAdded={(f) => loadPages(f[0])}>
       {/* Pages Workspace */}
       {pages.length > 0 && (
         <div className="space-y-4 mb-8">

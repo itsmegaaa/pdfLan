@@ -96,7 +96,7 @@ export default function Footer() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               <span className="text-white font-medium">Local Host Ready</span>
               <span className="text-[#596082]">•</span>
-              <span className="text-[#8b90b0]">v1.0.8</span>
+              <span className="text-[#8b90b0]">v1.1.0</span>
             </div>
           </div>
 

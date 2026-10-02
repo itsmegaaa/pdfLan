@@ -1,6 +1,7 @@
 ﻿import { useState, useRef } from 'react';
-import { Upload, X, FileText, AlertCircle } from 'lucide-react';
+import { Upload, X, AlertCircle } from 'lucide-react';
 import { formatFileSize, validateFiles } from '../utils/fileHelpers';
+import FileThumb from './FileThumb';
 
 /**
  * @param {Object} props
@@ -162,9 +163,7 @@ export default function DropZone({
               key={`${file.name}-${idx}`}
               className="flex items-center gap-3 bg-bg border border-border rounded-md px-3 py-2.5 hover:border-border-hover transition-colors"
             >
-              <div className="w-8 h-8 bg-surface rounded flex items-center justify-center flex-shrink-0 text-primary border border-border/60">
-                <FileText className="w-4 h-4" />
-              </div>
+              <FileThumb file={file} />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-text-main truncate">{file.name}</p>
                 <p className="text-[10px] text-text-muted mt-0.5">{formatFileSize(file.size)}</p>

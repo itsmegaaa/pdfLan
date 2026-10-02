@@ -5,31 +5,23 @@ import { apiCompress } from '../../utils/api';
 import { formatFileSize } from '../../utils/fileHelpers';
 
 export default function CompressPdf() {
-  const { startProcess, setUploadProgress, setResult, setError } = useToolStore();
   const files = useToolStore((s) => s.files);
   const [level, setLevel] = useState('medium');
 
-  const handleProcess = async (files) => {
+  const handleProcessFile = async (file, { setProgress }) => {
+    const res = await apiCompress(file, level, (e) => {
+      if (e.total) setProgress(Math.round((e.loaded * 100) / e.total));
+    });
+    const { fileId, filename } = res.data;
+    const downloadUrl = `${import.meta.env.VITE_API_BASE_URL}/download/${fileId}?filename=${encodeURIComponent(filename)}`;
+
+    let compressedBytes = 0;
     try {
-      const file = files[0];
-      const totalMb = file?.size ? (file.size / (1024 * 1024)).toFixed(1) : 0;
-      startProcess('Menyiapkan file...', `Ukuran dokumen: ${totalMb} MB`);
+      const head = await fetch(downloadUrl, { method: 'HEAD' });
+      compressedBytes = Number(head.headers.get('content-length')) || 0;
+    } catch { /* abaikan, statistik opsional */ }
 
-      const res = await apiCompress(file, level, (e) => {
-        if (e.total) {
-          const percent = Math.round((e.loaded * 100) / e.total);
-          const loadedMb = (e.loaded / (1024 * 1024)).toFixed(1);
-          setUploadProgress(percent, percent < 100
-            ? `Mengunggah: ${loadedMb} MB / ${totalMb} MB`
-            : 'File terunggah! Ghostscript sedang mengompresi PDF...');
-        }
-      });
-
-      const { fileId, filename } = res.data;
-      setResult({ url: `${import.meta.env.VITE_API_BASE_URL}/download/${fileId}?filename=${encodeURIComponent(filename)}`, filename });
-    } catch (err) {
-      setError(err.message || 'Gagal mengompresi PDF. Pastikan backend berjalan.');
-    }
+    return { url: downloadUrl, filename, compressedBytes };
   };
 
   const LEVELS = [
@@ -43,26 +35,26 @@ export default function CompressPdf() {
       title="Compress PDF"
       description="Kurangi ukuran file PDF menggunakan Ghostscript. Butuh backend berjalan."
       accept={{ 'application/pdf': ['.pdf'] }}
-      multiple={false}
-      onProcess={handleProcess}
+      multiple={true}
+      batch={true}
+      onProcessFile={handleProcessFile}
       actionLabel="Compress PDF"
       options={
         <div className="space-y-2">
-          <label className="block text-sm text-text-muted mb-2">Level Kompresi</label>
+          <label className="block text-xs text-text-muted mb-2">Level Kompresi</label>
           {LEVELS.map(({ v, label, desc }) => (
-            <label key={v} className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-colors
-              ${level === v ? 'border-[#e2001a]/50 bg-primary/5' : 'border-border hover:border-[#e2001a]/30'}`}>
-              <input type="radio" name="level" value={v} checked={level === v} onChange={() => setLevel(v)} className="mt-0.5 accent-[#e2001a]" />
+            <label key={v} className={`flex items-start gap-3 p-3 rounded-md border cursor-pointer transition-colors
+              ${level === v ? 'border-primary/50 bg-primary/5' : 'border-border hover:border-border-hover'}`}>
+              <input type="radio" name="level" value={v} checked={level === v} onChange={() => setLevel(v)} className="mt-0.5 accent-primary" />
               <div>
-                <p className="text-sm font-medium text-white">{label}</p>
-                <p className="text-xs text-text-muted">{desc}</p>
+                <p className="text-xs font-semibold text-text-main">{label}</p>
+                <p className="text-[11px] text-text-muted">{desc}</p>
               </div>
             </label>
           ))}
-          {files[0] && <p className="text-xs text-text-muted mt-2">Ukuran asli: {formatFileSize(files[0].size)}</p>}
+          {files[0] && <p className="text-[11px] text-text-muted mt-2">Ukuran asli: {formatFileSize(files[0].size)}</p>}
         </div>
       }
     />
   );
 }
-

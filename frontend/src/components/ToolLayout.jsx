@@ -1,7 +1,10 @@
-import { CheckCircle, Download, RefreshCw, AlertCircle, ChevronLeft, ArrowRight, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Search, Eye, Home as HomeIcon, FileText, Trash2, Copy, Check } from 'lucide-react';
+import { CheckCircle, Download, RefreshCw, AlertCircle, ChevronLeft, ArrowRight, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Search, Eye, Home as HomeIcon, FileText, Trash2, Copy, Check, Loader2, XCircle, FileArchive } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import JSZip from 'jszip';
 import DropZone from './DropZone';
+import ToolIcon from './ToolIcon';
+import FileThumb from './FileThumb';
 import ProgressBar from './ProgressBar';
 import useToolStore from '../store/useToolStore';
 import { downloadBlob, formatFileSize } from '../utils/fileHelpers';
@@ -20,6 +23,9 @@ import { TOOLS } from '../constants/tools';
  * @param {React.ReactNode} [props.options] - extra UI between file list and action button
  * @param {boolean} [props.showFileList] - whether to show the default file list (default true)
  * @param {boolean} [props.hideDropZone] - whether to hide the dropzone (default false)
+ * @param {function} [props.onFilesAdded] - dipanggil dengan file baru (drop / smart drop), buat halaman custom
+ * @param {boolean} [props.batch] - true = mode batch, pakai onProcessFile per file
+ * @param {function} [props.onProcessFile] - async (file, { setProgress }) => { url, blob, filename }, buat mode batch
  */
 export default function ToolLayout({
   title,
@@ -31,20 +37,93 @@ export default function ToolLayout({
   options = null,
   showFileList = true,
   hideDropZone = false,
+  onFilesAdded,
+  batch = false,
+  onProcessFile,
   children,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { files, isProcessing, progress, statusMessage, statusDetail, result, error, setFiles, removeFile, reset } = useToolStore();
+  const { files, isProcessing, progress, statusMessage, statusDetail, result, error, setFiles, removeFile, reset, consumePendingFiles,
+    batch: batchState, startBatch, updateBatchItem, finishBatch, cancelBatch, clearBatch, cancelProcess } = useToolStore();
+  const batchCancelled = useRef(false);
 
   const [showAllChains, setShowAllChains] = useState(false);
   const [chainCategory, setChainCategory] = useState('all');
   const [chainSearch, setChainSearch] = useState('');
   const [copied, setCopied] = useState(false);
 
+  // File titipan dari smart drop di Home → masukkan seperti habis drop
+  useEffect(() => {
+    const pending = consumePendingFiles();
+    if (pending.length) {
+      const list = multiple ? pending : pending.slice(0, 1);
+      setFiles(list);
+      onFilesAdded?.(list);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Esc = batalkan proses (single maupun batch)
+  useEffect(() => {
+    const h = (e) => {
+      if (e.key !== 'Escape') return;
+      if (batchState?.isRunning) {
+        batchCancelled.current = true;
+        cancelBatch();
+      } else if (isProcessing) {
+        cancelProcess();
+      }
+    };
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, [isProcessing, batchState, cancelProcess, cancelBatch]);
+
   const handleProcess = async () => {
     if (!files.length) return;
+    if (batch && onProcessFile) {
+      await runBatch();
+      return;
+    }
     await onProcess(files);
+  };
+
+  const runBatch = async () => {
+    batchCancelled.current = false;
+    startBatch(files);
+    const items = useToolStore.getState().batch.items;
+    for (const item of items) {
+      if (batchCancelled.current) break;
+      updateBatchItem(item.id, { status: 'processing', progress: 0 });
+      try {
+        const r = await onProcessFile(item.file, {
+          setProgress: (p) => updateBatchItem(item.id, { progress: p }),
+        });
+        updateBatchItem(item.id, {
+          status: 'done', progress: 100,
+          resultUrl: r.url, blob: r.blob, filename: r.filename,
+          originalBytes: item.file.size, compressedBytes: r.compressedBytes,
+        });
+      } catch (e) {
+        updateBatchItem(item.id, { status: 'error', error: e?.message || 'Gagal memproses' });
+      }
+    }
+    finishBatch();
+  };
+
+  const downloadZip = async () => {
+    const done = batchState.items.filter((i) => i.status === 'done');
+    if (!done.length) return;
+    const zip = new JSZip();
+    for (const it of done) {
+      try {
+        let blob = it.blob;
+        if (!blob && it.resultUrl) blob = await (await fetch(it.resultUrl)).blob();
+        if (blob) zip.file(it.filename || `hasil-${it.id}.pdf`, blob);
+      } catch { /* skip file yang gagal diambil */ }
+    }
+    const content = await zip.generateAsync({ type: 'blob' });
+    downloadBlob(content, 'hasil-batch.zip');
   };
 
   const handleDownload = () => {
@@ -157,6 +236,101 @@ export default function ToolLayout({
     }
   };
 
+  // ── Batch screen ─────────────────────────────────────────────
+  if (batchState) {
+    const doneCount = batchState.items.filter((i) => i.status === 'done').length;
+    const errCount = batchState.items.filter((i) => i.status === 'error').length;
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-main mb-6 transition-colors">
+          <ChevronLeft className="w-3.5 h-3.5" />
+          Kembali ke Semua Tools
+        </Link>
+        <div className="mb-6">
+          <h1 className="text-xl md:text-2xl font-bold text-text-main mb-1 tracking-tight">{title} — Batch</h1>
+          <p className="text-xs text-text-muted">
+            {batchState.isRunning
+              ? 'Sedang memproses antrian… (Esc untuk batalkan)'
+              : `${doneCount} berhasil${errCount ? `, ${errCount} gagal` : ''} dari ${batchState.items.length} file`}
+          </p>
+        </div>
+
+        <ul className="space-y-2 mb-6">
+          {batchState.items.map((it) => (
+            <li key={it.id} className="bg-bg border border-border rounded-md px-3 py-2.5">
+              <div className="flex items-center gap-3">
+                <FileThumb file={it.file} className="w-10 h-12" />
+                {it.status === 'processing' && <Loader2 className="w-4 h-4 text-primary animate-spin flex-shrink-0" />}
+                {it.status === 'queued' && <div className="w-4 h-4 rounded-full border-2 border-border-hover flex-shrink-0" />}
+                {it.status === 'done' && <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />}
+                {it.status === 'error' && <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />}
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-text-main truncate">{it.file.name}</p>
+                  <p className="text-[10px] text-text-muted mt-0.5">
+                    {formatFileSize(it.file.size)}
+                    {it.status === 'error' && <span className="text-red-400"> · {it.error}</span>}
+                    {it.status === 'done' && it.compressedBytes > 0 && it.originalBytes > 0 && (
+                      <span className="text-green-400"> · {formatFileSize(it.originalBytes)} → {formatFileSize(it.compressedBytes)}</span>
+                    )}
+                  </p>
+                </div>
+                {it.status === 'done' && (it.resultUrl || it.blob) && (
+                  <button
+                    onClick={() => {
+                      if (it.blob) downloadBlob(it.blob, it.filename);
+                      else {
+                        const a = document.createElement('a');
+                        a.href = it.resultUrl;
+                        a.download = it.filename || 'hasil.pdf';
+                        a.click();
+                      }
+                    }}
+                    className="text-xs font-semibold text-primary hover:text-text-main border border-border hover:border-border-hover rounded-md px-3 py-1.5 transition-colors flex-shrink-0"
+                  >
+                    Unduh
+                  </button>
+                )}
+              </div>
+              {(it.status === 'processing' || it.status === 'queued') && it.progress > 0 && (
+                <ProgressBar progress={it.progress} />
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex flex-col sm:flex-row gap-2">
+          {batchState.isRunning ? (
+            <button
+              onClick={() => { batchCancelled.current = true; cancelBatch(); }}
+              className="flex-1 py-2.5 bg-surface hover:bg-surface-hover border border-border text-text-main text-xs font-semibold rounded-md transition-colors"
+            >
+              Batalkan Batch
+            </button>
+          ) : (
+            <>
+              {doneCount > 0 && (
+                <button
+                  onClick={downloadZip}
+                  className="flex-1 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-md transition-colors flex items-center justify-center gap-2"
+                >
+                  <FileArchive className="w-4 h-4" />
+                  Unduh Semua (.zip)
+                </button>
+              )}
+              <button
+                onClick={() => { clearBatch(); reset(); }}
+                className="flex-1 py-2.5 bg-surface hover:bg-surface-hover border border-border text-text-main text-xs font-semibold rounded-md transition-colors"
+              >
+                Batch Baru
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+
   // â”€â”€ Result screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (result) {
     const fileSizeStr = result.blob?.size ? formatFileSize(result.blob.size) : null;
@@ -265,7 +439,7 @@ export default function ToolLayout({
             {/* 3 Columns Grid of Tool Options */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {topQuickTools.map((t) => {
-                const { Icon, color } = getIconMapping(t.id);
+                const { color } = getIconMapping(t.id);
                 return (
                   <button
                     key={t.id}
@@ -275,7 +449,7 @@ export default function ToolLayout({
                     <div className="flex items-center gap-3.5 min-w-0 pr-1">
                       <div className="w-12 h-12 bg-[#1c2033] rounded-md shadow-sm border border-[#2a2f4c] flex items-center justify-center shrink-0 group-hover:border-[#3d4468] transition-colors">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-text-main ${color} shadow-sm`}>
-                          <span className="text-sm">{t.icon}</span>
+                          <ToolIcon tool={t} className="w-4 h-4 text-text-muted" />
                         </div>
                       </div>
                       <span className="text-[13px] font-bold text-text-main/90 group-hover:text-text-main transition-colors truncate">
@@ -347,7 +521,7 @@ export default function ToolLayout({
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-1">
                         <div className="w-8 h-8 rounded-md bg-[#1c2033] border border-[#2a2f4c] flex items-center justify-center shrink-0">
-                          <span className="text-sm">{t.icon}</span>
+                          <ToolIcon tool={t} className="w-4 h-4 text-text-muted" />
                         </div>
                         <div className="min-w-0">
                           <div className="font-bold text-[13px] text-text-main/90 truncate group-hover:text-text-main">
@@ -382,6 +556,12 @@ export default function ToolLayout({
             <p className="text-xs text-text-muted mt-1">{statusDetail || 'Harap tunggu, dokumen sedang diproses secara lokal'}</p>
           </div>
           <ProgressBar progress={progress} label={statusMessage || 'Memprosesâ€¦'} />
+          <button
+            onClick={cancelProcess}
+            className="mt-6 w-full py-2.5 bg-surface hover:bg-surface-hover border border-border text-text-main text-xs font-semibold rounded-md transition-colors"
+          >
+            Batalkan (Esc)
+          </button>
         </div>
       </div>
     );
@@ -415,7 +595,7 @@ export default function ToolLayout({
             setFiles(multiple ? [...files, ...newFiles] : newFiles);
           }}
           accept={accept}
-          multiple={multiple}
+          multiple={multiple || batch}
           files={showFileList ? files : []}
           onRemove={removeFile}
         />
@@ -439,9 +619,27 @@ export default function ToolLayout({
           className="mt-5 w-full py-2.5 bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed
             text-text-main font-semibold text-xs rounded-md transition-colors"
         >
-          {actionLabel}
+          {batch ? `${actionLabel} (${files.length} file)` : actionLabel}
         </button>
       )}
+
+      {/* Cara menggunakan */}
+      <div className="mt-8 pt-6 border-t border-border">
+        <p className="text-xs font-semibold text-text-main mb-3">Cara menggunakan</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {[
+            { n: '1', t: hideDropZone ? 'Masukkan URL' : 'Pilih file', d: hideDropZone ? 'Tempel tautan halaman web yang ingin dikonversi.' : 'Klik atau seret file ke area upload di atas.' },
+            { n: '2', t: actionLabel, d: 'Atur opsi bila ada, lalu tekan tombol proses.' },
+            { n: '3', t: 'Unduh hasil', d: 'File hasil siap diunduh ke perangkat Anda.' },
+          ].map((s) => (
+            <div key={s.n} className="p-3 bg-surface border border-border rounded-md">
+              <p className="text-[11px] font-bold text-primary mb-1">Langkah {s.n}</p>
+              <p className="text-xs font-semibold text-text-main">{s.t}</p>
+              <p className="text-[11px] text-text-muted mt-0.5 leading-relaxed">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

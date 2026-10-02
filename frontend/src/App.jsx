@@ -5,7 +5,10 @@ import { lazy, Suspense, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
+import CommandPalette from './components/CommandPalette';
 import useToolStore from './store/useToolStore';
+import { TOOLS } from './constants/tools';
+import { pushRecent } from './utils/recentTools';
 
 // Pages (lazy loaded)
 const Home = lazy(() => import('./pages/Home'));
@@ -48,12 +51,26 @@ function PageLoader() {
   );
 }
 
+function RouteTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const tool = TOOLS.find((t) => t.route === location.pathname);
+    if (tool) pushRecent(tool.id);
+  }, [location.pathname]);
+
+  return null;
+}
+
 function StoreResetter() {
   const location = useLocation();
   const reset = useToolStore((state) => state.reset);
   const setFiles = useToolStore((state) => state.setFiles);
 
   useEffect(() => {
+    // Smart drop dari Home menitipkan file via pendingFiles — jangan reset,
+    // biar ToolLayout halaman tujuan yang mengambilnya.
+    if (useToolStore.getState().pendingFiles.length) return;
     reset();
     if (location.state?.chainFile) {
       setFiles([location.state.chainFile]);
@@ -119,7 +136,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <StoreResetter />
+      <RouteTracker />
       <ToastNotifier />
+      <CommandPalette />
       <div className="min-h-screen flex flex-col bg-[#0f1117]">
         <Navbar />
         <main className="flex-1">

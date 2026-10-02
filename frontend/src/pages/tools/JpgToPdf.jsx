@@ -123,7 +123,7 @@ export default function JpgToPdf() {
   }
 
   return (
-    <ToolLayout title="JPG to PDF" description="Upload beberapa gambar dan gabungkan menjadi satu PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true}>
+    <ToolLayout title="JPG to PDF" description="Upload beberapa gambar dan gabungkan menjadi satu PDF. Drag untuk mengubah urutan." showFileList={false} hideDropZone={true} onFilesAdded={addImages}>
       <DropZone onFiles={addImages} accept={{ 'image/*': ['.jpg', '.jpeg', '.png'] }} multiple={true} variant={items.length > 0 ? "compact" : "default"} />
 
       {items.length > 0 && (

@@ -1,5 +1,22 @@
 # [Released]
 
+## [1.1.0] - 2026-10-02
+### Added
+- **Smart Drop on Home:** Drop files anywhere on the homepage (or tap the dashed upload button) to open a "Mau diapain file ini?" picker that only lists tools matching the file type; files are carried straight into the chosen tool.
+- **Tool Chaining ("Continue to..."):** After processing, chain the result file directly into a compatible tool via the result screen, with search and category filters.
+- **File Thumbnails:** File lists now render real thumbnails — first-page PDF previews, image previews, and a dedicated spreadsheet icon. Corrupt/protected PDFs fall back to an icon.
+- **Command Palette (Ctrl+K):** Jump to any tool from anywhere with keyboard navigation (↑↓/Enter/Esc).
+- **Batch Queue (Compress PDF):** Compress multiple PDFs in one run with per-file progress, cancel, individual downloads, and download-all-as-ZIP.
+- **Recently Used Tools:** Homepage now shows a "Terakhir dipakai" section (max 6, stored locally).
+- **"Cara menggunakan" Steps:** Every tool page shows 3 contextual steps under the action bar.
+- **Cancel Processing:** Processing can now be cancelled via button or Esc (single and batch).
+- **Design System:** New `DESIGN_SYSTEM.md` with CSS-variable tokens (zinc scale + red primary), standardized DropZone variants, and component guidelines.
+
+### Changed
+- **Emoji Tool Icons → Lucide:** All tool icons replaced with Lucide glyphs via a shared `ToolIcon` component across cards, navbar, command palette, and chaining UI.
+- **DropZone Reworked:** Hand-rolled drag & drop (no more react-dropzone), `default`/`compact` variants, centralized validation with inline error states.
+- **Result Screen:** Focused result hub with download, preview-in-new-tab, copy filename, and chaining actions.
+
 ## [1.0.8] - 2026-06-29
 ### Added
 - **Scan to PDF (Smart Document Scanner):** In-browser smart scanner powered by OpenCV.js featuring:

@@ -16,11 +16,17 @@ const MAX_CACHE_SIZE = 5;
  * @param {number} [props.pageNumber=1]
  * @param {number} [props.scale=1.0]
  * @param {string} [props.className]
+ * @param {function} [props.onError] - dipanggil saat render gagal; kalau diisi, kotak error tidak ditampilkan
  */
-export default function PdfThumbnail({ file, pageNumber = 1, scale = 1.0, className = '' }) {
+export default function PdfThumbnail({ file, pageNumber = 1, scale = 1.0, className = '', onError }) {
   const canvasRef = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const onErrorRef = useRef(onError);
+
+  useEffect(() => {
+    onErrorRef.current = onError;
+  }, [onError]);
 
   useEffect(() => {
     if (!file) return;
@@ -68,6 +74,7 @@ export default function PdfThumbnail({ file, pageNumber = 1, scale = 1.0, classN
         if (!cancelled) {
           setError('Gagal merender PDF');
           setLoading(false);
+          onErrorRef.current?.(err);
         }
       }
     }
@@ -83,7 +90,7 @@ export default function PdfThumbnail({ file, pageNumber = 1, scale = 1.0, classN
           <div className="w-6 h-6 border-2 border-[#e2001a] border-t-transparent rounded-full animate-spin" />
         </div>
       )}
-      {error && (
+      {error && !onError && (
         <div className="p-4 text-sm text-red-400 bg-red-900/10 rounded-lg border border-red-800/30">
           {error}
         </div>

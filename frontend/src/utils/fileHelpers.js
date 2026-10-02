@@ -100,3 +100,23 @@ export function validateFiles(rawFiles, accept, maxSizeMB, multiple = false) {
 
   return { accepted, rejections };
 }
+
+/** Beri id unik ke File yang belum punya. */
+export function withIds(files) {
+  return (files || []).map((f) => {
+    if (!f.id) f.id = Math.random().toString(36).substring(2, 9);
+    return f;
+  });
+}
+
+/** Cek satu file cocok dengan objek accept (tanpa cek ukuran). */
+export function matchesAccept(file, accept) {
+  const exts = Object.values(accept || {}).flat().map((e) => String(e).toLowerCase());
+  const mimes = Object.keys(accept || {}).map((m) => String(m).toLowerCase());
+  const ext = '.' + (file.name.split('.').pop() || '').toLowerCase();
+  return (
+    exts.length === 0 ||
+    exts.includes(ext) ||
+    mimes.includes((file.type || '').toLowerCase())
+  );
+}

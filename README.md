@@ -1,4 +1,4 @@
-# PDFVault v1.0.8
+# PDFVault v1.1.0
 
 PDFVault is a self-hosted, offline-first PDF tool designed to be run within your Local Area Network (LAN) or on your personal machine. It provides PDF processing capabilities without needing to upload your sensitive documents to external servers.
 

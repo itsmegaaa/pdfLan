@@ -1,14 +1,47 @@
 ﻿import { useState, useMemo, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Search, LayoutGrid, List, Star, X } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Search, LayoutGrid, List, Star, X, Upload, AlertCircle, Clock } from 'lucide-react';
 import ToolCard from '../components/ToolCard';
+import GlobalDropOverlay from '../components/GlobalDropOverlay';
+import ToolPickerModal from '../components/ToolPickerModal';
 import { TOOLS, CATEGORIES } from '../constants/tools';
+import { getRecent } from '../utils/recentTools';
+import { validateFiles, withIds } from '../utils/fileHelpers';
+import useToolStore from '../store/useToolStore';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get('cat') || 'all';
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef(null);
+  const navigate = useNavigate();
+  const { setPendingFiles } = useToolStore();
+
+  // ── Smart drop: file → pilih tool → file kebawa ──────────────────
+  const [pickerFiles, setPickerFiles] = useState(null);
+  const [dropError, setDropError] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleIncomingFiles = (incoming) => {
+    const { accepted, rejections } = validateFiles(incoming, null, 50, true);
+    if (rejections.length) {
+      setDropError(
+        rejections.map(({ file, errors }) =>
+          `${file.name}: ${errors.map((e) => e.code === 'file-too-large' ? 'melebihi 50MB' : 'gagal dibaca').join(', ')}`
+        ).join(' · ')
+      );
+      return;
+    }
+    if (!accepted.length) return;
+    setDropError(null);
+    setPickerFiles(accepted);
+  };
+
+  const pickTool = (tool) => {
+    setPendingFiles(withIds(pickerFiles));
+    setPickerFiles(null);
+    navigate(tool.route);
+  };
 
   // â”€â”€ View Mode: 'grid' | 'list' â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [viewMode, setViewMode] = useState(() => {
@@ -40,6 +73,14 @@ export default function Home() {
   const favoriteTools = useMemo(() => {
     return TOOLS.filter((t) => favorites.includes(t.id));
   }, [favorites]);
+
+  const recentTools = useMemo(() => {
+    if (searchQuery || activeCategory !== 'all') return [];
+    return getRecent()
+      .map((id) => TOOLS.find((t) => t.id === id))
+      .filter(Boolean)
+      .filter((t) => !favorites.includes(t.id));
+  }, [searchQuery, activeCategory, favorites]);
 
   // â”€â”€ Keyboard shortcuts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   useEffect(() => {
@@ -82,6 +123,20 @@ export default function Home() {
 
   return (
     <>
+      {/* Smart drop: seret file ke mana aja di home → pilih tool */}
+      <GlobalDropOverlay
+        onFiles={handleIncomingFiles}
+        disabled={!!pickerFiles}
+        subtitle="Pilih tool setelah file dilepas"
+      />
+      {pickerFiles && (
+        <ToolPickerModal
+          files={pickerFiles}
+          onPick={pickTool}
+          onClose={() => setPickerFiles(null)}
+        />
+      )}
+
       {/* Header / Search */}
       <section className="bg-[#0e1017] border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9 text-center">
@@ -126,6 +181,37 @@ export default function Home() {
               </kbd>
             )}
           </div>
+
+          {/* Smart drop button */}
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="mt-4 mx-auto flex items-center justify-center gap-2 max-w-md w-full px-4 py-2.5 border border-dashed border-border hover:border-border-hover rounded-md text-xs text-text-muted hover:text-text-main transition-colors"
+          >
+            <Upload className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Seret file ke sini, atau klik untuk memilih — langsung pilih tool</span>
+            <span className="sm:hidden">Pilih file — langsung pilih tool</span>
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              handleIncomingFiles(Array.from(e.target.files || []));
+              e.target.value = '';
+            }}
+          />
+
+          {/* Drop error */}
+          {dropError && (
+            <div className="mt-4 mx-auto max-w-md flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-md text-left">
+              <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="flex-1 text-xs text-red-500">{dropError}</p>
+              <button onClick={() => setDropError(null)} aria-label="Tutup" className="text-red-500/60 hover:text-red-500">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -213,7 +299,32 @@ export default function Home() {
           </div>
         )}
 
-        {/* â”€â”€ All / Filtered Tools â”€â”€ */}
+               {/* ── Recently Used ── */}
+        {!searchQuery && activeCategory === 'all' && recentTools.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-3.5 h-3.5 text-text-muted" />
+              <h2 className="text-xs font-semibold text-text-main uppercase tracking-wider">Terakhir dipakai</h2>
+            </div>
+            <div className={viewMode === 'grid'
+              ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'
+              : 'space-y-1.5'
+            }>
+              {recentTools.map((tool) => (
+                <ToolCard
+                  key={`recent-${tool.id}`}
+                  tool={tool}
+                  viewMode={viewMode}
+                  isFavorite={false}
+                  onToggleFavorite={toggleFavorite}
+                />
+              ))}
+            </div>
+            <div className="border-b border-border my-6" />
+          </div>
+        )}
+
+         {/* â”€â”€ All / Filtered Tools â”€â”€ */}
         {filtered.length > 0 ? (
           <div className={viewMode === 'grid'
             ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'

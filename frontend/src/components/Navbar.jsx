@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FileText, Menu, X, ChevronDown, History, ShieldCheck, ArrowRight } from 'lucide-react';
+import ToolIcon from './ToolIcon';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
@@ -68,7 +69,7 @@ export default function Navbar() {
               className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-[#8b90b0] bg-[#161925] border border-[#232738] hover:text-white hover:border-[#383e58]"
               title="View Release Notes"
             >
-              v1.0.8
+              v1.1.0
             </Link>
 
             {/* LAN / Security Status */}
@@ -114,7 +115,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <span className="text-sm">{tool.icon}</span>
+                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -134,7 +135,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <span className="text-sm">{tool.icon}</span>
+                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -154,7 +155,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <span className="text-sm">{tool.icon}</span>
+                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -175,7 +176,7 @@ export default function Navbar() {
                               onClick={() => setToolsOpen(false)}
                               className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                             >
-                              <span className="text-sm">{tool.icon}</span>
+                              <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
                               <span className="truncate">{tool.name}</span>
                             </Link>
                           ))}
@@ -267,7 +268,7 @@ export default function Navbar() {
                   className="flex items-center gap-2 p-2 rounded-md bg-[#161925] border border-[#232738] text-xs font-medium text-[#8b90b0] hover:text-white hover:border-[#383e58]"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span>{tool.icon}</span>
+                  <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
                   <span className="truncate">{tool.name}</span>
                 </Link>
               ))}
