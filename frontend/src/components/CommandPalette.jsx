@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, CornerDownLeft } from 'lucide-react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
-import ToolIcon from "./ToolIcon";
+import { ToolIconBadge } from "./ToolIcon";
 
 const catLabel = (id) => CATEGORIES.find((c) => c.id === id)?.label || id;
 
@@ -98,9 +98,7 @@ export default function CommandPalette() {
                   i === sel ? 'bg-surface-hover' : ''
                 }`}
               >
-                <span className="w-8 h-8 flex items-center justify-center bg-bg border border-border rounded-md flex-shrink-0 text-text-muted">
-                  <ToolIcon tool={t} className="w-4 h-4" />
-                </span>
+                <ToolIconBadge tool={t} size="sm" />
                 <span className="flex-1 min-w-0">
                   <span className="block text-sm font-medium text-text-main truncate">{t.name}</span>
                   <span className="block text-xs text-text-muted truncate">{catLabel(t.category)}</span>

@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import JSZip from 'jszip';
 import DropZone from './DropZone';
-import ToolIcon from './ToolIcon';
+import { ToolIcon, ToolIconBadge } from './ToolIcon';
 import FileThumb from './FileThumb';
 import ProgressBar from './ProgressBar';
 import useToolStore from '../store/useToolStore';
@@ -358,18 +358,6 @@ export default function ToolLayout({
       return `${title || 'Dokumen'} telah selesai diproses!`;
     };
 
-    const getIconMapping = (id) => {
-      switch (id) {
-        case 'compress-pdf': return { Icon: RefreshCw, color: 'bg-emerald-500' };
-        case 'split-pdf': return { Icon: CheckCircle, color: 'bg-orange-500' };
-        case 'page-numbers': return { Icon: FileText, color: 'bg-purple-500' };
-        case 'watermark-pdf': return { Icon: AlertCircle, color: 'bg-rose-600' };
-        case 'rotate-pdf': return { Icon: RefreshCw, color: 'bg-indigo-600' };
-        case 'protect-pdf': return { Icon: CheckCircle, color: 'bg-blue-500' };
-        default: return { Icon: FileText, color: 'bg-slate-500' };
-      }
-    };
-
     return (
       <div className="w-full rounded-lg py-12 px-4 sm:px-8 text-center flex flex-col items-center mt-4">
         
@@ -439,7 +427,6 @@ export default function ToolLayout({
             {/* 3 Columns Grid of Tool Options */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {topQuickTools.map((t) => {
-                const { color } = getIconMapping(t.id);
                 return (
                   <button
                     key={t.id}
@@ -447,11 +434,7 @@ export default function ToolLayout({
                     className="flex items-center justify-between p-2 rounded-md hover:bg-[#1a1d2d] transition-colors group text-left border border-transparent hover:border-[#2a2f4c]"
                   >
                     <div className="flex items-center gap-3.5 min-w-0 pr-1">
-                      <div className="w-12 h-12 bg-[#1c2033] rounded-md shadow-sm border border-[#2a2f4c] flex items-center justify-center shrink-0 group-hover:border-[#3d4468] transition-colors">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-text-main ${color} shadow-sm`}>
-                          <ToolIcon tool={t} className="w-4 h-4 text-text-muted" />
-                        </div>
-                      </div>
+                      <ToolIconBadge tool={t} size="lg" />
                       <span className="text-[13px] font-bold text-text-main/90 group-hover:text-text-main transition-colors truncate">
                         {t.name}
                       </span>
@@ -520,9 +503,7 @@ export default function ToolLayout({
                       className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#1a1d2d] border border-transparent hover:border-[#2a2f4c] transition-colors group text-left"
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-1">
-                        <div className="w-8 h-8 rounded-md bg-[#1c2033] border border-[#2a2f4c] flex items-center justify-center shrink-0">
-                          <ToolIcon tool={t} className="w-4 h-4 text-text-muted" />
-                        </div>
+                        <ToolIconBadge tool={t} size="sm" />
                         <div className="min-w-0">
                           <div className="font-bold text-[13px] text-text-main/90 truncate group-hover:text-text-main">
                             {t.name}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { X, FileText, FileImage, File as FileIcon, MousePointerClick } from 'lucide-react';
-import ToolIcon from './ToolIcon';
+import { ToolIconBadge } from './ToolIcon';
 import { formatFileSize } from '../utils/fileHelpers';
 import { toolsForFiles } from '../utils/matchTools';
 
@@ -83,9 +83,7 @@ export default function ToolPickerModal({ files, onPick, onClose }) {
                 onClick={() => onPick(t)}
                 className="group flex flex-col items-start gap-2 p-3 bg-bg border border-border hover:border-border-hover hover:bg-surface-hover rounded-md text-left transition-colors"
               >
-                <span className="w-8 h-8 rounded-md bg-surface border border-border flex items-center justify-center text-text-muted group-hover:text-text-main transition-colors">
-                  <ToolIcon tool={t} className="w-4 h-4" />
-                </span>
+                <ToolIconBadge tool={t} size="sm" />
                 <span>
                   <span className="block text-xs font-semibold text-text-main">
                     {t.name}

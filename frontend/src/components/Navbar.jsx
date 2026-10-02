@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FileText, Menu, X, ChevronDown, History, ShieldCheck, ArrowRight } from 'lucide-react';
-import ToolIcon from './ToolIcon';
+import { ToolIcon } from './ToolIcon';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
 
@@ -115,7 +115,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
+                            <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -135,7 +135,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
+                            <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -155,7 +155,7 @@ export default function Navbar() {
                             onClick={() => setToolsOpen(false)}
                             className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                           >
-                            <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
+                            <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
                           </Link>
                         ))}
@@ -176,7 +176,7 @@ export default function Navbar() {
                               onClick={() => setToolsOpen(false)}
                               className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
                             >
-                              <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
+                              <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                               <span className="truncate">{tool.name}</span>
                             </Link>
                           ))}
@@ -268,7 +268,7 @@ export default function Navbar() {
                   className="flex items-center gap-2 p-2 rounded-md bg-[#161925] border border-[#232738] text-xs font-medium text-[#8b90b0] hover:text-white hover:border-[#383e58]"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <ToolIcon tool={tool} className="w-3.5 h-3.5 text-text-muted" />
+                  <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                   <span className="truncate">{tool.name}</span>
                 </Link>
               ))}

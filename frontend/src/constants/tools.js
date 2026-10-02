@@ -302,3 +302,16 @@ export const CATEGORIES = [
   { id: "security", label: "PDF Security" },
   { id: "image", label: "Image Tools" },
 ];
+
+/**
+ * Warna ikon per kategori — dipakai ToolIconBadge.
+ * Class Tailwind ditulis penuh (jangan dirakit dinamis) biar ke-detect build.
+ */
+export const CATEGORY_COLORS = {
+  organize: { text: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/25" },
+  optimize: { text: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/25" },
+  convert: { text: "text-green-400", bg: "bg-green-500/10", border: "border-green-500/25" },
+  edit: { text: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/25" },
+  security: { text: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/25" },
+  image: { text: "text-cyan-400", bg: "bg-cyan-500/10", border: "border-cyan-500/25" },
+};

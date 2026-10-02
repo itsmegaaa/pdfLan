@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
-import ToolIcon from './ToolIcon';
+import { ToolIconBadge } from './ToolIcon';
 
 /**
  * @param {{
@@ -31,9 +31,7 @@ export default function ToolCard({
           className="flex items-center gap-3 flex-1 min-w-0"
           onClick={(e) => isMaintenance && e.preventDefault()}
         >
-          <div className="w-8 h-8 rounded-md bg-[#1c2030] flex items-center justify-center shrink-0 border border-[#232738]/60 text-text-muted">
-            <ToolIcon tool={tool} className="w-4 h-4" />
-          </div>
+          <ToolIconBadge tool={tool} size="sm" />
           <div className="flex-1 min-w-0 pr-3">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-white">{tool.name}</span>
@@ -121,9 +119,8 @@ export default function ToolCard({
 
       <div>
         {/* Icon */}
-        <div className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 mb-3 border border-[#232738]/60
-          ${isMaintenance ? 'bg-[#1c2030] grayscale opacity-50' : 'bg-[#1c2030] text-text-muted'}`}>
-          <ToolIcon tool={tool} className="w-4 h-4" />
+        <div className="mb-3">
+          <ToolIconBadge tool={tool} size="md" className={isMaintenance ? 'grayscale opacity-50' : ''} />
         </div>
 
         {/* Content */}
