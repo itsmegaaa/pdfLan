@@ -133,7 +133,7 @@ export default function DropZone({
             }`}
           >
             <Upload className={isCompact ? 'w-4 h-4' : 'w-5 h-5'} strokeWidth={2.5} />
-            {isCompact ? 'Tambah File' : 'Pilih File'}
+            {isCompact ? (multiple ? 'Tambah File' : 'Ganti File') : 'Pilih File'}
           </button>
         )}
 
