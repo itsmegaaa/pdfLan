@@ -1,15 +1,14 @@
 import ToolLayout from '../../components/ToolLayout';
 import useToolStore from '../../store/useToolStore';
 import { mergePdfs } from '../../utils/clientPdf';
-import { useState } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, X, FileText } from 'lucide-react';
+import { GripVertical, X } from 'lucide-react';
 import { formatFileSize } from '../../utils/fileHelpers';
 import PdfThumbnail from '../../components/PdfThumbnail';
 
-function SortableFile({ file, id, index, onRemove }) {
+function SortableFile({ file, id, onRemove }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   return (
     <div
@@ -27,7 +26,7 @@ function SortableFile({ file, id, index, onRemove }) {
         <p className="text-sm font-medium text-white truncate">{file.name}</p>
         <p className="text-xs text-text-muted">{formatFileSize(file.size)}</p>
       </div>
-      <button onClick={() => onRemove(index)} className="text-text-muted hover:text-red-400 transition-colors p-1">
+      <button onClick={() => onRemove(id)} aria-label="Hapus file" className="text-text-muted hover:text-red-400 transition-colors p-1">
         <X className="w-4 h-4" />
       </button>
     </div>
@@ -76,13 +75,12 @@ export default function MergePdf() {
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
             <div className="mt-4 space-y-2">
-              {files.map((file, i) => (
+              {files.map((file) => (
                 <SortableFile
                   key={file.id}
                   file={file}
                   id={file.id}
-                  index={i}
-                  onRemove={(idx) => removeFile(idx)}
+                  onRemove={(fileId) => removeFile(fileId)}
                 />
               ))}
             </div>
