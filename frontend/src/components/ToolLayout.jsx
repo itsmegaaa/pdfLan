@@ -563,10 +563,10 @@ export default function ToolLayout({
         <div className="w-full max-w-md">
           <div className="text-center mb-6">
             <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-text-main font-semibold text-base">{statusMessage || 'Sedang memprosesâ€¦'}</p>
+            <p className="text-text-main font-semibold text-base">{statusMessage || 'Sedang memproses…'}</p>
             <p className="text-xs text-text-muted mt-1">{statusDetail || 'Harap tunggu, dokumen sedang diproses secara lokal'}</p>
           </div>
-          <ProgressBar progress={progress} label={statusMessage || 'Memprosesâ€¦'} />
+          <ProgressBar progress={progress} label={statusMessage || 'Memproses…'} />
           <button
             onClick={cancelProcess}
             className="mt-6 w-full py-2.5 bg-surface hover:bg-surface-hover border border-border text-text-main text-xs font-semibold rounded-md transition-colors"

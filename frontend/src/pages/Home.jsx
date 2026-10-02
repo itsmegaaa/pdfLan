@@ -142,7 +142,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9 text-center">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded text-xs font-medium bg-surface border border-border text-text-muted mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span>100% Offline Â· Lokal & Privat Â· Bebas Kuota</span>
+            <span>100% Offline · Lokal & Privat · Bebas Kuota</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-text-main mb-2 tracking-tight">
             PDF & Office Tools <span className="text-[#e2001a]">Lokal</span>
@@ -157,7 +157,7 @@ export default function Home() {
             <input
               ref={searchInputRef}
               type="text"
-              placeholder="Cari tool (tekan / untuk cari)â€¦"
+              placeholder="Cari tool (tekan / untuk cari)…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-16 py-2.5 bg-surface border border-border rounded-md text-text-main placeholder-[#8b90b0]
