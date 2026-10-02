@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { RotateCw, RotateCcw } from 'lucide-react';
+import { validateFiles, withIds } from '../../utils/fileHelpers';
+import { RotateCw, RotateCcw, Replace } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
 import PdfThumbnail from '../../components/PdfThumbnail';
 import ToolLayout from '../../components/ToolLayout';
@@ -29,7 +30,12 @@ function PageItem({ page, onRotateRight, onRotateLeft }) {
 }
 
 export default function RotatePdf() {
-  const { files, startProcess, setProgress, setResult, setError } = useToolStore();
+  const { files, setFiles, startProcess, setProgress, setResult, setError } = useToolStore();
+  const inputRef = useRef(null);
+  const gantiFile = (rawFiles) => {
+    const { accepted } = validateFiles(rawFiles, { 'application/pdf': ['.pdf'] }, 50, false);
+    if (accepted.length > 0) setFiles(withIds(accepted));
+  };
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
@@ -109,6 +115,13 @@ export default function RotatePdf() {
           <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-surface border border-border rounded-xl gap-4">
             <span className="text-sm font-medium text-white">{pages.length} Halaman</span>
             <div className="flex gap-2 w-full sm:w-auto">
+              <input
+                type="file" ref={inputRef} className="hidden" accept=".pdf"
+                onChange={(e) => { if (e.target.files?.length) gantiFile(Array.from(e.target.files)); e.target.value = null; }}
+              />
+              <button onClick={() => inputRef.current?.click()} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 border border-dashed border-border hover:border-primary text-text-muted hover:text-primary rounded-lg text-sm transition-colors">
+                <Replace className="w-4 h-4" /> Ganti File
+              </button>
               <button onClick={rotateAllLeft} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-surface-hover hover:bg-[#2d3150] text-text-muted hover:text-white rounded-lg text-sm transition-colors">
                 <RotateCcw className="w-4 h-4" /> Semua Kiri
               </button>

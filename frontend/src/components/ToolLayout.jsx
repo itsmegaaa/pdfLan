@@ -640,8 +640,8 @@ export default function ToolLayout({
           }}
           accept={accept}
           multiple={multiple || batch}
-          variant={files.length > 0 ? 'compact' : 'default'}
-          files={showFileList ? files : []}
+          files={files}
+          hideList={!showFileList}
           onRemove={removeFile}
         />
       )}
