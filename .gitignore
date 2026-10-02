@@ -57,3 +57,6 @@ CHANGELOG.md
 # Electron Manager App
 manager-app/node_modules/
 manager-app/dist/
+# dokumentasi pribadi (graphify code-graph)
+graphify-out/
+graphify_answers.txt
