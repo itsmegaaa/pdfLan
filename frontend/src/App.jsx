@@ -84,7 +84,6 @@ function StoreResetter() {
 
 function ToastNotifier() {
   const error = useToolStore((state) => state.error);
-  const result = useToolStore((state) => state.result);
   const isProcessing = useToolStore((state) => state.isProcessing);
   const toastIdRef = useRef(null);
 
@@ -114,20 +113,6 @@ function ToastNotifier() {
       }
     }
   }, [error, isProcessing]);
-
-  useEffect(() => {
-    if (result && !isProcessing) {
-      if (toastIdRef.current) {
-        gooeyToast.update(toastIdRef.current, {
-          title: 'File berhasil diproses!',
-          type: 'success'
-        });
-        toastIdRef.current = null;
-      } else {
-        gooeyToast.success('File berhasil diproses!');
-      }
-    }
-  }, [result, isProcessing]);
 
   return null;
 }
@@ -186,9 +171,6 @@ export default function App() {
           preset="bouncy"
           showProgress={true}
           closeButton="top-right"
-          toastOptions={{
-            style: { zoom: 1.5 }
-          }}
         />
       </div>
     </BrowserRouter>

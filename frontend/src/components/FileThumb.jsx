@@ -17,6 +17,7 @@ const SHEET_EXTS = ['.xls', '.xlsx', '.csv', '.ods'];
 export default function FileThumb({ file, className = 'w-10 h-12' }) {
   const [imgUrl, setImgUrl] = useState(null);
   const [pdfFailed, setPdfFailed] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
 
   const type = file?.type || '';
   const ext = extOf(file?.name);
@@ -34,6 +35,7 @@ export default function FileThumb({ file, className = 'w-10 h-12' }) {
 
   useEffect(() => {
     setPdfFailed(false);
+    setImgFailed(false);
   }, [file]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
@@ -49,8 +51,8 @@ export default function FileThumb({ file, className = 'w-10 h-12' }) {
           className="w-full h-full [&_canvas]:w-full [&_canvas]:h-full [&_canvas]:object-cover [&_canvas]:rounded-none"
           onError={() => setPdfFailed(true)}
         />
-      ) : isImage && imgUrl ? (
-        <img src={imgUrl} alt={file.name} className="w-full h-full object-cover" loading="lazy" />
+      ) : isImage && imgUrl && !imgFailed ? (
+        <img src={imgUrl} alt={file.name} className="w-full h-full object-cover" loading="lazy" onError={() => setImgFailed(true)} />
       ) : isSheet ? (
         <FileSpreadsheet className="w-4 h-4 text-green-400" />
       ) : (

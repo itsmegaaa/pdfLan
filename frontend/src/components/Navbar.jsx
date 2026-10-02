@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FileText, Menu, X, ChevronDown, History, ShieldCheck, ArrowRight } from 'lucide-react';
+import { FileText, Menu, X, ChevronDown, History, ShieldCheck, Layers, ArrowLeftRight, Lock, Image as ImageIcon } from 'lucide-react';
 import { ToolIcon } from './ToolIcon';
 import { useState, useRef, useEffect } from 'react';
 import { TOOLS, CATEGORIES } from '../constants/tools';
@@ -48,32 +48,32 @@ export default function Navbar() {
   const imageTools = TOOLS.filter((t) => t.category === 'image');
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#232738] bg-[#10121a]">
+    <nav className="sticky top-0 z-50 border-b border-border bg-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 gap-4">
 
           {/* Left: Brand + Status Badges */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-7 h-7 bg-[#e2001a] rounded-md flex items-center justify-center text-white">
+              <div className="w-7 h-7 bg-primary rounded-md flex items-center justify-center text-white">
                 <FileText className="w-3.5 h-3.5" />
               </div>
               <span className="font-bold text-base text-white tracking-tight">
-                PDF<span className="text-[#e2001a]">Vault</span>
+                PDF<span className="text-primary">Vault</span>
               </span>
             </Link>
 
             {/* Version Badge */}
             <Link
               to="/changelog"
-              className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-[#8b90b0] bg-[#161925] border border-[#232738] hover:text-white hover:border-[#383e58]"
+              className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-text-muted bg-surface border border-border hover:text-white hover:border-border-hover"
               title="View Release Notes"
             >
               v1.1.0
             </Link>
 
             {/* LAN / Security Status */}
-            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-[#161925] text-[#8b90b0] border border-[#232738]">
+            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-surface text-text-muted border border-border">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               <span>{isHttps ? 'HTTPS Secured' : 'LAN Active'}</span>
             </div>
@@ -88,10 +88,12 @@ export default function Navbar() {
                 onClick={() => setToolsOpen(!toolsOpen)}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                   toolsOpen
-                    ? 'bg-[#181c2b] text-white border border-[#232738]'
-                    : 'text-[#8b90b0] hover:text-white hover:bg-[#181c2b]'
+                    ? 'bg-surface-hover text-white border border-border'
+                    : 'text-text-muted hover:text-white hover:bg-surface-hover'
                 }`}
                 aria-expanded={toolsOpen}
+                aria-haspopup="true"
+                aria-controls="tools-mega-dropdown"
               >
                 <span>Tools</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${toolsOpen ? 'rotate-180 text-white' : ''}`} />
@@ -99,13 +101,13 @@ export default function Navbar() {
 
               {/* Mega Dropdown Menu */}
               {toolsOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 w-[740px] p-4 bg-[#141724] border border-[#232738] rounded-lg shadow-xl shadow-black/40 z-50">
+                <div id="tools-mega-dropdown" className="absolute right-0 top-full mt-1.5 w-[min(740px,92vw)] p-4 bg-surface border border-border rounded-lg shadow-xl shadow-black/40 z-50">
                   <div className="grid grid-cols-4 gap-4">
 
                     {/* Column 1: Organize & Edit */}
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-bold text-red-400 uppercase tracking-wider mb-3">
-                        <span>📋 Organize & Edit</span>
+                        <Layers className="w-3.5 h-3.5" /><span>Organize & Edit</span>
                       </div>
                       <div className="space-y-1">
                         {organizeTools.map((tool) => (
@@ -113,7 +115,7 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
                           >
                             <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
@@ -125,7 +127,7 @@ export default function Navbar() {
                     {/* Column 2: Convert */}
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider mb-3">
-                        <span>🔄 Convert PDF</span>
+                        <ArrowLeftRight className="w-3.5 h-3.5" /><span>Convert PDF</span>
                       </div>
                       <div className="space-y-1">
                         {convertTools.map((tool) => (
@@ -133,7 +135,7 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
                           >
                             <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
@@ -145,7 +147,7 @@ export default function Navbar() {
                     {/* Column 3: Security & Optimize */}
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3">
-                        <span>🔒 Security & Size</span>
+                        <Lock className="w-3.5 h-3.5" /><span>Security & Size</span>
                       </div>
                       <div className="space-y-1">
                         {securityTools.map((tool) => (
@@ -153,7 +155,7 @@ export default function Navbar() {
                             key={tool.id}
                             to={tool.route}
                             onClick={() => setToolsOpen(false)}
-                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
                           >
                             <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                             <span className="truncate">{tool.name}</span>
@@ -166,7 +168,7 @@ export default function Navbar() {
                     <div className="flex flex-col justify-between">
                       <div>
                         <div className="flex items-center gap-1.5 text-xs font-bold text-purple-400 uppercase tracking-wider mb-3">
-                          <span>📸 Image & AI</span>
+                          <ImageIcon className="w-3.5 h-3.5" /><span>Image & AI</span>
                         </div>
                         <div className="space-y-1">
                           {imageTools.map((tool) => (
@@ -174,7 +176,7 @@ export default function Navbar() {
                               key={tool.id}
                               to={tool.route}
                               onClick={() => setToolsOpen(false)}
-                              className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#1c2030] transition-colors"
+                              className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
                             >
                               <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
                               <span className="truncate">{tool.name}</span>
@@ -184,12 +186,12 @@ export default function Navbar() {
                       </div>
 
                       {/* Offline Guarantee Promo Box */}
-                      <div className="mt-3 p-2.5 rounded-md bg-[#181c2b] border border-[#232738]">
+                      <div className="mt-3 p-2.5 rounded-md bg-surface-hover border border-border">
                         <div className="flex items-center gap-1.5 text-[11px] font-semibold text-white mb-0.5">
                           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                           <span>100% Offline</span>
                         </div>
-                        <p className="text-[10px] text-[#8b90b0] leading-tight">
+                        <p className="text-[10px] text-text-muted leading-tight">
                           Semua file diproses di memori browser & LAN server.
                         </p>
                       </div>
@@ -203,9 +205,9 @@ export default function Navbar() {
             {/* Changelog Link */}
             <Link
               to="/changelog"
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#181c2b] transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
             >
-              <History className="w-3.5 h-3.5 text-[#8b90b0]" />
+              <History className="w-3.5 h-3.5 text-text-muted" />
               <span>Changelog</span>
             </Link>
 
@@ -214,7 +216,7 @@ export default function Navbar() {
               href="https://github.com/itsmegaaa/pdfLan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-[#8b90b0] hover:text-white hover:bg-[#181c2b] transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-text-muted hover:text-white hover:bg-surface-hover transition-colors"
               title="GitHub Repository"
             >
               <GithubIcon className="w-3.5 h-3.5" />
@@ -227,13 +229,13 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 md:hidden">
             <Link
               to="/changelog"
-              className="p-1.5 text-[#8b90b0] hover:text-white"
+              className="p-1.5 text-text-muted hover:text-white"
               title="Changelog"
             >
               <History className="w-4 h-4" />
             </Link>
             <button
-              className="text-[#8b90b0] hover:text-white p-1.5 rounded-md hover:bg-[#181c2b]"
+              className="text-text-muted hover:text-white p-1.5 rounded-md hover:bg-surface-hover"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -246,11 +248,11 @@ export default function Navbar() {
 
       {/* Mobile menu drawer */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#10121a] border-t border-[#232738] px-4 py-4 space-y-4 max-h-[85vh] overflow-y-auto">
+        <div className="md:hidden bg-bg border-t border-border px-4 py-4 space-y-4 max-h-[85vh] overflow-y-auto">
 
           {/* Mobile Status */}
-          <div className="flex items-center justify-between p-2.5 rounded-md bg-[#161925] border border-[#232738]">
-            <span className="text-xs text-[#8b90b0]">Mode Server:</span>
+          <div className="flex items-center justify-between p-2.5 rounded-md bg-surface border border-border">
+            <span className="text-xs text-text-muted">Mode Server:</span>
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               {isHttps ? 'HTTPS Secured' : 'Local LAN Active'}
@@ -259,13 +261,13 @@ export default function Navbar() {
 
           {/* Mobile Tool Categories */}
           <div className="space-y-3">
-            <div className="text-xs font-bold text-[#8b90b0] uppercase tracking-wider px-1">Daftar Alat Populer</div>
+            <div className="text-xs font-bold text-text-muted uppercase tracking-wider px-1">Semua Alat</div>
             <div className="grid grid-cols-2 gap-2">
-              {TOOLS.slice(0, 10).map((tool) => (
+              {TOOLS.map((tool) => (
                 <Link
                   key={tool.id}
                   to={tool.route}
-                  className="flex items-center gap-2 p-2 rounded-md bg-[#161925] border border-[#232738] text-xs font-medium text-[#8b90b0] hover:text-white hover:border-[#383e58]"
+                  className="flex items-center gap-2 p-2 rounded-md bg-surface border border-border text-xs font-medium text-text-muted hover:text-white hover:border-border-hover"
                   onClick={() => setMobileOpen(false)}
                 >
                   <ToolIcon tool={tool} colored className="w-3.5 h-3.5" />
@@ -273,21 +275,13 @@ export default function Navbar() {
                 </Link>
               ))}
             </div>
-            <Link
-              to="/"
-              className="flex items-center justify-center gap-1.5 p-2 rounded-md text-xs font-medium text-white bg-[#181c2b] border border-[#232738] hover:bg-[#202538] transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              <span>Lihat Semua {TOOLS.length} Alat PDF</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
           </div>
 
           {/* Mobile Quick Links */}
-          <div className="pt-2 border-t border-[#232738] space-y-1">
+          <div className="pt-2 border-t border-border space-y-1">
             <Link
               to="/changelog"
-              className="flex items-center gap-2 py-1.5 text-xs font-medium text-[#8b90b0] hover:text-white"
+              className="flex items-center gap-2 py-1.5 text-xs font-medium text-text-muted hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
               <History className="w-3.5 h-3.5" />
@@ -297,7 +291,7 @@ export default function Navbar() {
               href="https://github.com/itsmegaaa/pdfLan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 py-1.5 text-xs font-medium text-[#8b90b0] hover:text-white"
+              className="flex items-center gap-2 py-1.5 text-xs font-medium text-text-muted hover:text-white"
             >
               <GithubIcon className="w-3.5 h-3.5" />
               <span>GitHub Repository</span>

@@ -26,6 +26,30 @@ export default function ToolPickerModal({ files, onPick, onClose }) {
     return () => window.removeEventListener('keydown', h);
   }, [onClose]);
 
+  // Kunci scroll body saat modal tampil
+  useEffect(() => {
+    if (!files?.length) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [files?.length]);
+
+  // "Pilih manual": tutup modal, lalu fokuskan pencarian di home
+  // agar user bisa memilih tool sendiri dari daftar.
+  const handleManualPick = () => {
+    onClose();
+    requestAnimationFrame(() => {
+      const input = document.querySelector('input[placeholder^="Cari tool"]');
+      if (input) {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        input.focus({ preventScroll: true });
+      } else {
+        // Fallback: scroll ke konten utama bila input tidak ditemukan
+        document.querySelector('main')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  };
+
   if (!files?.length) return null;
 
   return (
@@ -34,6 +58,9 @@ export default function ToolPickerModal({ files, onPick, onClose }) {
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Pilih tool untuk file"
         className="w-full max-w-2xl bg-surface border border-border rounded-lg p-6 shadow-xl max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
@@ -49,6 +76,7 @@ export default function ToolPickerModal({ files, onPick, onClose }) {
             </p>
           </div>
           <button
+            autoFocus
             onClick={onClose}
             aria-label="Tutup"
             className="p-2 rounded-md text-text-muted hover:text-text-main hover:bg-surface-hover transition-colors"
@@ -102,7 +130,7 @@ export default function ToolPickerModal({ files, onPick, onClose }) {
               Tipe file ini belum didukung tool mana pun.
             </p>
             <button
-              onClick={onClose}
+              onClick={handleManualPick}
               className="px-4 py-2 bg-surface hover:bg-surface-hover border border-border text-text-main text-xs font-semibold rounded-md transition-colors"
             >
               Pilih manual dari daftar

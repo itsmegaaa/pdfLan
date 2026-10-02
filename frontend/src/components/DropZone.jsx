@@ -75,7 +75,7 @@ export default function DropZone({
 
   const isError = fileRejections.length > 0;
 
-  let containerClass = "relative flex flex-col items-center justify-center border rounded-md p-4 text-center cursor-pointer transition-colors duration-150 ";
+  let containerClass = "relative flex flex-col items-center justify-center border rounded-md p-4 text-center cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ";
   if (variant === 'compact') containerClass += "min-h-[120px] ";
   else containerClass += "min-h-[200px] ";
 
@@ -103,6 +103,16 @@ export default function DropZone({
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         onClick={onClick}
+        tabIndex={0}
+        role="button"
+        aria-label="Unggah file — tekan Enter untuk memilih file"
+        onKeyDown={(e) => {
+          if (e.target !== e.currentTarget) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        }}
       >
         <input 
           type="file" 
@@ -160,7 +170,7 @@ export default function DropZone({
         <ul className="mt-4 space-y-2">
           {files.map((file, idx) => (
             <li
-              key={`${file.name}-${idx}`}
+              key={file.id || file.name}
               className="flex items-center gap-3 bg-bg border border-border rounded-md px-3 py-2.5 hover:border-border-hover transition-colors"
             >
               <FileThumb file={file} />

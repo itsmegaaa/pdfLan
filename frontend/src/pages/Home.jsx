@@ -206,7 +206,7 @@ export default function Home() {
           {dropError && (
             <div className="mt-4 mx-auto max-w-md flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-md text-left">
               <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="flex-1 text-xs text-red-500">{dropError}</p>
+              <p className="flex-1 text-xs text-red-500 break-words">{dropError}</p>
               <button onClick={() => setDropError(null)} aria-label="Tutup" className="text-red-500/60 hover:text-red-500">
                 <X className="w-3.5 h-3.5" />
               </button>

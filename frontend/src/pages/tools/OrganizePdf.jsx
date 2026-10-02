@@ -1,15 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { GripVertical, Trash2, RotateCw, CheckCircle, Download, RefreshCw } from 'lucide-react';
+import { GripVertical, Trash2, RotateCw } from 'lucide-react';
 import useToolStore from '../../store/useToolStore';
-import { downloadBlob } from '../../utils/fileHelpers';
 import PdfThumbnail from '../../components/PdfThumbnail';
 import DropZone from '../../components/DropZone';
-import ProgressBar from '../../components/ProgressBar';
-import { Link } from 'react-router-dom';
 import ToolLayout from '../../components/ToolLayout';
 
 function SortablePage({ page, onDelete, onRotate }) {
@@ -26,11 +23,11 @@ function SortablePage({ page, onDelete, onRotate }) {
       </div>
       <div className="flex items-center justify-between px-2 pb-2">
         <span className="text-xs text-text-muted">Hal. {page.originalIndex + 1}</span>
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button onClick={() => onRotate(page.id)} className="p-1 text-text-muted hover:text-white">
+        <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+          <button onClick={() => onRotate(page.id)} aria-label="Putar halaman" className="p-1 text-text-muted hover:text-white">
             <RotateCw className="w-3 h-3" />
           </button>
-          <button onClick={() => onDelete(page.id)} className="p-1 text-text-muted hover:text-red-400">
+          <button onClick={() => onDelete(page.id)} aria-label="Hapus halaman" className="p-1 text-text-muted hover:text-red-400">
             <Trash2 className="w-3 h-3" />
           </button>
         </div>
@@ -90,18 +87,6 @@ export default function OrganizePdf() {
       setResult({ blob, filename: file ? file.name : "organized.pdf" });
     } catch (err) {
       setError(err.message || 'Gagal mengorganisir PDF');
-    }
-  };
-
-  const handleDownload = () => {
-    if (!result) return;
-    if (result.blob) {
-      downloadBlob(result.blob, result.filename || (file ? file.name : "organized.pdf"));
-    } else if (result.url) {
-      const a = document.createElement('a');
-      a.href = result.url;
-      a.download = result.filename || (file ? file.name : "organized.pdf");
-      a.click();
     }
   };
 

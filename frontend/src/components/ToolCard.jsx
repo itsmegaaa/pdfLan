@@ -108,7 +108,7 @@ export default function ToolCard({
             className={`p-1 rounded transition-colors ${
               isFavorite
                 ? 'text-amber-400 opacity-100'
-                : 'text-[#4a5070] opacity-0 group-hover:opacity-100 hover:text-amber-400'
+                : 'text-[#4a5070] opacity-100 md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100 hover:text-amber-400'
             }`}
             title={isFavorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}
           >

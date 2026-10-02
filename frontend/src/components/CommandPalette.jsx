@@ -26,6 +26,14 @@ export default function CommandPalette() {
     return () => window.removeEventListener('keydown', h);
   }, []);
 
+  // Kunci scroll body saat palette terbuka
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = TOOLS.filter((t) => !t.maintenance);
@@ -73,6 +81,9 @@ export default function CommandPalette() {
       onClick={() => setOpen(false)}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Pilih tool"
         className="w-full max-w-lg bg-surface border border-border rounded-lg shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={onKey}
@@ -81,6 +92,10 @@ export default function CommandPalette() {
           <Search className="w-4 h-4 text-text-muted flex-shrink-0" />
           <input
             autoFocus
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="cmd-listbox"
+            aria-activedescendant={results.length ? `cmd-opt-${sel}` : undefined}
             value={query}
             onChange={onQuery}
             placeholder="Ketik nama tool… (Esc untuk tutup)"
@@ -88,10 +103,13 @@ export default function CommandPalette() {
           />
           <kbd className="px-1.5 py-0.5 bg-bg border border-border rounded text-[10px] text-text-muted">Esc</kbd>
         </div>
-        <ul className="max-h-80 overflow-y-auto py-2">
+        <ul id="cmd-listbox" role="listbox" aria-label="Hasil pencarian tool" className="max-h-80 overflow-y-auto py-2">
           {results.map((t, i) => (
             <li key={t.id}>
               <button
+                id={`cmd-opt-${i}`}
+                role="option"
+                aria-selected={i === sel}
                 onClick={() => go(t)}
                 onMouseEnter={() => setSel(i)}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
