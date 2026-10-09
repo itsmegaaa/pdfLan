@@ -234,7 +234,7 @@ export async function cropPdf(file, margins, pageIndices = 'all') {
 /**
  * Parse range string like "1-3,5,7-9" into 0-based index arrays
  */
-function parseRanges(str, total) {
+export function parseRanges(str, total) {
   return str
     .split(',')
     .map((s) => s.trim())
